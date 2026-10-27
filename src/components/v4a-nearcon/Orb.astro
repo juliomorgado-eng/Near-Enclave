@@ -1,0 +1,96 @@
+---
+// Thin circle + line drawing (green→sky) + dashed diagonals with nodes on the rim.
+import { lattice, vault, skyline, type Seg } from './art';
+
+interface Props {
+  kind: 'lattice' | 'vault' | 'morph' | 'skyline';
+  uid: string;
+  mirror?: boolean;
+  class?: string;
+}
+const { kind, uid, mirror = false, class: cls = '' } = Astro.props;
+const g = `g-${uid}`;
+const c = `c-${uid}`;
+
+const C = 200;
+const R = 190;
+const deg = (a: number) => (a * Math.PI) / 180;
+const pt = (a: number, rad = R): [number, number] => [C + rad * Math.cos(deg(a)), C + rad * Math.sin(deg(a))];
+const f = (n: number) => Math.round(n * 10) / 10;
+
+// diagonals: one through the centre, two tangents. Long enough to cross the layout.
+type Diag = { x1: number; y1: number; x2: number; y2: number; o: number };
+const along = (p: [number, number], a: number, t0: number, t1: number, o: number): Diag => ({
+  x1: f(p[0] + Math.cos(deg(a)) * t0),
+  y1: f(p[1] + Math.sin(deg(a)) * t0),
+  x2: f(p[0] + Math.cos(deg(a)) * t1),
+  y2: f(p[1] + Math.sin(deg(a)) * t1),
+  o,
+});
+const diags: Diag[] = [
+  along([C, C], -26, -330, 1100, 0.5),
+  along(pt(-62), -62 + 90, -420, 900, 0.32),
+  along(pt(118), 118 - 90, -300, 760, 0.32),
+];
+const rim: [number, number][] = [pt(-26), pt(154), pt(-62), pt(118), pt(-90), pt(90)];
+
+const lat = kind === 'lattice' || kind === 'morph' ? lattice() : null;
+const vlt = kind === 'vault' || kind === 'morph' ? vault() : null;
+const sky = kind === 'skyline' ? skyline() : null;
+const op = (s: Seg) => (s.o ?? 1);
+---
+<svg class={`orb orb--${kind} ${cls}`} viewBox="0 0 400 400" overflow="visible" aria-hidden="true" focusable="false" data-orb={kind}>
+  <defs>
+    <linearGradient id={g} gradientUnits="userSpaceOnUse" x1="60" y1="340" x2="340" y2="60">
+      <stop offset="0" stop-color="#65d56e" />
+      <stop offset="1" stop-color="#59c2e8" />
+    </linearGradient>
+    <clipPath id={c}><circle cx="200" cy="200" r="189" /></clipPath>
+  </defs>
+
+  <g class="orb__diag" transform={mirror ? 'matrix(-1 0 0 1 400 0)' : undefined}>
+    {diags.map((d) => (
+      <line x1={d.x1} y1={d.y1} x2={d.x2} y2={d.y2} stroke-opacity={d.o} data-grow />
+    ))}
+  </g>
+
+  <circle class="orb__ring" cx="200" cy="200" r={R} pathLength="1" data-draw />
+  <circle class="orb__ring orb__ring--in" cx="200" cy="200" r="168" pathLength="1" data-draw />
+
+  <g class="orb__art" clip-path={`url(#${c})`} stroke={`url(#${g})`} fill="none">
+    {lat && (
+      <g class="orb__lat" data-lat>
+        {lat.segs.map((s) => (
+          <path d={s.d} class={s.dash ? 'is-dash' : ''} stroke-opacity={op(s)} pathLength={s.dash ? undefined : 1} data-draw={s.dash ? undefined : ''} data-fade={s.dash ? '' : undefined} />
+        ))}
+        {lat.nodes.map(([x, y]) => <circle class="dot" cx={f(x)} cy={f(y)} r="2.6" data-pop />)}
+        {lat.hubs.map(([x, y]) => <circle class="hub" cx={f(x)} cy={f(y)} r="4.2" fill={`url(#${g})`} stroke="none" data-pop />)}
+      </g>
+    )}
+    {vlt && (
+      <g class="orb__vault" data-vault>
+        {vlt.fills.map((d, i) => <path class="face" d={d} fill={`url(#${g})`} stroke="none" fill-opacity={[0.22, 0.12, 0.3][i]} data-face />)}
+        {vlt.segs.map((s) => (
+          <path d={s.d} class={s.dash ? 'is-dash' : ''} stroke-opacity={op(s)} pathLength={s.dash ? undefined : 1} data-draw={s.dash ? undefined : ''} data-fade={s.dash ? '' : undefined} />
+        ))}
+        {vlt.nodes.map(([x, y]) => <circle class="hub" cx={f(x)} cy={f(y)} r="3.6" fill={`url(#${g})`} stroke="none" data-pop />)}
+      </g>
+    )}
+    {sky && (
+      <g class="orb__sky">
+        {sky.fills.map((d) => <path class="face face--solid" d={d} fill={`url(#${g})`} stroke="none" data-face />)}
+        {sky.lines.map((s) => (
+          <path d={s.d} class={s.dash ? 'is-dash' : ''} stroke-opacity={op(s)} pathLength={s.dash ? undefined : 1} data-draw={s.dash ? undefined : ''} data-fade={s.dash ? '' : undefined} />
+        ))}
+      </g>
+    )}
+  </g>
+
+  <g class="orb__rim" transform={mirror ? 'matrix(-1 0 0 1 400 0)' : undefined}>
+    {rim.map(([x, y], i) => (
+      i < 4
+        ? <circle class="node" cx={f(x)} cy={f(y)} r="5" data-pop />
+        : <rect class="tick" x={f(x) - 2.5} y={f(y) - 2.5} width="5" height="5" data-pop />
+    ))}
+  </g>
+</svg>

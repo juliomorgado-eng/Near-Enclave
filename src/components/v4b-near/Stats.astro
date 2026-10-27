@@ -1,0 +1,46 @@
+---
+import { stats } from '../../content/copy';
+// Halftone strip: 4 rows x 30 modules; size ramps down left to right, dithered.
+const ROWS = 4;
+const COLS = 56;
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+const mods: { x: number; y: number; s: number; c: number }[] = [];
+for (let c = 0; c < COLS; c++) {
+  for (let r = 0; r < ROWS; r++) {
+    const ramp = 1 - c / (COLS - 1);
+    const th = BAYER[(r % 4) * 4 + (c % 4)] / 16;
+    const s = 0.34 + 0.6 * Math.min(1, ramp + (th - 0.5) * 0.35);
+    mods.push({ x: c, y: r, s: Math.max(0.3, Math.min(0.94, s)), c });
+  }
+}
+---
+<section id="stats" class="sec stats">
+  <div class="wrap">
+    <ul class="stats__grid">
+      {stats.map((s, i) => (
+        <>
+          {i === 1 || i === 3 ? <li class="stats__stripe" aria-hidden="true"></li> : null}
+          <li class="stat" data-stat data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>
+            <p class="stat__num">
+              <span class="sr-only">{s.value}</span>
+              <span class="stat__val" aria-hidden="true" data-stat-val>{s.value}</span>
+            </p>
+            <svg class="stat__strip" viewBox={`0 0 ${COLS} ${ROWS}`} aria-hidden="true" data-strip>
+              {mods.map((m) => (
+                <rect
+                  x={m.x + (1 - m.s) / 2}
+                  y={m.y + (1 - m.s) / 2}
+                  width={m.s}
+                  height={m.s}
+                  data-c={m.c}
+                />
+              ))}
+            </svg>
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src label">{s.source}</p>
+          </li>
+        </>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { nav, hero } from '../../content/copy';
+const shiftLabel = nav.find((n) => n.id === 'shift')?.label ?? 'The Shift';
+---
+<header class="hd" data-hd>
+  <div class="hd__in wrap">
+    <a class="hd__brand" href="#top" aria-label="NEAR Enclave 2027, back to top">
+      <NearLogo class="hd__logo" label="NEAR" />
+      <span class="hd__tag" aria-hidden="true">Enclave</span>
+    </a>
+    <nav class="hd__nav" aria-label="Primary">
+      <ul>
+        <li><a href="#shift">{shiftLabel}</a></li>
+        <li><a href="#stats">Signals</a></li>
+      </ul>
+    </nav>
+    <button class="btn btn--sm" type="button" data-open-request>
+      <span class="btn__txt">{hero.cta}</span>
+      <span class="btn__arr" aria-hidden="true">→</span>
+    </button>
+  </div>
+  <span class="hd__bar" data-progress aria-hidden="true"></span>
+</header>

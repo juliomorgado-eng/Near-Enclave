@@ -1,0 +1,26 @@
+---
+import { stats } from '../../content/copy';
+---
+<section class="stats" id="stats" data-stats>
+  <div class="wrap grid stats__grid">
+    <div class="cell stats__stripe" aria-hidden="true"><span class="stripe" data-stripe></span></div>
+    <div class="cell stats__block" data-stats-block>
+      <ul class="stats__list" role="list">
+        {stats.map((s, i) => (
+          <li class="st" data-st>
+            {i > 0 && (
+              <div class="tl tl--stat" aria-hidden="true"><span class="tl__on" data-st-on></span></div>
+            )}
+            <div class="st__row">
+              <p class="st__val" data-count data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>{s.value}</p>
+              <div class="st__meta">
+                <p class="st__label">{s.label}</p>
+                <p class="label st__src">{s.source}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

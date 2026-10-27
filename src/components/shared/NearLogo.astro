@@ -1,0 +1,17 @@
+---
+// Inline NEAR logo (wordmark or N mark). Inherits color via currentColor.
+import wordmark from '../../../public/assets/logos/near-wordmark.svg?raw';
+import mark from '../../../public/assets/logos/near-mark.svg?raw';
+
+interface Props {
+  variant?: 'wordmark' | 'mark';
+  class?: string;
+  label?: string;
+}
+const { variant = 'wordmark', class: className = '', label = 'NEAR' } = Astro.props;
+const svg = (variant === 'mark' ? mark : wordmark).replace(
+  '<svg ',
+  `<svg role="img" aria-label="${label}" class="${className}" `,
+);
+---
+<Fragment set:html={svg} />

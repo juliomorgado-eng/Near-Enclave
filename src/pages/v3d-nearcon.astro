@@ -1,0 +1,54 @@
+---
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '../styles/v3d-nearcon.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v3d-nearcon/Header.astro';
+import Hero from '../components/v3d-nearcon/Hero.astro';
+import Shift from '../components/v3d-nearcon/Shift.astro';
+import Stats from '../components/v3d-nearcon/Stats.astro';
+import Format from '../components/v3d-nearcon/Format.astro';
+import Footer from '../components/v3d-nearcon/Footer.astro';
+import RequestModal from '../components/v3d-nearcon/RequestModal.astro';
+import { metaApply } from '../content/copy';
+---
+<!doctype html>
+<html lang="en" class="vdn">
+  <head>
+    <Seo themeColor="#ebe3d3" description={metaApply.description} />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('vdn-js');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('vdn-motion');
+        // Safety net: if the bundle never boots, reveal everything as a static page.
+        setTimeout(function () {
+          if (window.__vdnready) return;
+          d.classList.remove('vdn-motion');
+          d.classList.add('vdn-failsafe');
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <canvas class="gl gl--fg" data-gl-fg aria-hidden="true"></canvas>
+    <Header />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+      <Format />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3d-nearcon/main.ts';
+    </script>
+  </body>
+</html>

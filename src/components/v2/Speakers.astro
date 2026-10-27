@@ -1,0 +1,33 @@
+---
+import Button from './Button.astro';
+import { speakers, hero } from '../../content/copy';
+const accents = ['var(--green)', 'var(--teal)', 'var(--purple)', 'var(--coral)'];
+const slots = Array.from({ length: 4 }, (_, i) => i);
+---
+<section class="section speakers" id="speakers" style="--theme-color: var(--teal)" aria-labelledby="speakers-title">
+  <div class="wrap speakers__grid">
+    <div class="speakers__head">
+      <h2 class="h2" id="speakers-title" data-reveal>{speakers.h2}</h2>
+      <p class="body-l" data-reveal>{speakers.body}</p>
+      <div data-reveal>
+        <Button label={hero.cta} request icon="arrow" />
+      </div>
+    </div>
+    <ul class="tba" aria-hidden="true">
+      {slots.map((i) => (
+        <li class="tba__card" style={`--theme-color:${accents[i % 4]}; --d:${i % 4}`} data-reveal>
+          <div class="tba__art">
+            <svg class="tba__sil" viewBox="0 0 120 140" preserveAspectRatio="xMidYMax meet">
+              <circle cx="60" cy="50" r="24" />
+              <path d="M14 140c0-30 20-50 46-50s46 20 46 50z" />
+            </svg>
+          </div>
+          <div class="tba__meta">
+            <span class="tba__name"></span>
+            <span class="mono tba__label">To be announced</span>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

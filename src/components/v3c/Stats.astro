@@ -1,0 +1,49 @@
+---
+import { stats } from '../../content/copy';
+// Raw, fully-expanded form of each figure: what an open ledger exposes.
+const expand = (n: number, mul: number) => '$' + Math.round(n * mul).toLocaleString('en-US');
+const mulOf = (suffix: string) => (suffix.startsWith('T') ? 1e12 : 1e9);
+const raw = stats.map((s) => {
+  const m = mulOf(s.suffix);
+  const plus = s.suffix.endsWith('+') ? '+' : '';
+  return s.numberTo ? [expand(s.number, m) + ' –', expand(s.numberTo, m)] : [expand(s.number, m) + plus];
+});
+// deterministic short signatures
+const sig = (i: number) => {
+  let x = (i + 3) * 2654435761;
+  let o = '';
+  for (let k = 0; k < 8; k++) {
+    x = (x * 1103515245 + 12345) >>> 0;
+    o += '0123456789abcdef'[x >>> 28];
+  }
+  return `${o.slice(0, 4)}…${o.slice(4)}`;
+};
+---
+<section class="sec stats" id="stats" data-chapter="stats" aria-label="Signals">
+  <div class="stats__head" aria-hidden="true">
+    <p class="mono stats__col stats__col--pub">Public view</p>
+    <p class="mono stats__col stats__col--seal">Authorized view</p>
+  </div>
+  <ol class="stats__list">
+    {stats.map((s, i) => (
+      <li class="stat" data-stat>
+        <div class="stat__pub" aria-hidden="true">
+          <span class="stat__tag mono" data-clear>TX {String(i + 1).padStart(2, '0')} <span data-pub-state>· exposed</span></span>
+          <span class="stat__raw mono" data-clear data-raw data-number={s.number} data-number-to={s.numberTo ?? ''} data-mul={mulOf(s.suffix)} data-plus={s.suffix.endsWith('+') ? '+' : ''}>
+            {raw[i].map((r) => <span class="stat__rl">{r}</span>)}
+          </span>
+          <span class="stat__pkt" data-pkt></span>
+        </div>
+        <div class="stat__seal">
+          <p class="stat__num" data-clear>
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__val" aria-hidden="true" data-stat-val data-final={s.value}>{s.value}</span>
+          </p>
+          <p class="stat__label">{s.label}</p>
+          <p class="stat__src mono">{s.source}</p>
+          <p class="stat__sig mono" aria-hidden="true" data-sig><span class="stat__ok">✓</span> Sealed · σ {sig(i)}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

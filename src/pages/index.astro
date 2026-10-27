@@ -1,0 +1,141 @@
+---
+import Seo from '../components/shared/Seo.astro';
+import NearLogo from '../components/shared/NearLogo.astro';
+import { hero } from '../content/copy';
+
+// Version tree: each version lists its sub-versions (variants built on top of it).
+const versions = [
+  { id: 'v1', href: '/v1', note: 'NEARCON brand · premium editorial', subs: [] },
+  { id: 'v2', href: '/v2', note: 'near.org system · NEARCON personality', subs: [] },
+  {
+    id: 'v3',
+    href: '/v3',
+    note: 'Awwwards concept · SEALED · WebGL',
+    subs: [
+      { id: 'v3A', href: '/v3a', note: 'Aperture · v1 brand × v3', subs: [] },
+      {
+        id: 'v3B',
+        href: '/v3b',
+        note: 'Enclave · monolito de vidrio',
+        subs: [
+          { id: 'v3B · near', href: '/v3b-near', note: 'near.org · oscura · íconos en el monolito · + Format' },
+          { id: 'v3B · NEARCON', href: '/v3b-nearcon', note: 'NEARCON · clara · copy tal cual · + Format' },
+        ],
+      },
+      { id: 'v3C', href: '/v3c', note: 'Two Ledgers · público vs privado', subs: [] },
+      {
+        id: 'v3D',
+        href: '/v3d',
+        note: 'Invitation · keycard',
+        subs: [
+          { id: 'v3D · near', href: '/v3d-near', note: 'near.org · oscura · invitación sellada · + Format' },
+          { id: 'v3D · NEARCON', href: '/v3d-nearcon', note: 'NEARCON · cream · layout editorial · + Format' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'v4',
+    href: '',
+    note: 'Dirección vectorial · ASCII · pixel · línea',
+    subs: [
+      {
+        id: 'v4A',
+        href: '',
+        note: 'Plano · dibujo técnico lineal que se traza',
+        subs: [
+          { id: 'v4A · near', href: '/v4a-near', note: 'near.org · clara · grilla modular · diagrama de nodos' },
+          { id: 'v4A · NEARCON', href: '/v4a-nearcon', note: 'NEARCON · negra · ilustración en círculos · ríos de dígitos' },
+        ],
+      },
+      {
+        id: 'v4B',
+        href: '',
+        note: 'Módulo · pixel · densidad · ASCII',
+        subs: [
+          { id: 'v4B · near', href: '/v4b-near', note: 'near.org · oscura · halftone de módulos verdes' },
+          { id: 'v4B · NEARCON', href: '/v4b-nearcon', note: 'NEARCON · negra · campo ASCII 3D · barras pixel' },
+        ],
+      },
+    ],
+  },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <Seo />
+    <meta name="robots" content="noindex" />
+    <style is:global>
+      :root { --cream: #ebe3d3; --ink: #000; --line: #222; --muted: rgb(235 227 211 / .6); --accent: #00dc8d; }
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        min-height: 100svh; background: var(--ink); color: var(--cream);
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        padding: clamp(24px, 6vw, 72px) 16px;
+      }
+      main { width: min(960px, 100%); margin-inline: auto; display: grid; gap: 40px; }
+      .logo svg { width: 96px; height: auto; }
+      h1 { font-size: clamp(28px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em; }
+      .kicker { font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      ul { list-style: none; }
+      .tree { display: grid; gap: 2px; background: var(--line); border: 1px solid var(--line); }
+      .tree > li { background: var(--ink); }
+      a {
+        display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;
+        padding: 20px 24px; color: inherit; text-decoration: none; transition: background .2s;
+      }
+      .group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; padding: 20px 24px; }
+      .group strong { font-size: clamp(24px, 3vw, 34px); min-width: 4ch; }
+      .subs .group { padding-block: 14px; }
+      .subs .group strong { font-size: clamp(18px, 2.2vw, 24px); }
+      .group span { font-size: 15px; color: var(--muted); }
+      a:hover, a:focus-visible { background: #111; }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+      a strong { font-size: clamp(24px, 3vw, 34px); min-width: 4ch; }
+      a span { font-size: 15px; color: var(--muted); }
+      .subs { border-left: 1px solid #333; margin-left: 32px; }
+      .subs a { padding-block: 14px; }
+      .subs a strong { font-size: clamp(18px, 2.2vw, 24px); }
+      .subs .subs a strong { font-size: 18px; }
+      .subs .subs a strong::before { content: '↳ '; color: var(--accent); }
+      .new { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: var(--accent); padding: 2px 6px; }
+      @media (max-width: 600px) {
+        .subs { margin-left: 16px; }
+        a { padding: 16px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div class="logo"><NearLogo /></div>
+      <h1>{hero.h1}</h1>
+      <p class="kicker">Design directions · versiones y sub-versiones</p>
+      <ul class="tree">
+        {versions.map((v) => (
+          <li>
+            {v.href ? <a href={v.href}><strong>{v.id}</strong><span>{v.note}</span></a> : <div class="group"><strong>{v.id}</strong><span>{v.note}</span></div>}
+            {v.subs.length > 0 && (
+              <ul class="subs">
+                {v.subs.map((s) => (
+                  <li>
+                    {s.href ? <a href={s.href}><strong>{s.id}</strong><span>{s.note}</span></a> : <div class="group"><strong>{s.id}</strong><span>{s.note}</span></div>}
+                    {s.subs.length > 0 && (
+                      <ul class="subs">
+                        {s.subs.map((ss) => (
+                          <li>
+                            <a href={ss.href}><strong>{ss.id}</strong><span>{ss.note}</span><em class="new">nuevo</em></a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </main>
+  </body>
+</html>

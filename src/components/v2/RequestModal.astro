@@ -1,0 +1,56 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { form } from '../../content/copy';
+---
+<div class="modal" data-request-modal hidden>
+  <div class="modal__backdrop" data-request-close></div>
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="req-title" aria-describedby="req-intro">
+    <span class="grad-line modal__line" aria-hidden="true"></span>
+    <div class="modal__head">
+      <NearLogo variant="mark" class="modal__mark" />
+      <button class="modal__close" type="button" data-request-close>
+        <span class="sr-only">Close</span>
+        <svg aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path d="M3 3l10 10M13 3 3 13" stroke="currentColor" stroke-width="1.5" /></svg>
+      </button>
+    </div>
+    <h2 class="modal__title" id="req-title">{form.title}</h2>
+    <p class="modal__intro" id="req-intro">{form.intro}</p>
+    <form class="modal__form" data-request-form novalidate>
+      <div class="fields">
+        {form.fields.map((f) => (
+          <label class="field">
+            <span class="field__label">{f.label}</span>
+            <input
+              class="field__input"
+              name={f.name}
+              type={f.type}
+              autocomplete={f.autocomplete}
+              required={f.required}
+            />
+          </label>
+        ))}
+      </div>
+      <fieldset class="segment">
+        <legend class="field__label">{form.segment.label}</legend>
+        <div class="segment__opts">
+          {form.segment.options.map((o, i) => (
+            <label class="segment__opt">
+              <input type="radio" name="segment" value={o} required={i === 0} />
+              <span>{o}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+      <button class="btn btn--primary btn--l modal__submit" type="submit">
+        <span class="sr-only">{form.submit}</span>
+        <span class="btn__label" aria-hidden="true">
+          {[...form.submit].map((ch, i) => <span class="btn__l" style={`--i:${i}`}>{ch}</span>)}
+        </span>
+      </button>
+    </form>
+    <p class="modal__success" data-request-success hidden tabindex="-1" role="status">
+      <span class="modal__check" aria-hidden="true"></span>
+      {form.success}
+    </p>
+  </div>
+</div>

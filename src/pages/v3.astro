@@ -1,0 +1,92 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v3.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Hud from '../components/v3/Hud.astro';
+import Menu from '../components/v3/Menu.astro';
+import Hero from '../components/v3/Hero.astro';
+import Shift from '../components/v3/Shift.astro';
+import Stats from '../components/v3/Stats.astro';
+import Format from '../components/v3/Format.astro';
+import Agenda from '../components/v3/Agenda.astro';
+import Audience from '../components/v3/Audience.astro';
+import Partners from '../components/v3/Partners.astro';
+import Speakers from '../components/v3/Speakers.astro';
+import Closing from '../components/v3/Closing.astro';
+import Faq from '../components/v3/Faq.astro';
+import Footer from '../components/v3/Footer.astro';
+import RequestModal from '../components/v3/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v3">
+  <head>
+    <Seo themeColor="#000000" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v3-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v3-motion');
+        // Safety net: if the bundle never boots, reveal everything and drop the loader.
+        setTimeout(function () {
+          if (window.__v3ready) return;
+          d.classList.remove('v3-motion');
+          d.classList.add('v3-failsafe');
+          var l = document.querySelector('[data-loader]');
+          if (l) l.remove();
+        }, 5000);
+      })();
+    </script>
+  </head>
+  <body data-theme="ink">
+    <script is:inline>
+      (function () {
+        // The preloader only exists when JS + motion are available.
+        var d = document.documentElement;
+        if (!d.classList.contains('v3-motion')) return;
+        var repeat = false;
+        try { repeat = sessionStorage.getItem('v3-intro') === '1'; } catch (e) {}
+        d.classList.add(repeat ? 'v3-intro-short' : 'v3-intro-long');
+        var half = function (pos) {
+          return '<div class="ld__half ld__half--' + pos + '"' + (pos === 'b' ? ' aria-hidden="true"' : '') + '>' +
+            '<div class="ld__center"><p class="ld__cipher" data-ld-cipher>NEAR ENCLAVE 2027</p><span class="ld__rule" data-ld-rule></span></div>' +
+            '<p class="ld__count" data-ld-count>000</p><p class="ld__status">ESTABLISHING SECURE CHANNEL</p></div>';
+        };
+        var l = document.createElement('div');
+        l.className = 'ld';
+        l.setAttribute('data-loader', '');
+        l.setAttribute('aria-hidden', 'true');
+        l.innerHTML = half('t') + half('b');
+        document.body.prepend(l);
+      })();
+    </script>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <div class="grain" data-grain aria-hidden="true"></div>
+    <Hud />
+    <Menu />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+      <Format />
+      <Agenda />
+      <Audience />
+      <Partners />
+      <Speakers />
+      <Closing />
+      <Faq />
+    </main>
+    <Footer />
+    <RequestModal />
+    <div class="cursor" data-cursor-root aria-hidden="true">
+      <span class="cursor__ring" data-cursor-ring><span class="cursor__label" data-cursor-label></span></span>
+      <span class="cursor__dot" data-cursor-dot></span>
+    </div>
+    <script>
+      import '../scripts/v3/main.ts';
+    </script>
+  </body>
+</html>

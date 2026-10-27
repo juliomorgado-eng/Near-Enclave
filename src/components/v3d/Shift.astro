@@ -1,0 +1,29 @@
+---
+import { shift, nav } from '../../content/copy';
+import Card from './Card.astro';
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+---
+<section id="shift" class="sec shift" data-chapter="shift" data-theme="paper" aria-labelledby="shift-title">
+  <div class="shift__pin" data-shift-pin>
+    <div class="shift__grid">
+      <div class="shift__text">
+        <p class="eyebrow mono"><span class="eyebrow__n" aria-hidden="true">02</span>{label}</p>
+        <h2 class="h2 shift__h2" id="shift-title" data-lines>{shift.h2}</h2>
+        <ol class="shift__list">
+          {shift.body.map((s, i) => (
+            <li class={`shift__s${i === 2 ? ' shift__s--key' : ''}`} data-shift-s>
+              <span class="shift__n mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="shift__t">{s}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+      <div class="shift__side">
+        <div class="anchor anchor--shift" data-anchor="shift" aria-hidden="true">
+          <Card side="back" />
+        </div>
+        <p class="shift__proof mono" data-shift-proof aria-hidden="true"><span class="shift__tick"></span><span data-proof-txt>Holder hidden · access verified</span></p>
+      </div>
+    </div>
+  </div>
+</section>

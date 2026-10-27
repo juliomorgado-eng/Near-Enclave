@@ -1,0 +1,28 @@
+---
+import Tab from './Tab.astro';
+import { format, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'format')?.label ?? '';
+---
+<section class="section format theme-dark" id="format" aria-labelledby="format-title" data-format>
+  <div class="wrap format__stage">
+    <div class="format__head">
+      <Tab index="02" label={label} />
+      <h2 class="h2 format__title" id="format-title" data-split>{format.h2}</h2>
+      <p class="format__coords mono" aria-hidden="true" data-reveal>
+        <span><b>40.7128° N</b></span><span><b>74.0060° W</b></span><span>Manhattan, NY</span>
+      </p>
+    </div>
+    <figure class="format__media" aria-hidden="true" data-format-media>
+      <img src="/assets/img/nearcon-B-80.jpg" alt="" width="2000" height="1333" loading="lazy" decoding="async" />
+      <figcaption class="mono">Fig. 01 — Single stage</figcaption>
+    </figure>
+    <div class="format__body">
+      {format.body.map((p, i) => (
+        <p class="format__p" data-format-p>
+          <span class="mono" aria-hidden="true">{`0${i + 1}`}</span>
+          <span>{p}</span>
+        </p>
+      ))}
+    </div>
+  </div>
+</section>

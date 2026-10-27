@@ -1,0 +1,28 @@
+---
+import Tab from './Tab.astro';
+import { agenda, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'agenda')?.label ?? '';
+const accents = ['var(--green)', 'var(--teal)', 'var(--purple)', 'var(--coral)'];
+---
+<section class="section agenda" id="agenda" style="--theme-color: var(--purple)" aria-labelledby="agenda-title">
+  <div class="wrap">
+    <div class="section__head">
+      <Tab index="03" text={label} />
+      <h2 class="h2" id="agenda-title" data-reveal>{agenda.h2}</h2>
+    </div>
+    <ol class="agenda__grid">
+      {agenda.tracks.map((t, i) => (
+        <li class="track" style={`--theme-color:${accents[i % 4]}; --d:${i % 2}`} data-reveal>
+          <div class="track__band" aria-hidden="true">
+            <span class="track__idx">{String(i + 1).padStart(2, '0')}</span>
+            <span class="track__swatch"></span>
+          </div>
+          <div class="track__content">
+            <h3 class="h3">{t.h3}</h3>
+            <p class="body-m">{t.body}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+import Button from './Button.astro';
+import NearLogo from '../shared/NearLogo.astro';
+import { closing } from '../../content/copy';
+---
+<section class="closing" id="request" aria-labelledby="closing-title">
+  <div class="closing__bg" aria-hidden="true">
+    <div class="closing__grad"></div>
+    <div class="grain grain--light"></div>
+  </div>
+  <div class="wrap closing__inner">
+    <NearLogo variant="mark" class="closing__mark" />
+    <h2 class="closing__title" id="closing-title" data-reveal>{closing.h2}</h2>
+    <p class="body-l closing__body" data-reveal>{closing.body}</p>
+    <div data-reveal>
+      <Button label={closing.cta} request size="l" icon="arrow" class="btn--ink" />
+    </div>
+  </div>
+</section>

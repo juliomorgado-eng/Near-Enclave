@@ -1,0 +1,38 @@
+---
+import Tab from './Tab.astro';
+import { partners, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'partners')?.label ?? '';
+const cols = partners.groups.map((g) => `${Math.max(g.logos.length, 1)}fr`).join(' ');
+---
+<section class="section partners" id="partners" style="--theme-color: var(--green)" aria-labelledby="partners-title">
+  <div class="wrap">
+    <div class="section__head section__head--split">
+      <div>
+        <Tab index="05" text={label} />
+        <h2 class="h2" id="partners-title" data-reveal>{partners.h2}</h2>
+      </div>
+      <p class="body-l section__aside" data-reveal>{partners.body}</p>
+    </div>
+    <div class="pgroups" style={`--pcols:${cols}`}>
+    {partners.groups.map((g) => (
+      <div class="pgroup">
+        <h3 class="pgroup__title" data-reveal>
+          <span class="mono pgroup__count" aria-hidden="true">×{g.logos.length}</span>
+          {g.h3}
+        </h3>
+        <ul class="pgrid" style={`--n:${g.logos.length}`}>
+          {g.logos.map((l, i) => (
+            <li class="pcell" data-reveal style={`--d:${i}`}>
+              {l.logo ? (
+                <img class="pcell__logo" src={l.logo} alt={l.name} loading="lazy" decoding="async" />
+              ) : (
+                <span class="pcell__word">{l.name}</span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+    </div>
+  </div>
+</section>

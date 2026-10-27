@@ -1,0 +1,17 @@
+---
+// Concentric thin-ellipses mark.
+interface Props { class?: string; uid: string }
+const { class: cls = '', uid } = Astro.props;
+const rings = Array.from({ length: 7 }, (_, i) => ({ rx: 180 - i * 24, ry: 46 - i * 6.2, cy: 60 - i * 3.2 }));
+---
+<svg class={`ell ${cls}`} viewBox="0 0 400 120" aria-hidden="true" focusable="false" data-ell>
+  <defs>
+    <linearGradient id={`e-${uid}`} x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#65d56e" /><stop offset="0.34" stop-color="#59c2e8" /><stop offset="0.67" stop-color="#f98372" /><stop offset="1" stop-color="#f1b139" />
+    </linearGradient>
+  </defs>
+  {rings.map((e, i) => (
+    <ellipse cx="200" cy={e.cy} rx={e.rx} ry={e.ry} pathLength="1" data-draw stroke={i === 0 ? `url(#e-${uid})` : undefined} class={i === 0 ? 'ell__out' : undefined} />
+  ))}
+  <line x1="0" y1="60" x2="400" y2="60" class="ell__axis" />
+</svg>

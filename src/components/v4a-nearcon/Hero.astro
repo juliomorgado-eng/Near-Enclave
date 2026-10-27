@@ -1,0 +1,43 @@
+---
+import { heroApply as hero } from '../../content/copy';
+import Orb from './Orb.astro';
+// h1 must read exactly as the doc: "NEAR Enclave 2027: Open Markets, Private Money"
+const [l1, l2] = hero.h1Lines; // 'Open Markets,' / 'Private Money'
+const w1 = l1.split(' ');
+const w2 = l2.split(' ');
+---
+<section class="hero" id="top" data-hero>
+  <div class="hero__stage" aria-hidden="true">
+    <div class="hero__orb hero__orb--l" data-par="-1"><Orb kind="lattice" uid="hl" /></div>
+    <div class="hero__orb hero__orb--r" data-par="1"><Orb kind="vault" uid="hr" mirror /></div>
+  </div>
+
+  <div class="hero__frame" data-frame data-par="0.35">
+    <span class="fr fr--t" aria-hidden="true"></span>
+    <span class="fr fr--r" aria-hidden="true"></span>
+    <span class="fr fr--b" aria-hidden="true"></span>
+    <span class="fr fr--l" aria-hidden="true"></span>
+    <span class="fd fd--tl" aria-hidden="true"></span>
+    <span class="fd fd--tr" aria-hidden="true"></span>
+    <span class="fd fd--bl" aria-hidden="true"></span>
+    <span class="fd fd--br" aria-hidden="true"></span>
+
+    <div class="hero__copy">
+      <p class="hero__eyebrow mono" data-hin>
+        {hero.eyebrowParts.map((p, i) => (<>{i > 0 && <span class="sep" aria-hidden="true"> · </span>}<span>{p}</span></>))}
+      </p>
+      <h1 class="hero__h1">
+        <span class="ln"><span class="ln__in" data-hl>{hero.h1Lead}</span></span>{' '}
+        <span class="ln"><span class="ln__in" data-hl><span class="gw gw--gs">{w1[0]}</span> {w1.slice(1).join(' ')}</span></span>{' '}
+        <span class="ln"><span class="ln__in" data-hl><span class="gw gw--ca">{w2[0]}</span> {w2.slice(1).join(' ')}</span></span>
+      </h1>
+      <p class="hero__sub" data-hin>{hero.subhead}</p>
+      <div class="hero__act" data-hin>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{hero.cta}</span>
+          <span class="cta__arr" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

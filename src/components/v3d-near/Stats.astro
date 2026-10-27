@@ -1,0 +1,36 @@
+---
+import { stats } from '../../content/copy';
+import Seal from './Seal.astro';
+---
+<section id="stats" class="sec stats" aria-label="Market signals">
+  <div class="stats__grid wrap">
+    <ul class="stats__list">
+      {stats.map((s) => (
+        <li class="stat" data-stat>
+          <p class="stat__num">
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__lock" aria-hidden="true"></span>
+            <span
+              class="stat__val"
+              aria-hidden="true"
+              data-stat-val
+              data-prefix={s.prefix}
+              data-number={s.number}
+              data-to={s.numberTo ?? ''}
+              data-dec={s.decimals}
+              data-suffix={s.suffix}
+            >{s.value}</span>
+          </p>
+          <p class="stat__label">{s.label}</p>
+          <p class="stat__src label">{s.source}</p>
+        </li>
+      ))}
+    </ul>
+    <div class="stats__side">
+      <div class="reader" aria-hidden="true">
+        <div class="anchor anchor--stats" data-anchor="stats"><Seal /></div>
+        <div class="reader__body" data-reader><span class="reader__slot" data-slot></span></div>
+      </div>
+    </div>
+  </div>
+</section>

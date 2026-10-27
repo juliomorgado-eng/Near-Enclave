@@ -1,0 +1,43 @@
+---
+import { partners, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'partners')?.label ?? '';
+const [eco, media] = partners.groups;
+const all = [...eco.logos, ...media.logos].map((l) => l.name);
+---
+<section id="partners" class="sec partners" data-theme="ink" data-hud={label.toUpperCase()} data-chapter="partners" aria-labelledby="partners-title">
+  <div class="wrap partners__top">
+    <p class="eyebrow mono"><span class="eyebrow__n" aria-hidden="true">§07</span>{label}</p>
+    <h2 class="h2 partners__h2" id="partners-title" data-lines>{partners.h2}</h2>
+    <p class="partners__body lead" data-fade>{partners.body}</p>
+  </div>
+  <div class="wrap partners__group partners__group--eco">
+    <h3 class="partners__gl mono">{eco.h3}</h3>
+    <ul class="partners__eco">
+      {eco.logos.map((l) => (
+        <li class="wm" data-wordmark data-cursor="READ">
+          {l.logo ? <img src={`/assets/logos/partners/${l.logo}`} alt={l.name} /> : <span class="wm__t" data-wm-t>{l.name}</span>}
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="wrap partners__group partners__group--media">
+    <h3 class="partners__gl mono">{media.h3}</h3>
+    <ul class="partners__media">
+      {media.logos.map((l, i) => (
+        <li class="wm wm--sm" data-wordmark data-cursor="READ">
+          <span class="wm__i mono" aria-hidden="true">M.{String(i + 1).padStart(2, '0')}</span>
+          {l.logo ? <img src={`/assets/logos/partners/${l.logo}`} alt={l.name} /> : <span class="wm__t" data-wm-t>{l.name}</span>}
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="marquee" aria-hidden="true" data-marquee>
+    {[0, 1].map((r) => (
+      <div class={`marquee__row marquee__row--${r}`} data-marquee-row>
+        <div class="marquee__inner" data-marquee-inner>
+          {[0, 1, 2, 3].map(() => all.map((n) => <span>{n}<i>◇</i></span>))}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

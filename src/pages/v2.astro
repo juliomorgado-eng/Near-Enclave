@@ -1,0 +1,62 @@
+---
+import '@fontsource-variable/mona-sans/wdth.css';
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '../styles/v2.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Nav from '../components/v2/Nav.astro';
+import Hero from '../components/v2/Hero.astro';
+import Shift from '../components/v2/Shift.astro';
+import Stats from '../components/v2/Stats.astro';
+import Format from '../components/v2/Format.astro';
+import Agenda from '../components/v2/Agenda.astro';
+import Audience from '../components/v2/Audience.astro';
+import Partners from '../components/v2/Partners.astro';
+import Speakers from '../components/v2/Speakers.astro';
+import Closing from '../components/v2/Closing.astro';
+import Faq from '../components/v2/Faq.astro';
+import Footer from '../components/v2/Footer.astro';
+import RequestModal from '../components/v2/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v2">
+  <head>
+    <Seo themeColor="#000000" />
+    <meta name="robots" content="noindex" />
+    <script is:inline>
+      // Enable JS-only initial states (hidden reveals) unless reduced motion.
+      (function () {
+        var d = document.documentElement;
+        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        d.classList.add(reduce ? 'js-reduced' : 'js');
+        // Safety net: if the main script never boots, show everything.
+        setTimeout(function () {
+          if (!window.__v2ready) d.classList.add('anim-off');
+        }, 3000);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+      <Format />
+      <Agenda />
+      <Audience />
+      <Partners />
+      <Speakers />
+      <Closing />
+      <Faq />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import { boot } from '../scripts/v2/main';
+      boot();
+    </script>
+  </body>
+</html>

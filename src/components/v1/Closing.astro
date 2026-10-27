@@ -1,0 +1,17 @@
+---
+import Cta from './Cta.astro';
+import { closing, hero } from '../../content/copy';
+---
+<section class="section closing" id="request" aria-labelledby="closing-title">
+  <div class="wrap closing__inner">
+    <div class="closing__meta" aria-hidden="true" data-reveal>
+      <span class="mono">{hero.eyebrowParts[0]}</span>
+      <span class="mono">{hero.eyebrowParts[1]}</span>
+    </div>
+    <h2 class="closing__title" id="closing-title" data-split>{closing.h2}</h2>
+    <div class="closing__row">
+      <p class="closing__body" data-reveal>{closing.body}</p>
+      <div data-reveal><Cta label={closing.cta} variant="black" /></div>
+    </div>
+  </div>
+</section>

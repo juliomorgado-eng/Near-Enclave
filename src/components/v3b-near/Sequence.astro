@@ -1,0 +1,28 @@
+---
+// A headline + sentence-by-sentence body; the monolith beside it shows one icon per sentence.
+// Used for Shift and Format. No labels, no numbering.
+import Icon from './Icon.astro';
+interface Props { id: string; h2: string; body: string[]; prim?: number; fallbackIcon: number }
+const { id, h2, body, prim = -1, fallbackIcon } = Astro.props;
+---
+<section id={id} class="sec seq" data-chapter={id} data-seq aria-labelledby={`${id}-title`}>
+  <div class="seq__pin">
+    <div class="wrap seq__grid">
+      <div class="seq__stage" aria-hidden="true">
+        <div class="enclave">
+          <div class="enclave__box slab-anchor" data-slab-anchor>
+            <div class="enclave__css"><Icon i={fallbackIcon} class="enclave__ico" /></div>
+          </div>
+        </div>
+      </div>
+      <h2 class="h2 seq__h2" id={`${id}-title`} data-seq-h2>{h2}</h2>
+      <ol class="seq__body">
+        {body.map((s, i) => (
+          <li class:list={['seq__s', i === prim && 'seq__s--prim']} data-seq-s>
+            <span class="seq__t" data-seq-t>{s}</span>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

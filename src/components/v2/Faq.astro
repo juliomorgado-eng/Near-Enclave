@@ -1,0 +1,44 @@
+---
+import Tab from './Tab.astro';
+import { faq, contact, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'faq')?.label ?? '';
+---
+<section class="section faq" id="faq" style="--theme-color: var(--teal)" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div class="faq__head">
+      <Tab index="06" text={label} />
+      <h2 class="h2" id="faq-title" data-reveal>{faq.h2}</h2>
+    </div>
+    <div class="faq__list" data-faq>
+      {faq.items.map((item, i) => (
+        <div class="qa" data-qa data-open data-reveal style={`--d:${i}`}>
+          <h3 class="qa__h">
+            <button
+              class="qa__btn"
+              type="button"
+              id={`faq-q-${i}`}
+              aria-expanded="true"
+              aria-controls={`faq-a-${i}`}
+              data-qa-btn
+            >
+              <span class="qa__q">{item.q}</span>
+              <span class="qa__icon" aria-hidden="true"></span>
+            </button>
+          </h3>
+          <div class="qa__panel" id={`faq-a-${i}`} role="region" aria-labelledby={`faq-q-${i}`} data-qa-panel>
+            <div class="qa__inner">
+              {item.contact ? (
+                <p>
+                  Press: <a href={`mailto:${contact.press}`}>{contact.press}</a> · Sponsorship:{' '}
+                  <a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a>
+                </p>
+              ) : (
+                <p>{item.a}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

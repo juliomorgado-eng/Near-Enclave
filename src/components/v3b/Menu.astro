@@ -1,0 +1,29 @@
+---
+import { nav, hero } from '../../content/copy';
+const imgs = ['B-80', 'B-85', 'B-15', 'C-105', 'B-94', 'C-106'];
+// Only "The Shift" lives on this exploration page; the rest point at the approved v3.
+const local = new Set(['shift']);
+---
+<div class="menu" id="v3b-menu" data-menu hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu__top">
+    <span class="mono menu__tag" aria-hidden="true">Enclave 2027 — Index</span>
+    <button class="mono menu__close" type="button" data-menu-close>Close <span aria-hidden="true">×</span></button>
+  </div>
+  <nav class="menu__nav" aria-label="Sections">
+    <ol class="menu__list">
+      {nav.map((n, i) => (
+        <li class="menu__item">
+          <a class="menu__link" href={local.has(n.id) ? `#${n.id}` : `/v3#${n.id}`} data-menu-link data-img={`/assets/img/v3/nearcon-${imgs[i]}-900.webp`}>
+            <span class="menu__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="menu__label">{n.label}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+  <div class="menu__foot mono">
+    <span aria-hidden="true">{hero.eyebrowParts.slice(0, 2).join(' · ')}</span>
+    <button class="btn btn--sm" type="button" data-open-request data-menu-close-silent><span class="btn__txt">{hero.cta}</span></button>
+  </div>
+  <img class="menu__img" data-menu-img alt="" aria-hidden="true" width="280" height="187" />
+</div>

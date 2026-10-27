@@ -1,0 +1,18 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { hero } from '../../content/copy';
+---
+<header class="hud" data-hud>
+  <a class="hud__brand" href="#top">
+    <NearLogo variant="mark" class="hud__mark" label="NEAR — back to top" />
+    <span class="hud__name mono" aria-hidden="true">Enclave 2027</span>
+  </a>
+  <div class="hud__right">
+    <button class="hud__menu mono" type="button" data-menu-open aria-expanded="false" aria-controls="v3b-menu">
+      <span class="hud__burger" aria-hidden="true"><i></i><i></i></span>Menu
+    </button>
+    <button class="btn btn--sm" type="button" data-open-request>
+      <span class="btn__txt">{hero.cta}</span>
+    </button>
+  </div>
+</header>

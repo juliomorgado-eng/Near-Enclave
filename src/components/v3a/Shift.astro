@@ -1,0 +1,30 @@
+---
+import { shift, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+const [s1, s2, s3, s4] = shift.body;
+---
+<section id="shift" class="shift" aria-labelledby="shift-title" data-shift>
+  <div class="shift__frame" data-shift-frame>
+    <div class="shift__in wrap" data-shift-content>
+      <p class="tab mono"><span class="tab__n" aria-hidden="true">01</span>{label}</p>
+      <h2 class="shift__h2" id="shift-title">{shift.h2}</h2>
+      <div class="shift__grid">
+        <div class="shift__win ap-anchor" data-ap="shift" aria-hidden="true"><span class="ap-fallback"></span></div>
+        <ol class="shift__list">
+          <li class="shift__s" data-shift-s><span class="shift__n mono" aria-hidden="true">01</span><span>{s1}</span></li>
+          <li class="shift__s" data-shift-s><span class="shift__n mono" aria-hidden="true">02</span><span>{s2}</span></li>
+          <li class="shift__s shift__s--key ap-anchor" data-shift-s data-ap="key">
+            <span class="ap-fallback" aria-hidden="true"></span>
+            <span class="shift__n mono" aria-hidden="true">03 · Inside the enclave</span><span class="shift__keytxt">{s3}</span>
+          </li>
+          <li class="shift__s" data-shift-s><span class="shift__n mono" aria-hidden="true">04</span><span>{s4}</span></li>
+        </ol>
+      </div>
+    </div>
+    <!-- full-frame moment of the key sentence (pinned desktop only); the list item above carries the real text -->
+    <div class="shift__over" data-shift-over aria-hidden="true">
+      <p class="mono shift__over-k">03 · Inside the enclave</p>
+      <p class="shift__over-t">{s3}</p>
+    </div>
+  </div>
+</section>

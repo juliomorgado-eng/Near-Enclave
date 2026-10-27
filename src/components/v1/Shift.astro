@@ -1,0 +1,41 @@
+---
+import Tab from './Tab.astro';
+import { shift, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+const keyIndex = shift.body.findIndex((s) => s.startsWith('Privacy'));
+const before = shift.body.slice(0, keyIndex);
+const key = shift.body[keyIndex];
+const after = shift.body.slice(keyIndex + 1);
+---
+<section class="section shift theme-light" id="shift" aria-labelledby="shift-title">
+  <div class="wrap">
+    <Tab index="01" label={label} />
+    <h2 class="h2 shift__title" id="shift-title" data-split>{shift.h2}</h2>
+
+    <div class="shift__grid">
+      {before.map((s, i) => (
+        <p class="shift__p">
+          <span class="idx mono" aria-hidden="true">{`0${i + 1} /`}</span>
+          <span data-scramble>{s}</span>
+        </p>
+      ))}
+    </div>
+
+    <div class="shift__key" data-key>
+      <div class="shift__key-meta mono" aria-hidden="true">
+        <span>{`0${keyIndex + 1} / Decrypted`}</span>
+        <span>■ ■ ■ ■</span>
+      </div>
+      <p class="shift__key-text"><span class="grad-text" data-key-text>{key}</span></p>
+    </div>
+
+    <div class="shift__close">
+      {after.map((s, i) => (
+        <p class="shift__p">
+          <span class="idx mono" aria-hidden="true">{`0${keyIndex + i + 2} /`}</span>
+          <span data-scramble>{s}</span>
+        </p>
+      ))}
+    </div>
+  </div>
+</section>

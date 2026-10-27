@@ -1,0 +1,39 @@
+---
+import { shift } from '../../content/copy';
+import { SHIFT, SEAL, pathOf } from '../../scripts/v4a-near/geo';
+---
+<section class="shift" id="shift" data-shift>
+  <div class="wrap grid shift__grid">
+    <div class="cell shift__copy">
+      <h2 class="h2 shift__h2" data-shift-h2>{shift.h2}</h2>
+      <p class="body shift__p">
+        {shift.body.map((s, i) => (
+          <>
+            <span class={`sn${i === 2 ? ' sn--key' : ''}`} data-sn={i}>{s}</span>
+            {i < shift.body.length - 1 ? ' ' : ''}
+          </>
+        ))}
+      </p>
+    </div>
+    <div class="cell shift__fig" aria-hidden="true">
+      <div class="seal" data-seal>
+        <svg class="seal__svg" viewBox="0 0 600 600" fill="none">
+          <g class="seal__ghost" data-ghost>
+            <circle cx="300" cy="300" r="150" />
+            <circle cx="300" cy="300" r="255" />
+            <path d="M300 20V580M20 300H580" />
+          </g>
+          <rect class="seal__fill" data-fill x={SEAL.x} y={SEAL.y} width={SEAL.s} height={SEAL.s} />
+          <g class="seal__edges">
+            {SHIFT.edges.map((e) => <path class="edge" data-edge d={pathOf(e.open)} />)}
+          </g>
+          <g class="seal__nodes" data-nodes>
+            {SHIFT.nodes.map((p, i) => (i < 6 ? <rect class="nd nd--sq" x={p[0] - 5} y={p[1] - 5} width="10" height="10" /> : <circle class="nd" cx={p[0]} cy={p[1]} r="4.5" />))}
+          </g>
+          <circle class="nd nd--lime" data-core cx="300" cy="300" r="8" />
+          <rect class="seal__core" data-core-sq x="288" y="288" width="24" height="24" />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

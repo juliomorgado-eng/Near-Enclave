@@ -1,0 +1,84 @@
+---
+import Button from './Button.astro';
+import NearLogo from '../shared/NearLogo.astro';
+import { hero } from '../../content/copy';
+
+const words = (s: string) => s.split(' ');
+let w = 0; // running word index for stagger
+const lead = words(hero.h1Lead);
+const lines = hero.h1Lines.map(words);
+const ticker = [...hero.eyebrowParts, ...hero.eyebrowParts, ...hero.eyebrowParts];
+---
+<section class="hero on-dark" id="top" data-hero aria-labelledby="hero-title">
+  <div class="hero__bg" aria-hidden="true">
+    <canvas class="hero__canvas" data-hero-canvas></canvas>
+    <div class="hero__shade"></div>
+    <div class="grain"></div>
+  </div>
+
+  <div class="hero__inner wrap">
+    <p class="hero__eyebrow" data-hero-eyebrow>
+      <span class="sr-only">{hero.eyebrow}</span>
+      <span class="hero__eyebrow-vis" aria-hidden="true">
+        {hero.eyebrowParts.map((part, i) => (
+          <span class={`hero__chip ${i === 0 ? 'hero__chip--accent' : ''}`}><span data-scramble>{part}</span></span>
+        ))}
+      </span>
+    </p>
+
+    <h1 class="hero__title" id="hero-title" data-hero-title>
+      <span class="hero__lead">
+        {lead.map((word, i) => (
+          <>
+            <span class="word" style={`--w:${w++}`}>{word}</span>{i < lead.length - 1 ? ' ' : ''}
+          </>
+        ))}
+      </span>{' '}
+      {lines.map((line, li) => (
+        <>
+          <span class="hero__line">
+            {line.map((word, i) => (
+              <>
+                <span class="word" style={`--w:${w++}`}>{word}</span>{i < line.length - 1 ? ' ' : ''}
+              </>
+            ))}
+          </span>{li < lines.length - 1 ? ' ' : ''}
+        </>
+      ))}
+    </h1>
+    <span class="hero__rule grad-line" aria-hidden="true" data-hero-rule></span>
+
+    <div class="hero__bottom">
+      <p class="hero__sub" data-hero-fade>{hero.subhead}</p>
+      <div class="hero__ctas" data-hero-fade>
+        <Button label={hero.cta} request size="l" icon="arrow" />
+        <Button label="Explore the agenda" href="#agenda" variant="secondary" size="l" icon="down" />
+      </div>
+    </div>
+
+    <div class="hero__date" aria-hidden="true" data-hero-fade>
+      <div class="hero__date-cell">
+        <span class="hero__date-big">{hero.eyebrowParts[0]}</span>
+      </div>
+      <div class="hero__date-cell">
+        <span class="hero__date-big">{hero.eyebrowParts[1]}</span>
+      </div>
+      <div class="hero__date-cell hero__date-cell--host">
+        <span class="mono">{hero.eyebrowParts[2]}</span>
+        <NearLogo variant="mark" class="hero__date-mark" />
+      </div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__track">
+      {[0, 1].map(() => (
+        <div class="ticker__group">
+          {ticker.map((t) => (
+            <span class="ticker__item"><i class="ticker__dot"></i>{t}</span>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

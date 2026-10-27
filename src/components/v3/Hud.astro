@@ -1,0 +1,26 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { hero } from '../../content/copy';
+---
+<div class="hud-fade" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><span class="progress__bar" data-progress></span></div>
+<header class="hud" data-hud>
+  <a class="hud__brand" href="#top" data-cursor="TOP">
+    <NearLogo variant="mark" class="hud__mark" label="NEAR — back to top" />
+    <span class="hud__name" aria-hidden="true">ENCLAVE/27</span>
+  </a>
+  <p class="hud__sec" aria-hidden="true">
+    <span class="hud__label" data-hud-label>§01 ENCLAVE</span>
+    <span class="hud__dash">—</span>
+    <span class="hud__pct" data-hud-pct>000%</span>
+  </p>
+  <div class="hud__right">
+    <span class="hud__clock" aria-hidden="true" data-clock>NYC --:--:--</span>
+    <button class="hud__btn hud__btn--req" type="button" data-open-request data-cursor="REQUEST">
+      <span aria-hidden="true">[</span>{hero.cta}<span aria-hidden="true">]</span>
+    </button>
+    <button class="hud__btn hud__btn--menu" type="button" data-menu-open aria-expanded="false" aria-controls="v3-menu" data-cursor="OPEN">
+      <span class="hud__burger" aria-hidden="true"><i></i><i></i></span>Menu
+    </button>
+  </div>
+</header>

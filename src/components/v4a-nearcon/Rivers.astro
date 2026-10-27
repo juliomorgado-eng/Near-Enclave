@@ -1,0 +1,21 @@
+---
+// Three crawling rows of mono digits behind a section H2 (texture only).
+import { digitRows } from './art';
+interface Props { seed: number; class?: string }
+const { seed, class: cls = '' } = Astro.props;
+const rows = digitRows(seed, 3, 10);
+const speeds = [74, 52, 96];
+---
+<div class={`rv ${cls}`} aria-hidden="true" data-rivers>
+  {rows.map((row, i) => (
+    <div class="rv__row" style={`--dur:${speeds[i]}s;--dir:${i % 2 ? 'reverse' : 'normal'}`}>
+      <div class="rv__track">
+        {[0, 1].map(() => (
+          <span class="rv__run">
+            {row.map((g) => (<><span class={g.f ? 'f' : undefined}>{g.t}</span><span class="sep"> | </span></>))}
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>

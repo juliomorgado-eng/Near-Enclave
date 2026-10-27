@@ -1,0 +1,10 @@
+---
+// Static sealed invitation (no WebGL / reduced motion): frosted glass, official N mark, nothing printed.
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<div class={`seal ${cls}`} aria-hidden="true">
+  <span class="seal__inner"></span>
+  <span class="seal__frost"></span>
+  <img class="seal__mark" src="/v3d-near/near-icon.svg" alt="" width="73" height="73" />
+</div>

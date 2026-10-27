@@ -1,0 +1,29 @@
+---
+import { format, formatParagraph } from '../../content/copy';
+import { SKY } from '../../scripts/v4a-near/geo';
+---
+<section class="format" id="format" data-format>
+  <div class="wrap grid format__grid">
+    <div class="cell format__copy">
+      <h2 class="h2 format__h2" data-rise>{format.h2}</h2>
+      <p class="body format__p" data-rise>{formatParagraph}</p>
+    </div>
+    <div class="cell format__fig" aria-hidden="true">
+      <div class="sky" data-sky>
+        <svg class="sky__svg" viewBox="0 0 1000 560" fill="none" preserveAspectRatio="xMidYMax meet">
+          <rect class="sky__water" data-water x="0" y={SKY.H} width="1000" height={560 - SKY.H} />
+          <g class="sky__rows">
+            {SKY.rows.map((d) => <path class="sky__row" data-row d={d} />)}
+          </g>
+          <g class="sky__det">
+            {SKY.details.map((d) => <path class="sky-d" pathLength="1" data-sky-d d={d} />)}
+          </g>
+          <g class="sky__out">
+            {SKY.outlines.map((d) => <path class="sky-o" pathLength="1" data-sky-o d={d} />)}
+          </g>
+          <path class="sky__horizon" d={SKY.horizon} />
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>

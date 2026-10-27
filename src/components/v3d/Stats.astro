@@ -1,0 +1,45 @@
+---
+import { stats, closing } from '../../content/copy';
+import Card from './Card.astro';
+---
+<section id="stats" class="sec stats" data-chapter="stats" data-theme="ink" aria-label="Market signals">
+  <div class="stats__pin" data-stats-pin>
+    <div class="stats__grid">
+      <div class="reader" data-reader aria-hidden="true">
+        <div class="anchor anchor--stats" data-anchor="stats">
+          <Card side="front" class="fcard--portrait" />
+        </div>
+        <div class="reader__body">
+          <span class="reader__slot" data-slot></span>
+          <p class="reader__status mono"><span class="reader__led" data-led></span><span data-reader-status>Awaiting credential</span></p>
+          <p class="reader__count mono"><span data-reader-count>0</span>/{stats.length} records</p>
+        </div>
+      </div>
+      <div class="stats__data">
+        <ol class="stats__list">
+          {stats.map((s, i) => (
+            <li class="stat" data-stat>
+              <span class="stat__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <p class="stat__num">
+                <span class="sr-only">{s.value}</span>
+                <span class="stat__val" aria-hidden="true" data-stat-val data-final={s.value}>{s.value}</span>
+                <span class="stat__lock" aria-hidden="true"></span>
+              </p>
+              <div class="stat__meta">
+                <p class="stat__label">{s.label}</p>
+                <p class="stat__src mono">{s.source}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div class="stats__cta" data-stats-cta>
+          <button class="cta cta--lg" type="button" data-open-request data-card-hover>
+            <span class="cta__txt">{closing.cta}</span>
+            <span class="cta__arrow" aria-hidden="true">→</span>
+          </button>
+          <p class="stats__note">{closing.body}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

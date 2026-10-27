@@ -1,0 +1,19 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { hero, meta } from '../../content/copy';
+const host = meta.url.replace(/^https?:\/\//, '');
+---
+<footer class="footer theme-dark">
+  <div class="wrap">
+    <div class="footer__grad" aria-hidden="true"></div>
+    <div class="footer__big">
+      <NearLogo class="footer__logo" label="NEAR" />
+      <p class="mono">{hero.eyebrowParts[2]}</p>
+    </div>
+    <div class="footer__row mono">
+      <span>© 2027 NEAR Enclave</span>
+      <a href={meta.url}>{host}</a>
+      <a href="#top" data-anchor>Back to top ↑</a>
+    </div>
+  </div>
+</footer>

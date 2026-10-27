@@ -1,0 +1,12 @@
+---
+// Green / warm-black / light stripe columns used as a section separator (manual: stripe columns).
+interface Props { seed?: number }
+const { seed = 1 } = Astro.props;
+let s = seed * 9301 + 49297;
+const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+const tones = ['g', 'k', 'w', 'g', 'g', 'k'];
+const cols = Array.from({ length: 28 }, (_, i) => ({ t: tones[(i * 7 + seed) % tones.length], w: 1 + Math.round(rnd() * 5) }));
+---
+<div class="stripes" aria-hidden="true" data-stripes>
+  {cols.map((c) => <span class:list={['stripes__c', `stripes__c--${c.t}`]} style={`flex-grow:${c.w}`}></span>)}
+</div>

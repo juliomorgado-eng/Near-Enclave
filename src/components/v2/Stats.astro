@@ -1,0 +1,30 @@
+---
+import { stats } from '../../content/copy';
+const accents = ['var(--green)', 'var(--teal)', 'var(--purple)', 'var(--coral)'];
+---
+<section class="stats">
+  <div class="wrap">
+    <ul class="stats__grid">
+      {stats.map((s, i) => (
+        <li class="stat" style={`--theme-color:${accents[i % 4]}; --d:${i}`} data-reveal>
+          <span class="stat__bar" aria-hidden="true"></span>
+          <p class="stat__value">
+            <span class="sr-only">{s.value}</span>
+            <span
+              aria-hidden="true"
+              data-count
+              data-prefix={s.prefix}
+              data-number={s.number}
+              data-number-to={s.numberTo ?? ''}
+              data-decimals={s.decimals}
+              data-suffix={s.suffix}
+              data-final={s.value}
+            >{s.value}</span>
+          </p>
+          <p class="stat__label">{s.label}</p>
+          <p class="stat__source mono">{s.source}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

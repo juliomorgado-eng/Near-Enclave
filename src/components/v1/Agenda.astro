@@ -1,0 +1,32 @@
+---
+import Tab from './Tab.astro';
+import { agenda, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'agenda')?.label ?? '';
+const accents = ['var(--green)', 'var(--sky)', 'var(--coral)', 'var(--amber)'];
+const total = String(agenda.tracks.length).padStart(2, '0');
+---
+<section class="section agenda theme-light" id="agenda" aria-labelledby="agenda-title">
+  <div class="wrap">
+    <div class="agenda__head">
+      <div>
+        <Tab index="03" label={label} />
+      </div>
+      <p class="mono" aria-hidden="true" data-reveal>{`${total} Tracks / 01 Stage / 01 Day`}</p>
+    </div>
+    <h2 class="h2 agenda__title" id="agenda-title" data-split style="margin-top:28px">{agenda.h2}</h2>
+
+    <ol class="tracks" data-tracks>
+      {agenda.tracks.map((t, i) => (
+        <li class="track" style={`--accent:${accents[i % 4]};--i:${i}`} data-track>
+          <div class="track__top">
+            <span class="track__idx" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="track__tag mono" aria-hidden="true">{`Track ${String(i + 1).padStart(2, '0')} / ${total}`}</span>
+          </div>
+          <h3 class="track__h3">{t.h3}</h3>
+          <p class="track__body">{t.body}</p>
+          <span class="track__shade" aria-hidden="true" data-track-shade></span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

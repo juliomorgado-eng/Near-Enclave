@@ -1,0 +1,37 @@
+---
+// Static CSS keycard: shown when WebGL is unavailable or motion is reduced.
+import NearLogo from '../shared/NearLogo.astro';
+import { CARD } from '../../scripts/v3d/card-data';
+interface Props {
+  side?: 'front' | 'back';
+  class?: string;
+}
+const { side = 'front', class: cls = '' } = Astro.props;
+---
+<div class={`fcard fcard--${side} ${cls}`} aria-hidden="true">
+  {side === 'front' ? (
+    <>
+      <div class="fcard__row">
+        <NearLogo variant="wordmark" class="fcard__logo" label="NEAR" />
+        <span class="fcard__mono">{CARD.kind}</span>
+      </div>
+      <span class="fcard__chip" data-card-chip></span>
+      <div class="fcard__foot">
+        <span class="fcard__mono">{CARD.when}</span>
+        <span class="fcard__no">{CARD.no}</span>
+      </div>
+    </>
+  ) : (
+    <>
+      <div class="fcard__row">
+        <span class="fcard__mono">{CARD.backTitle}</span>
+        <NearLogo variant="mark" class="fcard__mark" label="NEAR" />
+      </div>
+      <dl class="fcard__dl">
+        {CARD.rows.map((r) => (
+          <div><dt>{r.k}</dt><dd class={r.redact ? 'is-redact' : ''}>{r.redact ? '' : r.v}</dd></div>
+        ))}
+      </dl>
+    </>
+  )}
+</div>

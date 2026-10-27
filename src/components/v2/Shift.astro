@@ -1,0 +1,27 @@
+---
+import Tab from './Tab.astro';
+import { shift, nav } from '../../content/copy';
+
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+// The key sentence is the short standalone claim; highlight it.
+const keyIndex = shift.body.findIndex((p) => /missing primitive/i.test(p));
+---
+<section class="section shift" id="shift" style="--theme-color: var(--green)" aria-labelledby="shift-title">
+  <div class="wrap shift__grid">
+    <div class="shift__head">
+      <Tab index="01" text={label} />
+      <h2 class="h2" id="shift-title" data-reveal>{shift.h2}</h2>
+    </div>
+    <div class="shift__body">
+      {shift.body.map((p, i) =>
+        i === keyIndex ? (
+          <p class="shift__key" data-reveal style={`--d:${i}`}>
+            <mark class="hl" data-highlight>{p}</mark>
+          </p>
+        ) : (
+          <p class="body-l" data-reveal style={`--d:${i}`}>{p}</p>
+        ),
+      )}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,24 @@
+---
+import Tab from './Tab.astro';
+import { audience, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'audience')?.label ?? '';
+---
+<section class="section audience theme-dark" id="audience" aria-labelledby="audience-title">
+  <div class="wrap">
+    <div class="audience__head">
+      <div>
+        <Tab index="04" label={label} />
+        <h2 class="h2 audience__title" id="audience-title" data-split>{audience.h2}</h2>
+      </div>
+      <p class="lede" data-reveal>{audience.body}</p>
+    </div>
+    <ol class="roster">
+      {audience.list.map((item, i) => (
+        <li class="roster__row" data-reveal>
+          <span class="roster__idx" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <span class="roster__text">{item}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

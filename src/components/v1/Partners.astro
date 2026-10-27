@@ -1,0 +1,49 @@
+---
+import Tab from './Tab.astro';
+import { partners, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'partners')?.label ?? '';
+const accents = ['var(--sky)', 'var(--coral)'];
+// Repeat logos so one "set" is always wider than the viewport.
+const fill = (logos: { name: string; logo: string }[]) => {
+  const reps = Math.max(2, Math.ceil(8 / logos.length));
+  return Array.from({ length: reps }, () => logos).flat();
+};
+---
+<section class="section partners theme-light" id="partners" aria-labelledby="partners-title">
+  <div class="wrap">
+    <div class="partners__head">
+      <div>
+        <Tab index="05" label={label} />
+        <h2 class="h2 partners__title" id="partners-title" data-split>{partners.h2}</h2>
+      </div>
+      <p class="lede" data-reveal>{partners.body}</p>
+    </div>
+
+    {partners.groups.map((g, gi) => (
+      <div class="pgroup" style={`--accent:${accents[gi % 2]}`} data-reveal>
+        <h3 class="pgroup__h3">{g.h3}</h3>
+        <ul class="sr-only">
+          {g.logos.map((l) => <li>{l.name}</li>)}
+        </ul>
+        <div class="marquee" data-dir={gi % 2 ? 'rev' : 'fwd'} style={`--dur:${gi % 2 ? 44 : 38}s`} aria-hidden="true">
+          <div class="marquee__track">
+            {[0, 1].map((copy) => (
+              <div class="marquee__set" aria-hidden={copy === 1 ? 'true' : undefined}>
+                {fill(g.logos).map((l) => (
+                  <span class="wordmark">
+                    {l.logo ? (
+                      <img class="wordmark__img" src={l.logo} alt="" loading="lazy" />
+                    ) : (
+                      <span class="wordmark__name">{l.name}</span>
+                    )}
+                    <span class="wordmark__sep"></span>
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

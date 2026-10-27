@@ -1,0 +1,30 @@
+---
+import { stats } from '../../content/copy';
+---
+<section class="sec stats" id="stats" data-theme="ink" data-hud="SIGNALS" data-chapter="stats">
+  <ol class="stats__list">
+    {stats.map((s, i) => (
+      <li class="stat wrap" data-stat>
+        <span class="stat__idx mono" aria-hidden="true">[{String(i + 1).padStart(2, '0')}]</span>
+        <p class="stat__num">
+          <span class="sr-only">{s.value}</span>
+          <span
+            class="stat__val"
+            aria-hidden="true"
+            data-stat-val
+            data-prefix={s.prefix}
+            data-number={s.number}
+            data-number-to={s.numberTo ?? ''}
+            data-decimals={s.decimals}
+            data-suffix={s.suffix}
+            data-final={s.value}
+          >{s.value}</span>
+        </p>
+        <div class="stat__meta">
+          <p class="stat__label">{s.label}</p>
+          <p class="stat__src mono">{s.source}</p>
+        </div>
+      </li>
+    ))}
+  </ol>
+</section>

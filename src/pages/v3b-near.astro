@@ -1,0 +1,70 @@
+---
+import '@fontsource-variable/inter-tight';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v3b-near.css';
+
+import { metaApply, shift, format } from '../content/copy';
+import Seo from '../components/shared/Seo.astro';
+import Hud from '../components/v3b-near/Hud.astro';
+import Hero from '../components/v3b-near/Hero.astro';
+import Sequence from '../components/v3b-near/Sequence.astro';
+import Stats from '../components/v3b-near/Stats.astro';
+import Footer from '../components/v3b-near/Footer.astro';
+import RequestModal from '../components/v3b-near/RequestModal.astro';
+import Icon from '../components/v3b-near/Icon.astro';
+import { ICONS } from '../scripts/v3b-near/icons';
+---
+<!doctype html>
+<html lang="en" class="v3bn">
+  <head>
+    <Seo themeColor="#1C1917" description={metaApply.description} />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v3bn-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v3bn-motion');
+        // Safety net: if the bundle never boots, reveal everything and drop the loader.
+        setTimeout(function () {
+          if (window.__v3bnready) return;
+          d.classList.remove('v3bn-motion');
+          d.classList.add('v3bn-failsafe');
+          var l = document.querySelector('[data-loader]');
+          if (l) l.remove();
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        if (!d.classList.contains('v3bn-motion')) return;
+        var repeat = false;
+        try { repeat = sessionStorage.getItem('v3bn-intro') === '1'; } catch (e) {}
+        d.classList.add(repeat ? 'v3bn-intro-short' : 'v3bn-intro-long');
+        var l = document.createElement('div');
+        l.className = 'ld';
+        l.setAttribute('data-loader', '');
+        l.setAttribute('aria-hidden', 'true');
+        l.innerHTML = '<div class="ld__center"><img class="ld__mark" data-ld-mark src="/v3b-near/near-icon.svg" alt="" width="73" height="73" /><span class="ld__rule" data-ld-rule></span></div>';
+        document.body.prepend(l);
+      })();
+    </script>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <div class="face" data-face aria-hidden="true">{ICONS.map((_, i) => <Icon i={i} class="face__ico" data-face-i={i} />)}</div>
+    <Hud />
+    <main id="main">
+      <Hero />
+      <Sequence id="shift" h2={shift.h2} body={shift.body} prim={2} fallbackIcon={2} />
+      <Stats />
+      <Sequence id="format" h2={format.h2} body={format.body} fallbackIcon={5} />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3b-near/main.ts';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+---
+import { agenda } from '../../content/copy';
+const short = ['MONEY', 'INSTITUTIONAL', 'CONFIDENTIAL', 'AGENTIC'];
+const accents = ['green', 'sky', 'coral', 'amber'];
+const imgs = ['B-15', 'B-85', 'B-94', 'B-52'];
+const alts = [
+  'A speaker addresses the audience under blue stage light.',
+  'Attendees walk down the stairs past a large NEARCON wall graphic.',
+  'Two attendees beneath a wall graphic that reads “Private. Intelligent. Yours.”',
+  'An attendee works on a laptop beside a giant robotic hand sculpture.',
+];
+const renderBody = (t: string) => {
+  const k = 'Bunker Mode';
+  const i = t.indexOf(k);
+  if (i < 0) return { a: t, chip: '', b: '' };
+  return { a: t.slice(0, i), chip: k, b: t.slice(i + k.length) };
+};
+---
+<section id="agenda" class="sec agenda" data-theme="cream" data-hud="AGENDA" data-chapter="agenda" aria-labelledby="agenda-title">
+  <div class="agenda__pin" data-agenda-pin>
+    <div class="agenda__top wrap">
+      <p class="eyebrow mono" aria-hidden="true"><span class="eyebrow__n">§05</span>4 TRACKS · 1 STAGE</p>
+      <h2 class="h2 agenda__h2" id="agenda-title" data-lines>{agenda.h2}</h2>
+      <div class="agenda__index mono" data-agenda-index>
+        {agenda.tracks.map((t, i) => (
+          <button type="button" class="agenda__ix" data-agenda-ix={i} aria-label={t.h3} data-cursor="JUMP">
+            <span aria-hidden="true">{String(i + 1).padStart(2, '0')} {short[i]}</span>
+          </button>
+        ))}
+        <span class="agenda__ul" data-agenda-ul aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="agenda__viewport">
+      <ol class="agenda__track" data-agenda-track>
+        {agenda.tracks.map((t, i) => {
+          const b = renderBody(t.body);
+          return (
+            <li class={`panel panel--${accents[i]}`} data-panel style={`--acc: var(--${accents[i]})`}>
+              <div class="panel__num" aria-hidden="true">
+                <span class="panel__num-o">{String(i + 1).padStart(2, '0')}</span>
+                <span class="panel__num-f" data-panel-fill>{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <div class="panel__text">
+                <h3 class="h3 panel__h3">{t.h3}</h3>
+                <p class="panel__p">
+                  {b.a}{b.chip && <mark class="chip mono">{b.chip}</mark>}{b.b}
+                </p>
+              </div>
+              <figure class="panel__fig">
+                <img src={`/assets/img/v3/nearcon-${imgs[i]}-900.webp`} alt={alts[i]} width="900" height="600" loading="lazy" decoding="async" />
+                <figcaption class="mono" aria-hidden="true">TRACK {String(i + 1).padStart(2, '0')} / 04</figcaption>
+              </figure>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+---
+import { nav, hero } from '../../content/copy';
+const imgs = ['B-80', 'B-85', 'B-15', 'C-105', 'B-94', 'C-106'];
+---
+<div class="menu" id="v3-menu" data-menu hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu__top">
+    <span class="mono menu__tag" aria-hidden="true">ENCLAVE/27 — INDEX</span>
+    <button class="mono menu__close" type="button" data-menu-close data-cursor="CLOSE">Close <span aria-hidden="true">×</span></button>
+  </div>
+  <nav class="menu__nav" aria-label="Sections">
+    <ol class="menu__list">
+      {nav.map((n, i) => (
+        <li class="menu__item">
+          <a class="menu__link" href={`#${n.id}`} data-menu-link data-img={`/assets/img/v3/nearcon-${imgs[i]}-900.webp`} data-cursor="GO">
+            <span class="menu__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="menu__label">{n.label}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+  <div class="menu__foot mono">
+    <span aria-hidden="true">40.7128° N&nbsp;&nbsp;74.0060° W</span>
+    <span aria-hidden="true" data-clock>NYC --:--:--</span>
+    <button class="menu__req" type="button" data-open-request data-menu-close-silent>{hero.cta} <span aria-hidden="true">→</span></button>
+  </div>
+  <img class="menu__img" data-menu-img alt="" aria-hidden="true" width="280" height="187" />
+</div>

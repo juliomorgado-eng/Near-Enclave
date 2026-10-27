@@ -1,0 +1,25 @@
+---
+import { shift, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+const [s1, s2, s3, s4] = shift.body;
+const cut = s3.lastIndexOf(' ');
+---
+<section id="shift" class="sec shift" data-theme="ink" data-hud={label.toUpperCase()} data-chapter="shift" aria-labelledby="shift-title">
+  <div class="shift__pin" data-shift-pin>
+    <div class="wrap shift__grid">
+      <p class="eyebrow mono shift__eyebrow"><span class="eyebrow__n" aria-hidden="true">§02</span>{label}</p>
+      <h2 class="h2 shift__h2" id="shift-title" data-decrypt-h2>{shift.h2}</h2>
+      <div class="slab-anchor slab-anchor--shift" data-slab-anchor aria-hidden="true"></div>
+      <ol class="shift__body lead" data-shift-body>
+        <li class="shift__s" data-shift-s><span class="shift__n mono" aria-hidden="true">01</span><span>{s1}</span></li>
+        <li class="shift__s" data-shift-s><span class="shift__n mono" aria-hidden="true">02</span><span>{s2}</span></li>
+        <li class="shift__s shift__s--prim" data-shift-prim>
+          <span class="shift__prim">{s3.slice(0, cut)} <span class="grad-text">{s3.slice(cut + 1)}</span></span>
+        </li>
+        <!-- inline copy of the key sentence (desktop pin only): stays in the list after its full-frame moment -->
+        <li class="shift__s shift__s--echo" data-shift-echo aria-hidden="true"><span class="shift__n mono" aria-hidden="true">03</span><span>{s3.slice(0, cut)} <span class="grad-text">{s3.slice(cut + 1)}</span></span></li>
+        <li class="shift__s" data-shift-s><span class="shift__n mono" aria-hidden="true">04</span><span>{s4}</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

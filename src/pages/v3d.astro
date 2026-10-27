@@ -1,0 +1,72 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v3d.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v3d/Header.astro';
+import Menu from '../components/v3d/Menu.astro';
+import Hero from '../components/v3d/Hero.astro';
+import Shift from '../components/v3d/Shift.astro';
+import Stats from '../components/v3d/Stats.astro';
+import Footer from '../components/v3d/Footer.astro';
+import RequestModal from '../components/v3d/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v3d">
+  <head>
+    <Seo themeColor="#f3eee4" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v3d-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v3d-motion');
+        // Safety net: if the bundle never boots, reveal everything and drop the loader.
+        setTimeout(function () {
+          if (window.__v3dready) return;
+          d.classList.remove('v3d-motion');
+          d.classList.add('v3d-failsafe');
+          var l = document.querySelector('[data-loader]');
+          if (l) l.remove();
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body data-theme="paper">
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        if (!d.classList.contains('v3d-motion')) return;
+        var repeat = false;
+        try { repeat = sessionStorage.getItem('v3d-intro') === '1'; } catch (e) {}
+        d.classList.add(repeat ? 'v3d-intro-short' : 'v3d-intro-long');
+        var l = document.createElement('div');
+        l.className = 'ld';
+        l.setAttribute('data-loader', '');
+        l.setAttribute('aria-hidden', 'true');
+        l.innerHTML =
+          '<div class="ld__card"><span class="ld__edge" data-ld-edge></span>' +
+          '<p class="ld__top"><span>ENCLAVE/27</span><span>INVITATION</span></p>' +
+          '<p class="ld__no">N&ordm; <span data-ld-no>0427&middot;0000</span></p></div>' +
+          '<p class="ld__status" data-ld-status>Verifying invitation</p>';
+        document.body.prepend(l);
+      })();
+    </script>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <canvas class="gl gl--fg" data-gl-fg aria-hidden="true"></canvas>
+    <Header />
+    <Menu />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3d/main.ts';
+    </script>
+  </body>
+</html>

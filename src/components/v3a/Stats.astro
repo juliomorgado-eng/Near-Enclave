@@ -1,0 +1,39 @@
+---
+import { stats } from '../../content/copy';
+---
+<section id="stats" class="stats" aria-labelledby="stats-title">
+  <div class="wrap">
+    <div class="stats__head">
+      <p class="tab mono"><span class="tab__n" aria-hidden="true">02</span>Signals</p>
+      <h2 class="sr-only" id="stats-title">Market context</h2>
+      <p class="mono stats__note" aria-hidden="true">Read through the slit</p>
+    </div>
+    <ol class="stats__list" data-stats-list>
+      {stats.map((s, i) => (
+        <li class="stat" data-stat>
+          <span class="stat__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="stat__main">
+            <p class="stat__num">
+              <span class="sr-only">{s.value}</span>
+              <span
+                class="stat__val"
+                aria-hidden="true"
+                data-stat-val
+                data-prefix={s.prefix}
+                data-number={s.number}
+                data-number-to={s.numberTo ?? ''}
+                data-decimals={s.decimals}
+                data-suffix={s.suffix}
+                data-final={s.value}
+              >{s.value}</span>
+            </p>
+          </div>
+          <div class="stat__meta">
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src mono">{s.source}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

@@ -1,0 +1,39 @@
+---
+import { heroApply } from '../../content/copy';
+import Seal from './Seal.astro';
+---
+<section id="top" class="sec hero" aria-labelledby="hero-title">
+  <div class="hero__grid wrap">
+    <div class="hero__copy">
+      <p class="hero__eyebrow label" data-hero-fade>
+        <span class="kicker" aria-hidden="true"></span>
+        {heroApply.eyebrowParts.map((p, i) => (
+          <>
+            {i > 0 && <span class="hero__sep" aria-hidden="true">·</span>}
+            <span>{p}</span>
+          </>
+        ))}
+      </p>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__lead"><span data-hero-line>{heroApply.h1Lead}</span></span>
+        {' '}
+        <span class="hero__ln"><span data-hero-line>{heroApply.h1Lines[0]}</span></span>
+        {' '}
+        <span class="hero__ln hero__ln--b"><span data-hero-line>{heroApply.h1Lines[1]}</span></span>
+      </h1>
+      <p class="hero__sub" data-hero-fade>{heroApply.subhead}</p>
+      <div class="hero__cta" data-hero-fade>
+        <button class="cta cta--lg" type="button" data-open-request data-card-hover>
+          <span class="cta__txt">{heroApply.cta}</span>
+          <span class="cta__arrow" aria-hidden="true">→</span>
+        </button>
+        <span class="hatch" aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="hero__side">
+      <div class="anchor anchor--hero" data-anchor="hero" data-open-request data-card-hover aria-hidden="true">
+        <Seal />
+      </div>
+    </div>
+  </div>
+</section>

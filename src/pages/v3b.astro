@@ -1,0 +1,68 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v3b.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Hud from '../components/v3b/Hud.astro';
+import Menu from '../components/v3b/Menu.astro';
+import Hero from '../components/v3b/Hero.astro';
+import Shift from '../components/v3b/Shift.astro';
+import Stats from '../components/v3b/Stats.astro';
+import Footer from '../components/v3b/Footer.astro';
+import RequestModal from '../components/v3b/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v3b">
+  <head>
+    <Seo themeColor="#000000" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v3b-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v3b-motion');
+        // Safety net: if the bundle never boots, reveal everything and drop the loader.
+        setTimeout(function () {
+          if (window.__v3bready) return;
+          d.classList.remove('v3b-motion');
+          d.classList.add('v3b-failsafe');
+          var l = document.querySelector('[data-loader]');
+          if (l) l.remove();
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        if (!d.classList.contains('v3b-motion')) return;
+        var repeat = false;
+        try { repeat = sessionStorage.getItem('v3b-intro') === '1'; } catch (e) {}
+        d.classList.add(repeat ? 'v3b-intro-short' : 'v3b-intro-long');
+        var l = document.createElement('div');
+        l.className = 'ld';
+        l.setAttribute('data-loader', '');
+        l.setAttribute('aria-hidden', 'true');
+        l.innerHTML = '<div class="ld__center"><p class="ld__cipher" data-ld-cipher>NEAR ENCLAVE 2027</p><span class="ld__rule" data-ld-rule></span></div>';
+        document.body.prepend(l);
+      })();
+    </script>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <div class="vignette" aria-hidden="true"></div>
+    <Hud />
+    <Menu />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3b/main.ts';
+    </script>
+  </body>
+</html>

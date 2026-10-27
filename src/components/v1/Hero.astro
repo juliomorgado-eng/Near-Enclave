@@ -1,0 +1,45 @@
+---
+import Cta from './Cta.astro';
+import { hero } from '../../content/copy';
+---
+<section class="hero theme-dark" id="top" aria-labelledby="hero-title">
+  <div class="wrap hero__wrap">
+    <div class="hero__top">
+      <p class="hero__eyebrow" data-hero-fade>
+        <span class="sr-only">{hero.eyebrow}</span>
+        {hero.eyebrowParts.map((part, i) => (
+          <span class="hero__eyebrow-part" aria-hidden="true">
+            {i === 0 && <span class="hero__dot" />}
+            {part}
+          </span>
+        ))}
+      </p>
+      <p class="hero__coords mono" aria-hidden="true" data-hero-fade>40.7128° N<br />74.0060° W</p>
+    </div>
+
+    <h1 class="hero__title" id="hero-title">
+      <span class="sr-only">{hero.h1}</span>
+      <span class="hero__lead" aria-hidden="true" data-hero-lead>{hero.h1Lead}</span>
+      {hero.h1Lines.map((line, i) => (
+        <span class={`hero__line hero__line--${i + 1}`} aria-hidden="true" data-hero-line>{line}</span>
+      ))}
+    </h1>
+
+    <div class="hero__aperture" aria-hidden="true" data-aperture>
+      <div class="aperture__rule"></div>
+      <div class="aperture__window" data-aperture-window>
+        <canvas data-field></canvas>
+      </div>
+      <span class="aperture__readout aperture__readout--l">Aperture <span data-aperture-val>000</span>%</span>
+      <span class="aperture__readout aperture__readout--r">Enclave / Open</span>
+    </div>
+
+    <div class="hero__foot">
+      <p class="hero__sub" data-hero-fade>{hero.subhead}</p>
+      <div class="hero__actions" data-hero-fade>
+        <Cta label={hero.cta} />
+        <span class="hero__cue" aria-hidden="true"><span class="hero__cue-line"></span>Scroll</span>
+      </div>
+    </div>
+  </div>
+</section>

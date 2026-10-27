@@ -1,0 +1,35 @@
+---
+import { nav, hero } from '../../content/copy';
+const shiftLabel = nav.find((n) => n.id === 'shift')?.label ?? 'The Shift';
+// This exploration only ships sections 1–3; the menu lists what exists on the page.
+const links = [
+  { id: 'top', label: 'Enclave' },
+  { id: 'shift', label: shiftLabel },
+  { id: 'stats', label: 'Signals' },
+];
+---
+<div class="menu" id="v3c-menu" data-menu hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="menu__top">
+    <span class="mono menu__tag" aria-hidden="true">Enclave/27 — Index</span>
+    <button class="mono menu__close" type="button" data-menu-close>Close <span aria-hidden="true">×</span></button>
+  </div>
+  <nav class="menu__nav" aria-label="Sections">
+    <ol class="menu__list">
+      {links.map((n, i) => (
+        <li class="menu__item">
+          <a class="menu__link" href={`#${n.id}`} data-menu-link>
+            <span class="menu__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="menu__label">{n.label}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+  <div class="menu__foot">
+    <a class="mono menu__back" href="/">← All versions</a>
+    <button class="btn" type="button" data-open-request data-menu-close-silent>
+      <span class="btn__txt">{hero.cta}</span>
+      <span class="btn__arrow" aria-hidden="true">→</span>
+    </button>
+  </div>
+</div>

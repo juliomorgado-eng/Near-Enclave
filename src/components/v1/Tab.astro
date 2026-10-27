@@ -1,0 +1,9 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  tag?: 'p' | 'span';
+}
+const { index, label } = Astro.props;
+---
+<p class="tab" data-reveal><span class="tab__idx" aria-hidden="true">{index}</span><span>{label}</span></p>

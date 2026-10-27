@@ -1,0 +1,29 @@
+---
+import { nav, hero } from '../../content/copy';
+// Only The Shift lives on this exploration; the rest of the index points at the full v3 page.
+const local = new Set(['shift']);
+---
+<div class="mn" id="v3d-menu" data-menu hidden role="dialog" aria-modal="true" aria-label="Menu">
+  <div class="mn__top">
+    <span class="mono mn__tag" aria-hidden="true">Enclave 2027 — Index</span>
+    <button class="mn__close mono" type="button" data-menu-close>Close <span aria-hidden="true">×</span></button>
+  </div>
+  <nav class="mn__nav" aria-label="Sections">
+    <ol class="mn__list">
+      {nav.map((n, i) => (
+        <li class="mn__item">
+          <a class="mn__link" href={local.has(n.id) ? `#${n.id}` : `/v3#${n.id}`} data-menu-link>
+            <span class="mn__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span class="mn__label">{n.label}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+  <div class="mn__foot">
+    <span class="mono" aria-hidden="true">{hero.eyebrow}</span>
+    <button class="cta" type="button" data-open-request data-menu-close-silent>
+      <span class="cta__txt">{hero.cta}</span><span class="cta__arrow" aria-hidden="true">→</span>
+    </button>
+  </div>
+</div>

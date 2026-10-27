@@ -1,0 +1,31 @@
+---
+import { stats } from '../../content/copy';
+import Icon from './Icon.astro';
+---
+<section class="sec stats" id="stats" data-chapter="stats">
+  <div class="wrap stats__grid">
+    <div class="stats__side" aria-hidden="true">
+      <div class="stats__sticky">
+        <div class="enclave enclave--stats">
+          <div class="enclave__box slab-anchor" data-slab-anchor>
+            <div class="enclave__css"><Icon i={4} class="enclave__ico" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ul class="stats__list">
+      {stats.map((s) => (
+        <li class="stat" data-stat>
+          <p class="stat__num">
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__val" aria-hidden="true" data-stat-val>{s.value}</span>
+          </p>
+          <div class="stat__meta">
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src label">{s.source}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

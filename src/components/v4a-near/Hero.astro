@@ -1,0 +1,57 @@
+---
+import { heroApply } from '../../content/copy';
+import { HERO } from '../../scripts/v4a-near/geo';
+const h = HERO;
+---
+<section class="hero" id="top" data-hero>
+  <div class="wrap grid hero__grid">
+    <div class="cell hero__copy">
+      <p class="label hero__eyebrow" data-hero-in>{heroApply.eyebrow}</p>
+      <h1 class="hero__h1" data-hero-h1>
+        <span class="hero__l">{heroApply.h1Lead}</span>{' '}
+        {heroApply.h1Lines.map((l, i) => (
+          <>
+            <span class="hero__l hero__l--b">{l}</span>
+            {i < heroApply.h1Lines.length - 1 ? ' ' : ''}
+          </>
+        ))}
+      </h1>
+      <p class="hero__sub" data-hero-in>{heroApply.subhead}</p>
+      <div class="hero__act" data-hero-in>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{heroApply.cta}</span><span class="cta__arrow" aria-hidden="true">→</span>
+        </button>
+        <span class="hatch hero__hatch" data-hatch aria-hidden="true"></span>
+      </div>
+    </div>
+    <div class="cell hero__fig" aria-hidden="true">
+      <div class="dia" data-dia>
+        <svg class="dia__svg" viewBox="0 0 600 600" fill="none">
+          <g class="dia__thin">
+            <path class="dw--dash" d={h.cross} />
+            <path class="dw dw--ticks" pathLength="1" d={h.ticks} />
+            <circle class="dw" pathLength="1" cx="300" cy="300" r={h.inner} />
+            <circle class="dw" pathLength="1" cx="300" cy="300" r={h.mid} />
+            <circle class="dw--dash" cx="300" cy="300" r={h.outer} />
+          </g>
+          <g class="dia__net">
+            <path class="dw" pathLength="1" d={h.spokes} />
+            <path class="dw" pathLength="1" d={h.links} />
+            <path class="dw" pathLength="1" d={h.chords} />
+            <path class="dw dw--stray" pathLength="1" d={h.strays} />
+          </g>
+          <g class="dia__nodes">
+            {h.n1.map((p) => <rect class="nd nd--sq" x={p[0] - 5} y={p[1] - 5} width="10" height="10" />)}
+            {h.n2.map((p, i) => i !== 1 && <circle class="nd" cx={p[0]} cy={p[1]} r="4.5" />)}
+          </g>
+          <g class="dia__tag" data-tag>
+            <path class="dw" pathLength="1" d={h.tagLeader} />
+            <circle class="nd nd--lime" cx={h.tagNode[0]} cy={h.tagNode[1]} r="7" />
+            <rect class="tag" x={h.tagRect.x} y={h.tagRect.y} width={h.tagRect.w} height={h.tagRect.h} />
+          </g>
+        </svg>
+        <canvas class="dia__gl" data-wire></canvas>
+      </div>
+    </div>
+  </div>
+</section>

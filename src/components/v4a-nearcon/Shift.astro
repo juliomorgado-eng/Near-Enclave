@@ -1,0 +1,19 @@
+---
+import { shift, shiftParagraph } from '../../content/copy';
+import Orb from './Orb.astro';
+import Rivers from './Rivers.astro';
+---
+<section class="shift" id="shift" data-shift>
+  <div class="head">
+    <Rivers seed={2027} class="head__rv" />
+    <h2 class="head__h2" data-h2><span class="plate">{shift.h2}</span></h2>
+  </div>
+  <div class="shift__grid">
+    <div class="shift__orb" data-morph>
+      <Orb kind="morph" uid="sm" />
+    </div>
+    <div class="shift__copy">
+      <p class="shift__p" data-rise>{shiftParagraph}</p>
+    </div>
+  </div>
+</section>

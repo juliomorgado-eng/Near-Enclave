@@ -1,0 +1,71 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v3c.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v3c/Header.astro';
+import Menu from '../components/v3c/Menu.astro';
+import Hero from '../components/v3c/Hero.astro';
+import Shift from '../components/v3c/Shift.astro';
+import Stats from '../components/v3c/Stats.astro';
+import Footer from '../components/v3c/Footer.astro';
+import RequestModal from '../components/v3c/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v3c">
+  <head>
+    <Seo themeColor="#000000" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v3c-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v3c-motion');
+        // Safety net: if the bundle never boots, reveal everything and drop the loader.
+        setTimeout(function () {
+          if (window.__v3cready) return;
+          d.classList.remove('v3c-motion');
+          d.classList.add('v3c-failsafe');
+          var l = document.querySelector('[data-loader]');
+          if (l) l.remove();
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <script is:inline>
+      (function () {
+        // Preloader only with JS + motion. Two panels part along the primitive line.
+        var d = document.documentElement;
+        if (!d.classList.contains('v3c-motion')) return;
+        var repeat = false;
+        try { repeat = sessionStorage.getItem('v3c-intro') === '1'; } catch (e) {}
+        d.classList.add(repeat ? 'v3c-intro-short' : 'v3c-intro-long');
+        var l = document.createElement('div');
+        l.className = 'ld';
+        l.setAttribute('data-loader', '');
+        l.setAttribute('aria-hidden', 'true');
+        l.innerHTML =
+          '<div class="ld__p ld__p--a" data-ld-a><span class="ld__t" data-ld-t>Public</span></div>' +
+          '<div class="ld__p ld__p--b" data-ld-b><span class="ld__t" data-ld-t>Sealed</span></div>' +
+          '<span class="ld__line" data-ld-line></span>';
+        document.body.prepend(l);
+      })();
+    </script>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <Header />
+    <Menu />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3c/main.ts';
+    </script>
+  </body>
+</html>

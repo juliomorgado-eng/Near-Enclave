@@ -1,0 +1,19 @@
+---
+import { format, formatParagraph } from '../../content/copy';
+import Seal from './Seal.astro';
+---
+<section id="format" class="sec format" aria-labelledby="format-title">
+  <div class="format__grid wrap">
+    <div class="format__text">
+      <h2 class="h2 format__h2" id="format-title" data-lines>{format.h2}</h2>
+      <p class="format__body">{formatParagraph}</p>
+    </div>
+    <div class="format__side">
+      <div class="stage" aria-hidden="true">
+        <div class="anchor anchor--format" data-anchor="format"><Seal /></div>
+        <span class="stage__line"></span>
+        <span class="stage__hatch"></span>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,19 @@
+---
+import { shift } from '../../content/copy';
+import Seal from './Seal.astro';
+---
+<section id="shift" class="sec shift" aria-labelledby="shift-title">
+  <div class="shift__pin">
+    <div class="shift__text">
+      <h2 class="h2 shift__h2" id="shift-title" data-lines>{shift.h2}</h2>
+      <p class="shift__p">
+        {shift.body.map((s, i) => (
+          <>{i > 0 && ' '}<span class="shift__s" data-shift-s>{s}</span></>
+        ))}
+      </p>
+    </div>
+    <div class="shift__stage">
+      <div class="anchor anchor--shift" data-anchor="shift" aria-hidden="true"><Seal /></div>
+    </div>
+  </div>
+</section>

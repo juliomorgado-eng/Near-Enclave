@@ -1,0 +1,46 @@
+---
+import Tab from './Tab.astro';
+import { format, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'format')?.label ?? '';
+// Decorative detail chips derived from the body copy (hidden from AT).
+const chips = ['One stage', '301 / 401 level', 'Speaker dinner', 'Recorded on site'];
+---
+<section class="section format" id="format" style="--theme-color: var(--teal)" aria-labelledby="format-title">
+  <div class="wrap format__grid">
+    <div class="format__media">
+      <figure class="frame frame--main" data-parallax-frame data-reveal>
+        <img
+          src="/assets/img/nearcon-B-80.jpg"
+          alt="A speaker on the main stage at NEARCON"
+          width="2000"
+          height="1333"
+          loading="lazy"
+          decoding="async"
+          data-parallax
+        />
+      </figure>
+      <figure class="frame frame--inset" data-reveal style="--d:2">
+        <img
+          src="/assets/img/nearcon-C-105.jpg"
+          alt="Attendee badges laid out at NEARCON registration"
+          width="2000"
+          height="1333"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+    <div class="format__text">
+      <Tab index="02" text={label} />
+      <h2 class="h2" id="format-title" data-reveal>{format.h2}</h2>
+      <ul class="chips" aria-hidden="true" data-reveal>
+        {chips.map((c) => <li class="chip mono">{c}</li>)}
+      </ul>
+      <div class="format__body">
+        {format.body.map((p, i) => (
+          <p class={i === 0 ? 'body-l' : 'body-m'} data-reveal style={`--d:${i}`}>{p}</p>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

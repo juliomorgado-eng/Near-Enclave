@@ -1,0 +1,22 @@
+---
+import { shift } from '../../content/copy';
+import Rivers from './Rivers.astro';
+// h2 words that carry a gradient: "onchain," (green→sky) and "public." (coral→amber)
+const words = shift.h2.split(' ');
+const grad = (w: string) => (w.startsWith('onchain') ? 'gw gw--gs' : w.startsWith('public') ? 'gw gw--ca' : '');
+---
+<section id="shift" class="sec shift" aria-labelledby="shift-title">
+  <div class="shift__head">
+    <Rivers seed={3} size="lg" class="shift__rivers" />
+    <h2 class="h2 shift__h2" id="shift-title" data-reveal-h2>
+      <span class="plate plate--h2">{words.map((w, i) => (
+        <Fragment><span class={grad(w) || undefined}>{w}</span>{i < words.length - 1 ? ' ' : ''}</Fragment>
+      ))}</span>
+    </h2>
+  </div>
+  <div class="shift__body">
+    <p class="shift__p" data-scramble-p>{shift.body.map((s, i) => (
+      <Fragment><span class="shift__s" data-scramble>{s}</span>{i < shift.body.length - 1 ? ' ' : ''}</Fragment>
+    ))}</p>
+  </div>
+</section>

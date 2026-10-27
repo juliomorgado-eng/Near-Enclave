@@ -1,0 +1,33 @@
+---
+import Tab from './Tab.astro';
+import { faq, nav, contact } from '../../content/copy';
+const label = nav.find((n) => n.id === 'faq')?.label ?? '';
+---
+<section class="section faq theme-light" id="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div>
+      <Tab index="07" label={label} />
+      <h2 class="h2 faq__title" id="faq-title" data-split>{faq.h2}</h2>
+    </div>
+    <div class="faq__list">
+      {faq.items.map((item, i) => (
+        <details class="qa" data-qa>
+          <summary>
+            <span class="mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            <span>{item.q}</span>
+            <span class="qa__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__panel" data-qa-panel>
+            <p class="qa__a">
+              {item.contact ? (
+                <>Press: <a href={`mailto:${contact.press}`}>{contact.press}</a> · Sponsorship: <a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></>
+              ) : (
+                item.a
+              )}
+            </p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

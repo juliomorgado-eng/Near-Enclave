@@ -1,0 +1,32 @@
+---
+import { faq, nav, contact } from '../../content/copy';
+const label = nav.find((n) => n.id === 'faq')?.label ?? '';
+---
+<section id="faq" class="sec faq" data-theme="cream" data-hud={label.toUpperCase()} data-chapter="faq" aria-labelledby="faq-title">
+  <div class="wrap faq__grid">
+    <div class="faq__head">
+      <p class="eyebrow mono"><span class="eyebrow__n" aria-hidden="true">§10</span><span aria-hidden="true">Clearance</span></p>
+      <h2 class="h2 faq__h2" id="faq-title" data-lines>{faq.h2}</h2>
+    </div>
+    <div class="faq__list">
+      {faq.items.map((item, i) => (
+        <details class="qa" data-qa>
+          <summary class="qa__q" data-cursor="OPEN">
+            <span class="qa__idx mono" aria-hidden="true">Q.{String(i + 1).padStart(2, '0')}</span>
+            <span class="qa__qt">{item.q}</span>
+            <span class="qa__icon" aria-hidden="true"></span>
+          </summary>
+          <div class="qa__panel" data-qa-panel>
+            {item.contact ? (
+              <p class="qa__a qa__a--contact">
+                Press: <a class="ulink mono" href={`mailto:${contact.press}`}>{contact.press}</a> · Sponsorship: <a class="ulink mono" href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a>
+              </p>
+            ) : (
+              <p class="qa__a" data-qa-text>{item.a}</p>
+            )}
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

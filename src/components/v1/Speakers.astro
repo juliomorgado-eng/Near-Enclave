@@ -1,0 +1,33 @@
+---
+import Tab from './Tab.astro';
+import { speakers } from '../../content/copy';
+const cards = Array.from({ length: 4 }, (_, i) => i);
+const widths = [72, 58, 84, 64, 76, 52, 68, 80];
+---
+<section class="section speakers theme-dark" id="speakers" aria-labelledby="speakers-title">
+  <div class="wrap">
+    <div class="speakers__head">
+      <div>
+        <Tab index="06" label="[Redacted]" />
+        <h2 class="h2 speakers__title" id="speakers-title" data-split>{speakers.h2}</h2>
+      </div>
+      <p class="lede" data-reveal>{speakers.body}</p>
+    </div>
+    <div class="redacted-grid" aria-hidden="true">
+      {cards.map((i) => (
+        <div class="rcard" data-rcard>
+          <div class="rcard__portrait">
+            <span class="rcard__glow"></span>
+            <span class="rcard__stamp">[REDACTED]</span>
+            <span class="rcard__bar-eyes" data-bar></span>
+          </div>
+          <div class="rcard__lines">
+            <span class="rcard__bar" style={`width:${widths[i]}%`} data-bar></span>
+            <span class="rcard__bar rcard__bar--short" data-bar></span>
+          </div>
+          <div class="rcard__meta mono"><span>{`ID-${String(i + 1).padStart(3, '0')}`}</span><span>TBA</span></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { heroApply } from '../../content/copy';
+---
+<header class="hd" data-hd>
+  <a class="hd__brand" href="#top" aria-label="NEAR Enclave 2027, back to top">
+    <NearLogo variant="wordmark" class="hd__logo" label="NEAR" />
+  </a>
+  <button class="cta cta--sm" type="button" data-open-request data-card-hover>
+    <span class="cta__txt">{heroApply.cta}</span>
+    <span class="cta__arrow" aria-hidden="true">→</span>
+  </button>
+</header>

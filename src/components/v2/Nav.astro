@@ -1,0 +1,41 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import Button from './Button.astro';
+import { nav, hero } from '../../content/copy';
+---
+<header class="nav" data-nav data-tone="dark">
+  <div class="nav__bar wrap">
+    <a class="nav__logo" href="#top" aria-label="NEAR Enclave 2027, back to top">
+      <NearLogo class="nav__mark" label="NEAR" />
+      <span class="nav__divider" aria-hidden="true"></span>
+      <span class="nav__event" aria-hidden="true">Enclave</span>
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <ul>
+        {nav.map((item) => (
+          <li><a href={`#${item.id}`} data-nav-link>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="nav__actions">
+      <Button label={hero.cta} request class="nav__cta" />
+      <button class="nav__menu" type="button" aria-expanded="false" aria-controls="v2-menu" data-menu-toggle>
+        <span class="sr-only">Menu</span>
+        <span class="nav__burger" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav__panel" id="v2-menu" data-menu hidden>
+    <ul class="wrap">
+      {nav.map((item, i) => (
+        <li>
+          <a href={`#${item.id}`} data-nav-link>
+            <span class="mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+            {item.label}
+          </a>
+        </li>
+      ))}
+      <li class="nav__panel-cta"><Button label={hero.cta} request size="l" /></li>
+    </ul>
+  </div>
+</header>

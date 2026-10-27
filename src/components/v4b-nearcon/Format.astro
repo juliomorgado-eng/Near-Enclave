@@ -1,0 +1,19 @@
+---
+import { format, formatParagraph } from '../../content/copy';
+// h2: last word "capital." carries the coral→amber gradient
+const words = format.h2.split(' ');
+const last = words.pop();
+---
+<section id="format" class="sec format" aria-labelledby="format-title" data-format>
+  <div class="format__stage">
+    <div class="af af--sky" aria-hidden="true">
+      <pre class="af__pre" data-ascii-sky></pre>
+      <span class="af__scan"></span>
+    </div>
+    <span class="brk" aria-hidden="true"></span>
+    <h2 class="h2 format__h2" id="format-title" data-reveal-h2>
+      <span class="plate plate--h2">{words.join(' ')} <span class="gw gw--ca">{last}</span></span>
+    </h2>
+  </div>
+  <p class="format__p" data-fade>{formatParagraph}</p>
+</section>

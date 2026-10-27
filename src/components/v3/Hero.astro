@@ -1,0 +1,47 @@
+---
+import { hero } from '../../content/copy';
+// Static ASCII field for the no-WebGL fallback (deterministic, decorative).
+const G = '01$#/\\+×N≡◇·';
+let seed = 7;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const rows = Array.from({ length: 34 }, () =>
+  Array.from({ length: 140 }, () => (rnd() > 0.55 ? G[(rnd() * G.length) | 0] : ' ')).join(''),
+).join('\n');
+---
+<section id="top" class="sec hero" data-theme="ink" data-hud="ENCLAVE" data-chapter="hero" aria-labelledby="hero-title">
+  <div class="hero__fallback" aria-hidden="true">
+    <pre class="hero__ascii">{rows}</pre>
+    <div class="hero__css-slab"></div>
+  </div>
+  <div class="slab-anchor slab-anchor--hero" data-slab-anchor aria-hidden="true"></div>
+  <div class="hero__inner wrap">
+    <p class="hero__eyebrow mono" data-hero-fade>
+      {hero.eyebrowParts.map((p, i) => (
+        <>
+          {i > 0 && <span class="hero__eyerule" aria-hidden="true"></span>}
+          <span>{p}</span>
+        </>
+      ))}
+    </p>
+    <h1 class="hero__title" id="hero-title">
+      <span class="hero__kicker" data-hero-kicker>{hero.h1Lead}</span>
+      {' '}
+      <span class="hero__line"><span class="hero__li" data-hero-line>{hero.h1Lines[0]}</span></span>
+      {' '}
+      <span class="hero__line hero__line--indent"><span class="hero__li" data-hero-line data-hover-scramble>{hero.h1Lines[1]}</span></span>
+    </h1>
+    <div class="hero__foot">
+      <p class="hero__meta mono" aria-hidden="true" data-hero-fade>
+        <span class="hero__scroll"><i></i></span>Scroll to decrypt
+      </p>
+      <p class="hero__sub lead" data-hero-fade>{hero.subhead}</p>
+      <div class="hero__cta" data-hero-cta>
+        <button class="btn btn--pill" type="button" data-open-request data-magnetic data-cursor="REQUEST">
+          <span class="btn__fill" aria-hidden="true"></span>
+          <span class="btn__txt">{hero.cta}</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

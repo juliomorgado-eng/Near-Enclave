@@ -1,0 +1,28 @@
+---
+import { shift, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+---
+<section id="shift" class="sec shift" data-chapter="shift" aria-labelledby="shift-title">
+  <div class="shift__pin" data-shift-pin>
+    <div class="shift__inner wrap">
+      <div class="shift__head">
+        <p class="eyebrow mono" data-clear><span class="eyebrow__n" aria-hidden="true">02</span>{label}</p>
+        <h2 class="shift__h2" id="shift-title" data-clear data-lines>{shift.h2}</h2>
+      </div>
+      <div class="shift__stage" data-shift-stage data-clear>
+        <ol class="shift__list">
+          {shift.body.map((s, i) => (
+            <li class:list={['shift__s', i === 2 && 'shift__s--prim']} data-shift-s>
+              <span class="shift__n mono" aria-hidden="true">{String(i + 1).padStart(2, '0')} / {String(shift.body.length).padStart(2, '0')}</span>
+              <span class="shift__t">{s}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+    <p class="shift__meter mono" data-shift-meter aria-hidden="true">
+      <span class="shift__mp"><b data-meter-pub>88</b>% public</span>
+      <span class="shift__ms"><b data-meter-seal>12</b>% sealed</span>
+    </p>
+  </div>
+</section>

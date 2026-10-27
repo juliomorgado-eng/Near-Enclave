@@ -1,0 +1,46 @@
+---
+import { stats } from '../../content/copy';
+// Deterministic pixel-bar heights per cell (stage graphics). Decorative only.
+let seed = 29;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const ACC = ['g', 's', 'c', 'a'];
+const bars = stats.map((_, i) =>
+  Array.from({ length: 14 }, (_, k) => {
+    const rise = 0.25 + (k / 13) * 0.6;
+    return Math.round(Math.max(0.125, Math.min(1, rise + (rnd() - 0.5) * 0.45)) * 8) / 8;
+  }),
+);
+---
+<section class="sec stats" aria-label="Stats" data-stats>
+  <ul class="stats__grid">
+    {stats.map((s, i) => (
+      <li class={`stat stat--${ACC[i]}`} data-stat>
+        <span class="brk" aria-hidden="true"></span>
+        <div class="stat__bars" aria-hidden="true">
+          {bars[i].map((h, k) => (
+            <span class={`px ${k === 13 ? 'px--grad' : ''}`} style={`--h:${h.toFixed(2)}`}></span>
+          ))}
+        </div>
+        <p class="stat__value">
+          <span class="sr-only">{s.value}</span>
+          <span
+            class="stat__num"
+            aria-hidden="true"
+            data-stat-val
+            data-prefix={s.prefix}
+            data-number={s.number}
+            data-number-to={s.numberTo ?? ''}
+            data-decimals={s.decimals}
+            data-suffix={s.suffix}
+            data-final={s.value}
+          >{s.value}</span>
+        </p>
+        <p class="stat__label">{s.label}</p>
+        <p class="stat__source mono">{s.source}</p>
+      </li>
+    ))}
+  </ul>
+  <div class="stats__floor" aria-hidden="true">
+    <span class="fl fl--g"></span><span class="fl fl--s"></span><span class="fl fl--grad"></span><span class="fl fl--c"></span><span class="fl fl--a"></span><span class="fl fl--cream"></span>
+  </div>
+</section>

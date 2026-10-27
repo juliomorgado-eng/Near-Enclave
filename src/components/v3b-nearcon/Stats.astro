@@ -1,0 +1,33 @@
+---
+import { stats } from '../../content/copy';
+---
+<section class="sec stats" id="stats" data-chapter="stats" aria-label="Stats">
+  <div class="wrap stats__wrap">
+    <div class="stats__stage" aria-hidden="true">
+      <div class="enclave">
+        <div class="enclave__box slab-anchor" data-slab-anchor><div class="enclave__css"></div></div>
+      </div>
+    </div>
+    <ul class="stats__grid" data-stats-grid>
+      {stats.map((s) => (
+        <li class="stat" data-stat>
+          <p class="stat__value">
+            <span class="sr-only">{s.value}</span>
+            <span
+              aria-hidden="true"
+              data-stat-val
+              data-prefix={s.prefix}
+              data-number={s.number}
+              data-number-to={s.numberTo ?? ''}
+              data-decimals={s.decimals}
+              data-suffix={s.suffix}
+              data-final={s.value}
+            >{s.value}</span>
+          </p>
+          <p class="stat__label">{s.label}</p>
+          <p class="stat__source mono">{s.source}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

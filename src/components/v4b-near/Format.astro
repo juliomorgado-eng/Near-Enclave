@@ -1,0 +1,14 @@
+---
+import { format, formatParagraph } from '../../content/copy';
+---
+<section id="format" class="sec format" data-format aria-labelledby="format-title">
+  <div class="wrap format__grid">
+    <div class="format__copy">
+      <h2 class="h2 format__h2" id="format-title" data-split>{format.h2}</h2>
+      <p class="body format__p" data-fade>{formatParagraph}</p>
+    </div>
+    <div class="format__block" aria-hidden="true">
+      <canvas class="format__cv" data-nyc-cv></canvas>
+    </div>
+  </div>
+</section>

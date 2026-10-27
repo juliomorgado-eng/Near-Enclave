@@ -1,0 +1,54 @@
+---
+// near.org-style button with per-letter "wave" hover.
+// Letters are aria-hidden; the real label is exposed via a visually hidden span.
+interface Props {
+  label: string;
+  href?: string;
+  variant?: 'primary' | 'secondary';
+  request?: boolean; // opens the invitation modal
+  size?: 'm' | 'l';
+  class?: string;
+  icon?: 'arrow' | 'down' | 'none';
+}
+const {
+  label,
+  href,
+  variant = 'primary',
+  request = false,
+  size = 'm',
+  class: className = '',
+  icon = 'none',
+} = Astro.props;
+const letters = [...label];
+const cls = `btn btn--${variant} btn--${size} ${className}`.trim();
+---
+{
+  href ? (
+    <a class={cls} href={href} {...(request ? { 'data-open-request': '' } : {})}>
+      <span class="sr-only">{label}</span>
+      <span class="btn__label" aria-hidden="true">
+        {letters.map((ch, i) => (
+          <span class="btn__l" style={`--i:${i}`}>{ch}</span>
+        ))}
+      </span>
+      {icon === 'down' && (
+        <svg class="btn__icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+      )}
+      {icon === 'arrow' && (
+        <svg class="btn__icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path d="M3 8h10M8.5 3.5 13 8l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+      )}
+    </a>
+  ) : (
+    <button type="button" class={cls} {...(request ? { 'data-open-request': '' } : {})}>
+      <span class="sr-only">{label}</span>
+      <span class="btn__label" aria-hidden="true">
+        {letters.map((ch, i) => (
+          <span class="btn__l" style={`--i:${i}`}>{ch}</span>
+        ))}
+      </span>
+      {icon === 'arrow' && (
+        <svg class="btn__icon" aria-hidden="true" viewBox="0 0 16 16" width="16" height="16"><path d="M3 8h10M8.5 3.5 13 8l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+      )}
+    </button>
+  )
+}

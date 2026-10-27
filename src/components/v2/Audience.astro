@@ -1,0 +1,33 @@
+---
+import Tab from './Tab.astro';
+import { audience, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'audience')?.label ?? '';
+---
+<section class="section audience surface-cream" id="audience" style="--theme-color: var(--coral)" aria-labelledby="audience-title">
+  <div class="wrap audience__grid">
+    <div class="audience__head">
+      <Tab index="04" text={label} tone="ink" />
+      <h2 class="h2" id="audience-title" data-reveal>{audience.h2}</h2>
+      <p class="body-l" data-reveal>{audience.body}</p>
+      <figure class="frame frame--audience" data-reveal>
+        <img
+          src="/assets/img/nearcon-C-106.jpg"
+          alt="Attendees arriving through the doors at NEARCON"
+          width="2000"
+          height="1333"
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    </div>
+    <ul class="audience__list">
+      {audience.list.map((item, i) => (
+        <li class="row" data-reveal style={`--d:${i % 4}`}>
+          <span class="row__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <span class="row__dot" aria-hidden="true"></span>
+          <span class="row__text">{item}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

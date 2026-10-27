@@ -1,0 +1,19 @@
+---
+import { format, formatParagraph } from '../../content/copy';
+import Orb from './Orb.astro';
+import Rivers from './Rivers.astro';
+---
+<section class="format" id="format" data-format>
+  <div class="head head--light">
+    <Rivers seed={404} class="head__rv" />
+    <h2 class="head__h2" data-h2><span class="plate">{format.h2}</span></h2>
+  </div>
+  <div class="format__grid">
+    <div class="format__orb" data-sky>
+      <Orb kind="skyline" uid="fs" />
+    </div>
+    <div class="format__copy">
+      <p class="format__p" data-rise>{formatParagraph}</p>
+    </div>
+  </div>
+</section>

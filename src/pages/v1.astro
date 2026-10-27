@@ -1,0 +1,63 @@
+---
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '../styles/v1.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Nav from '../components/v1/Nav.astro';
+import Hero from '../components/v1/Hero.astro';
+import Shift from '../components/v1/Shift.astro';
+import Stats from '../components/v1/Stats.astro';
+import Format from '../components/v1/Format.astro';
+import Agenda from '../components/v1/Agenda.astro';
+import Audience from '../components/v1/Audience.astro';
+import Partners from '../components/v1/Partners.astro';
+import Speakers from '../components/v1/Speakers.astro';
+import Closing from '../components/v1/Closing.astro';
+import Faq from '../components/v1/Faq.astro';
+import Footer from '../components/v1/Footer.astro';
+import RequestModal from '../components/v1/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <Seo themeColor="#000000" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          d.classList.add('motion');
+          // Safety net: if the motion bundle never boots, show everything.
+          setTimeout(function () {
+            if (!window.__v1ready) d.classList.remove('motion');
+          }, 4000);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+      <Format />
+      <Agenda />
+      <Audience />
+      <Partners />
+      <Speakers />
+      <Closing />
+      <Faq />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v1/main.ts';
+    </script>
+  </body>
+</html>

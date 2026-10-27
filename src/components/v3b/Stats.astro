@@ -1,0 +1,30 @@
+---
+import { stats } from '../../content/copy';
+---
+<section class="sec stats" id="stats" data-chapter="stats">
+  <div class="wrap stats__grid">
+    <div class="stats__side" aria-hidden="true">
+      <div class="stats__sticky">
+        <p class="eyebrow mono"><span class="eyebrow__n">02</span>Verified output</p>
+        <div class="enclave enclave--stats">
+          <div class="enclave__box slab-anchor" data-slab-anchor><div class="enclave__css"></div></div>
+        </div>
+      </div>
+    </div>
+    <ol class="stats__list">
+      {stats.map((s, i) => (
+        <li class="stat" data-stat>
+          <span class="stat__idx mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <p class="stat__num">
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__val" aria-hidden="true" data-stat-val>{s.value}</span>
+          </p>
+          <div class="stat__meta">
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src mono">{s.source}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

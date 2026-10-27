@@ -1,0 +1,71 @@
+---
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '../styles/v3a.css';
+
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v3a/Header.astro';
+import Hero from '../components/v3a/Hero.astro';
+import Shift from '../components/v3a/Shift.astro';
+import Stats from '../components/v3a/Stats.astro';
+import Footer from '../components/v3a/Footer.astro';
+import RequestModal from '../components/v3a/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v3a">
+  <head>
+    <Seo themeColor="#ebe3d3" />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v3a-js');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('v3a-motion');
+        // Safety net: if the bundle never boots, reveal everything and drop the loader.
+        setTimeout(function () {
+          if (window.__v3aready) return;
+          d.classList.remove('v3a-motion');
+          var l = document.querySelector('[data-loader]');
+          if (l) l.remove();
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        if (!d.classList.contains('v3a-motion')) return;
+        var repeat = false;
+        try { repeat = sessionStorage.getItem('v3a-intro') === '1'; } catch (e) {}
+        d.classList.add(repeat ? 'v3a-intro-short' : 'v3a-intro-long');
+        var l = document.createElement('div');
+        l.className = 'ld';
+        l.setAttribute('data-loader', '');
+        l.setAttribute('aria-hidden', 'true');
+        l.innerHTML = '<p class="ld__t">NEAR Enclave 2027</p><span class="ld__rule" data-ld-rule></span><p class="ld__s">Opening aperture</p>';
+        document.body.prepend(l);
+      })();
+    </script>
+    <a class="skip" href="#main">Skip to content</a>
+    <canvas class="ap-gl" data-ap-gl aria-hidden="true"></canvas>
+    <div class="ap-frame" data-ap-frame aria-hidden="true">
+      <i class="ap-c ap-c--tl"></i><i class="ap-c ap-c--tr"></i><i class="ap-c ap-c--bl"></i><i class="ap-c ap-c--br"></i>
+      <span class="ap-lb ap-lb--l">Inside view</span>
+      <span class="ap-lb ap-lb--r" data-ap-readout>Aperture 000%</span>
+    </div>
+    <Header />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3a/main.ts';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { nav, contact, meta } from '../../content/copy';
+const near = [
+  { label: 'near.org', href: 'https://near.org' },
+  { label: 'nearcon.org', href: 'https://nearcon.org' },
+];
+---
+<footer class="footer on-dark">
+  <span class="grad-line footer__line" aria-hidden="true"></span>
+  <div class="wrap">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <a href="#top" class="footer__logo" aria-label="NEAR Enclave 2027, back to top">
+          <NearLogo class="footer__wordmark" />
+        </a>
+        <p class="footer__desc">{meta.description}</p>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div class="footer__col">
+          <p class="footer__h mono">Enclave</p>
+          <ul>
+            {nav.map((n) => <li><a href={`#${n.id}`}>{n.label}</a></li>)}
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="footer__h mono">NEAR</p>
+          <ul>
+            {near.map((l) => (
+              <li>
+                <a href={l.href} target="_blank" rel="noopener">
+                  {l.label}
+                  <svg aria-hidden="true" viewBox="0 0 12 12" width="10" height="10"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="footer__h mono">Contact</p>
+          <ul>
+            <li><a href={`mailto:${contact.press}`}>{contact.press}</a></li>
+            <li><a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="footer__legal">
+      <p>© 2027 NEAR Foundation</p>
+      <a href="#top" class="footer__top-link mono">Back to top ↑</a>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,36 @@
+---
+// Decorative digit rivers: 3 mono rows of digit groups separated by " | ", crawling at
+// different speeds. Content is duplicated once per row so the loop is seamless (-50%).
+interface Props {
+  seed?: number;
+  size?: 'lg' | 'sm';
+  class?: string;
+}
+const { seed: s0 = 11, size = 'lg', class: cls = '' } = Astro.props;
+let seed = s0 * 7919 + 13;
+const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+const digits = (n: number) => Array.from({ length: n }, () => ((rnd() * 10) | 0)).join('');
+const ACC = ['g', 's', 'c', 'a'];
+const rows = [0, 1, 2].map((r) => {
+  const groups = Array.from({ length: 9 }, () => {
+    const t = rnd();
+    return { d: digits(8 + ((rnd() * 16) | 0)), k: t < 0.3 ? 'dim' : t < 0.38 ? 'acc-' + ACC[(rnd() * 4) | 0] : '' };
+  });
+  return { groups, dur: [64, 92, 76][r] * (size === 'sm' ? 0.8 : 1), dir: r === 1 ? 'rev' : '' };
+});
+---
+<div class={`rivers rivers--${size} ${cls}`} aria-hidden="true" data-rivers>
+  {rows.map((row) => (
+    <div class={`rivers__row ${row.dir ? 'rivers__row--rev' : ''}`} style={`--dur:${row.dur}s`}>
+      <div class="rivers__track">
+        {[0, 1].map(() => (
+          <span class="rivers__set">
+            {row.groups.map((g) => (
+              <Fragment><span class={g.k}>{g.d}</span><span class="rivers__sep"> | </span></Fragment>
+            ))}
+          </span>
+        ))}
+      </div>
+    </div>
+  ))}
+</div>

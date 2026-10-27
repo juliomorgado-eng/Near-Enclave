@@ -1,0 +1,47 @@
+---
+import { form } from '../../content/copy';
+---
+<div class="modal" data-request-modal hidden role="dialog" aria-modal="true" aria-labelledby="request-title" aria-describedby="request-intro" data-lenis-prevent>
+  <div class="modal__backdrop" data-request-close></div>
+  <div class="modal__panel">
+    <div class="modal__bar" aria-hidden="true"></div>
+    <div class="modal__inner">
+      <div class="modal__top">
+        <div>
+          <span class="tab" aria-hidden="true"><span class="tab__idx">→</span><span>Enclave 2027</span></span>
+          <h2 class="modal__title" id="request-title">{form.title}</h2>
+        </div>
+        <button type="button" class="modal__close" data-request-close aria-label="Close">✕</button>
+      </div>
+      <p class="modal__intro" id="request-intro">{form.intro}</p>
+      <form class="form" data-request-form novalidate>
+        <div class="form__fields">
+          <div class="form__grid">
+            {form.fields.map((f) => (
+              <div class="field">
+                <label for={`rq-${f.name}`}>{f.label}</label>
+                <input id={`rq-${f.name}`} name={f.name} type={f.type} autocomplete={f.autocomplete} required={f.required} />
+              </div>
+            ))}
+          </div>
+          <fieldset class="seg" style="margin-top:22px">
+            <legend>{form.segment.label}</legend>
+            <div class="seg__opts">
+              {form.segment.options.map((o, i) => (
+                <label class="seg__opt">
+                  <input type="radio" name="segment" value={o} required={i === 0} />
+                  <span>{o}</span>
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <button type="submit" class="btn" style="margin-top:28px">
+            <span class="btn__label">{form.submit}</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <p class="form__success" data-request-success hidden tabindex="-1" role="status">{form.success}</p>
+      </form>
+    </div>
+  </div>
+</div>

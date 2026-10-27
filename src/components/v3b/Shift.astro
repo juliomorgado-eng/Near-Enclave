@@ -1,0 +1,27 @@
+---
+import { shift, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'shift')?.label ?? '';
+---
+<section id="shift" class="sec shift" data-chapter="shift" aria-labelledby="shift-title">
+  <div class="shift__pin">
+    <div class="wrap shift__grid">
+      <div class="shift__stage" aria-hidden="true">
+        <div class="enclave">
+          <div class="enclave__box slab-anchor" data-slab-anchor><div class="enclave__css"></div></div>
+        </div>
+      </div>
+      <div class="shift__copy">
+        <p class="eyebrow mono"><span class="eyebrow__n" aria-hidden="true">01</span>{label}</p>
+        <h2 class="h2 shift__h2" id="shift-title" data-shift-h2>{shift.h2}</h2>
+        <ol class="shift__body">
+          {shift.body.map((s, i) => (
+            <li class:list={['shift__s', i === 2 && 'shift__s--prim']} data-shift-s>
+              <span class="shift__n mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span class="shift__t" data-shift-t>{s}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>

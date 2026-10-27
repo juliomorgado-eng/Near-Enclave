@@ -1,0 +1,65 @@
+---
+import { format, nav } from '../../content/copy';
+const label = nav.find((n) => n.id === 'format')?.label ?? '';
+const marks = ['A', 'B', 'C', 'D'];
+---
+<section id="format" class="sec format" data-theme="cream" data-hud={label.toUpperCase()} data-chapter="format" aria-labelledby="format-title">
+  <div class="wrap format__grid">
+    <div class="format__head">
+      <div class="format__sticky">
+        <p class="eyebrow mono"><span class="eyebrow__n" aria-hidden="true">§04</span>{label}</p>
+        <h2 class="h2 format__h2" id="format-title" data-lines>{format.h2}</h2>
+      </div>
+    </div>
+    <ol class="format__list">
+      {format.body.slice(0, 2).map((p, i) => (
+        <li class="format__item" data-fade>
+          <span class="format__mark mono" aria-hidden="true">{marks[i]}</span>
+          <p class="lead">{p}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+  <figure class="format__fig" data-mosaic-fig>
+    <img
+      class="format__img"
+      data-mosaic
+      src="/assets/img/v3/nearcon-B-80-1600.webp"
+      srcset="/assets/img/v3/nearcon-B-80-900.webp 900w, /assets/img/v3/nearcon-B-80-1600.webp 1600w"
+      sizes="100vw"
+      alt="A speaker on the NEARCON main stage in front of a large screen, with lounge chairs set for a conversation."
+      width="1600"
+      height="1067"
+      loading="lazy"
+      decoding="async"
+    />
+    <figcaption class="format__cap mono" aria-hidden="true"><span>FIG. 03 — MAIN STAGE</span><span>1/1 · SINGLE TRACK</span></figcaption>
+  </figure>
+  <div class="wrap format__grid format__grid--2">
+    <figure class="format__side" data-mosaic-fig>
+      <img
+        class="format__img format__img--side"
+        data-mosaic
+        src="/assets/img/v3/nearcon-C-106-900.webp"
+        srcset="/assets/img/v3/nearcon-C-106-900.webp 900w, /assets/img/v3/nearcon-C-106-1600.webp 1600w"
+        sizes="(min-width: 1024px) 40vw, 100vw"
+        alt="Attendees walking through the NEARCON venue doors."
+        width="900"
+        height="600"
+        loading="lazy"
+        decoding="async"
+      />
+      <figcaption class="format__coords mono" aria-hidden="true">
+        <span>40.7128° N · 74.0060° W</span><span class="format__grid-ico"></span><span>MANHATTAN · 29° · BY INVITATION</span>
+      </figcaption>
+    </figure>
+    <ol class="format__list" start="3">
+      {format.body.slice(2).map((p, i) => (
+        <li class="format__item" data-fade>
+          <span class="format__mark mono" aria-hidden="true">{marks[i + 2]}</span>
+          <p class="lead">{p}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

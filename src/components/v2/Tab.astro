@@ -1,0 +1,14 @@
+---
+// NEARCON-style label tab (solid block, mono uppercase) with near.org 4px radius.
+// Decorative: section labels duplicate nav labels, so hidden from AT.
+interface Props {
+  index?: string;
+  text: string;
+  tone?: 'accent' | 'ink' | 'light';
+}
+const { index, text, tone = 'accent' } = Astro.props;
+---
+<span class={`tab tab--${tone}`} aria-hidden="true" data-reveal>
+  {index && <span class="tab__idx">{index}</span>}
+  <span class="tab__txt">{text}</span>
+</span>

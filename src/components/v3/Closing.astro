@@ -1,0 +1,42 @@
+---
+import { closing } from '../../content/copy';
+const words = closing.h2.split(' ');
+const last = words.pop();
+---
+<section id="request" class="sec closing" data-theme="ink" data-hud="REQUEST" data-chapter="closing" aria-labelledby="closing-title">
+  <div class="closing__pin" data-closing-pin>
+    <div class="slab-anchor slab-anchor--closing" data-slab-anchor aria-hidden="true"></div>
+    <div class="closing__flood" data-closing-flood aria-hidden="true"></div>
+    <div class="closing__layer">
+      <p class="closing__tag mono" aria-hidden="true"><span>VAULT 27</span><span data-closing-state>SEALED</span></p>
+      <h2 class="closing__h2" id="closing-title" data-closing-title>
+        <span class="closing__l">{words.join(' ')}</span>
+        {' '}
+        <span class="closing__l">{last}</span>
+      </h2>
+      <div class="closing__foot">
+        <p class="closing__body mono">{closing.body}</p>
+        <div class="closing__cta" data-closing-cta>
+          <button class="btn btn--pill btn--xl btn--hero" type="button" data-open-request data-magnetic data-cursor="REQUEST">
+            <span class="btn__fill" aria-hidden="true"></span>
+            <span class="btn__txt">{closing.cta}</span>
+            <span class="btn__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ink copy of the headline, clipped together with the flood (decorative) -->
+    <div class="closing__layer closing__layer--ink" data-closing-ink aria-hidden="true">
+      <p class="closing__tag mono" style="visibility:hidden"><span>VAULT 27</span><span>SEALED</span></p>
+      <p class="closing__h2" data-closing-ink-title>
+        <span class="closing__l">{words.join(' ')}</span>
+        {' '}
+        <span class="closing__l">{last}</span>
+      </p>
+      <div class="closing__foot">
+        <p class="closing__body mono">{closing.body}</p>
+        <div class="closing__cta" data-closing-cta-ink><span class="btn btn--pill btn--xl btn--hero btn--inkcopy"><span class="btn__txt">{closing.cta}</span><span class="btn__arrow">→</span></span></div>
+      </div>
+    </div>
+  </div>
+</section>

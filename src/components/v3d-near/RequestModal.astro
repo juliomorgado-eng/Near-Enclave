@@ -1,0 +1,41 @@
+---
+import { formApply } from '../../content/copy';
+---
+<div class="rq" data-request-modal hidden role="dialog" aria-modal="true" aria-labelledby="rq-title">
+  <div class="rq__backdrop" data-request-close></div>
+  <div class="rq__panel">
+    <div class="rq__head">
+      <img class="rq__mark" src="/v3d-near/near-icon.svg" alt="" width="28" height="28" />
+      <button class="rq__close" type="button" data-request-close aria-label="Close"><span aria-hidden="true"></span></button>
+    </div>
+    <h2 class="rq__title" id="rq-title">{formApply.title}</h2>
+    <p class="rq__intro">{formApply.intro}</p>
+    <form class="rq__form" data-request-form>
+      <div class="rq__fields">
+        {formApply.fields.map((f) => (
+          <div class="field">
+            <input class="field__in" id={`rq-${f.name}`} name={f.name} type={f.type} autocomplete={f.autocomplete} required={f.required} placeholder=" " />
+            <label class="field__lb label" for={`rq-${f.name}`}>{f.label}</label>
+            <span class="field__ln" aria-hidden="true"></span>
+          </div>
+        ))}
+        <fieldset class="seg">
+          <legend class="seg__lg label">{formApply.segment.label}</legend>
+          <div class="seg__opts">
+            {formApply.segment.options.map((o, i) => (
+              <label class="seg__opt">
+                <input type="radio" name="segment" value={o} required={i === 0} />
+                <span>{o}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </div>
+      <button class="cta cta--lg rq__submit" type="submit">
+        <span class="cta__txt">{formApply.submit}</span>
+        <span class="cta__arrow" aria-hidden="true">→</span>
+      </button>
+    </form>
+    <p class="rq__success" data-request-success hidden tabindex="-1" role="status">{formApply.success}</p>
+  </div>
+</div>

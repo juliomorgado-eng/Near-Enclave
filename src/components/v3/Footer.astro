@@ -1,0 +1,33 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { nav, contact, hero } from '../../content/copy';
+const letters = 'ENCLAVE'.split('');
+---
+<footer class="foot" data-theme="cream" data-chapter="footer" data-hud="END">
+  <div class="wrap foot__grid mono">
+    <div class="foot__col foot__brand">
+      <NearLogo variant="wordmark" class="foot__logo" label="NEAR" />
+      <p aria-hidden="true">{hero.eyebrowParts.slice(0, 2).join(' · ')}</p>
+    </div>
+    <nav class="foot__col" aria-label="Footer">
+      <ul>
+        {nav.map((n) => <li><a class="ulink" href={`#${n.id}`}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+    <div class="foot__col">
+      <ul>
+        <li><a class="ulink" href={`mailto:${contact.press}`}>{contact.press}</a></li>
+        <li><a class="ulink" href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></li>
+        <li><button class="ulink foot__req" type="button" data-open-request>{hero.cta}</button></li>
+      </ul>
+    </div>
+    <div class="foot__col foot__meta" aria-hidden="true">
+      <p>40.7128° N<br />74.0060° W</p>
+      <p data-clock>NYC --:--:--</p>
+      <p>© 2027 NEAR</p>
+    </div>
+  </div>
+  <div class="foot__mega" aria-hidden="true" data-foot-mega>
+    {letters.map((l) => <span class="foot__ch"><span data-foot-ch>{l}</span></span>)}
+  </div>
+</footer>

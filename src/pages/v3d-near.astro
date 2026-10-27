@@ -1,0 +1,52 @@
+---
+import '@fontsource-variable/inter-tight';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v3d-near.css';
+
+import Seo from '../components/shared/Seo.astro';
+import { metaApply } from '../content/copy';
+import Header from '../components/v3d-near/Header.astro';
+import Hero from '../components/v3d-near/Hero.astro';
+import Shift from '../components/v3d-near/Shift.astro';
+import Stats from '../components/v3d-near/Stats.astro';
+import Format from '../components/v3d-near/Format.astro';
+import Footer from '../components/v3d-near/Footer.astro';
+import RequestModal from '../components/v3d-near/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="vdn" data-theme="dark">
+  <head>
+    <Seo themeColor="#1c1917" description={metaApply.description} />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('vdn-js');
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) d.classList.add('vdn-motion');
+        // failsafe: if the bundle never boots, show everything statically
+        setTimeout(function () {
+          if (window.__vdnReady) return;
+          d.classList.remove('vdn-motion');
+          d.classList.add('no-gl');
+        }, 3500);
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="bgfx" aria-hidden="true"><i class="bgfx__a"></i><i class="bgfx__b"></i></div>
+    <canvas class="gl" data-gl aria-hidden="true"></canvas>
+    <Header />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <Stats />
+      <Format />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v3d-near/main.ts';
+    </script>
+  </body>
+</html>

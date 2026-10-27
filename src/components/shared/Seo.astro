@@ -1,0 +1,23 @@
+---
+import { meta } from '../../content/copy';
+
+interface Props {
+  themeColor?: string;
+  description?: string;
+}
+const { themeColor = '#000000', description = meta.description } = Astro.props;
+---
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{meta.title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={meta.url} />
+<meta name="theme-color" content={themeColor} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={meta.url} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={description} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={meta.title} />
+<meta name="twitter:description" content={description} />
+<link rel="icon" type="image/svg+xml" href="/assets/logos/near-mark.svg" />
