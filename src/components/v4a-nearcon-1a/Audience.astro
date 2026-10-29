@@ -1,0 +1,24 @@
+---
+// The single dark breath mid-page: small city and vault turning either side of the heading.
+import { audience } from '../../content/copy';
+import Rig from './Rig.astro';
+const acc = ['green', 'sky', 'coral', 'amber'];
+---
+<section class="breath" id="audience" aria-labelledby="audience-title" data-dark data-breath>
+  <div class="wrap breath__top">
+    <div class="breath__orb breath__orb--city" data-orb="city"><Rig kind="city" uid="bc" diag={false} /></div>
+    <div class="breath__head">
+      <h2 class="h2 breath__h2" id="audience-title" data-rise>{audience.h2}</h2>
+      <p class="breath__p" data-rise>{audience.body}</p>
+    </div>
+    <div class="breath__orb breath__orb--vault" data-orb="vault"><Rig kind="vault" uid="bv" diag={false} /></div>
+  </div>
+  <ul class="wrap breath__list" role="list">
+    {audience.list.map((item, i) => (
+      <li class="aud" data-rise>
+        <span class={`aud__b aud__b--${acc[i % 4]}`} aria-hidden="true"></span>
+        <span class="aud__t">{item}</span>
+      </li>
+    ))}
+  </ul>
+</section>

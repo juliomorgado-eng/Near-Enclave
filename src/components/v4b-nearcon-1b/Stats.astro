@@ -1,0 +1,32 @@
+---
+import { stats } from '../../content/copy';
+// Ported from the v4a-near stats treatment: stripe column + solid block, big count-up figures
+// separated by tick timelines. Restyled in this page's language: black framed panel (.brk),
+// cream text, per-stat accent gradients on the figures, pixel-block stripe in the 4 accents.
+const ACC = ['g', 's', 'c', 'a'];
+---
+<section class="sec stats" id="stats" aria-label="Stats" data-stats>
+  <div class="wrap stats__grid">
+    <div class="stats__stripe" aria-hidden="true"><span class="stripe" data-stripe></span></div>
+    <div class="frame stats__block" data-fade>
+      <span class="brk" aria-hidden="true"></span>
+      <span class="stats__scan" aria-hidden="true"></span>
+      <ul class="stats__list" role="list">
+        {stats.map((s, i) => (
+          <li class={`st st--${ACC[i % 4]}`} data-st>
+            {i > 0 && (
+              <div class="tl tl--stat" aria-hidden="true"><span class="tl__on" data-st-on></span></div>
+            )}
+            <div class="st__row">
+              <p class="st__val" data-count data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>{s.value}</p>
+              <div class="st__meta">
+                <p class="st__label">{s.label}</p>
+                <p class="mono st__src">{s.source}</p>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

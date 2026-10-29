@@ -1,0 +1,25 @@
+---
+// Section separator (flat): the 1A runs of tone become flat segments, each a solid 1px
+// hairline over a fine 1px dot texture in its tone. Segments are [data-c] so the script
+// switches them on with scroll, as in 1A.
+import { rng } from './shapes';
+interface Props { seed?: number }
+const { seed = 1 } = Astro.props;
+const rnd = rng(seed);
+const COLS = 180;
+const tones = ['g', 'k', 'g', 'w', 'g', 'l', 'k', 'g'];
+const runs: { t: string; n: number }[] = [];
+let used = 0;
+while (used < COLS) {
+  const n = Math.min(COLS - used, 4 + Math.round(rnd() * 18));
+  runs.push({ t: tones[(runs.length * 3 + seed) % tones.length], n });
+  used += n;
+}
+---
+<div class="dband" aria-hidden="true" data-dband>
+  <div class="dband__row">
+    {runs.map((r, i) => (
+      <span class={`dband__c dband__c--${r.t}`} data-c={i} style={`flex-grow:${r.n}`}></span>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,41 @@
+---
+import { stats } from '../../content/copy';
+// Figures step across the 12-col grid (2–6, 7–11, 4–8); column 1 carries a dot column that
+// fills with scroll (replaces the stripe column). Each figure has a finer halftone strip.
+const ROWS = 4;
+const COLS = 96;
+const BAYER = [0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5];
+const mods: { x: number; y: number; s: number; c: number }[] = [];
+for (let c = 0; c < COLS; c++) {
+  for (let r = 0; r < ROWS; r++) {
+    const ramp = 1 - c / (COLS - 1);
+    const th = BAYER[(r % 4) * 4 + (c % 4)] / 16;
+    const s = 0.34 + 0.6 * Math.min(1, ramp + (th - 0.5) * 0.35);
+    mods.push({ x: c, y: r, s: Math.max(0.3, Math.min(0.9, s)), c });
+  }
+}
+---
+<section id="stats" class="sec stats" data-stats>
+  <div class="wrap stats__grid">
+    <div class="stats__col" aria-hidden="true"><span class="stats__colfill" data-stats-col></span></div>
+    <ul class="stats__list">
+      {stats.map((s, i) => (
+        <li class={`stat stat--${i}`} data-stat data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>
+          <p class="stat__num">
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__val" aria-hidden="true" data-stat-val>{s.value}</span>
+          </p>
+          <svg class="stat__strip" viewBox={`0 0 ${COLS} ${ROWS}`} aria-hidden="true" data-strip>
+            {mods.map((m) => (
+              <rect x={m.x + (1 - m.s) / 2} y={m.y + (1 - m.s) / 2} width={m.s} height={m.s} data-c={m.c} />
+            ))}
+          </svg>
+          <div class="stat__meta">
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src label">{s.source}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

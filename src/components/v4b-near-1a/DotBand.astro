@@ -1,0 +1,45 @@
+---
+// Section separator: rows of square modules (replaces v4b-near's stripe columns). Columns
+// group into runs of one tone; each run ramps its module size like a halftone. Columns are
+// <g data-c> so the script can switch them on with scroll.
+import { bayer, rng } from './pixel';
+interface Props { seed?: number }
+const { seed = 1 } = Astro.props;
+const rnd = rng(seed);
+const COLS = 180;
+const ROWS = 5;
+const tones = ['g', 'k', 'g', 'w', 'g', 'l', 'k', 'g'];
+const runs: { t: string; n: number }[] = [];
+let used = 0;
+while (used < COLS) {
+  const n = Math.min(COLS - used, 4 + Math.round(rnd() * 18));
+  runs.push({ t: tones[(runs.length * 3 + seed) % tones.length], n });
+  used += n;
+}
+const cols: { c: number; t: string; mods: { y: number; s: number }[] }[] = [];
+let c = 0;
+for (const r of runs) {
+  for (let i = 0; i < r.n; i++, c++) {
+    const ramp = i / Math.max(1, r.n - 1);
+    const mods = [];
+    for (let y = 0; y < ROWS; y++) {
+      const th = bayer(c, y);
+      const base = r.t === 'k' ? 0 : 0.35 + 0.6 * (1 - Math.abs(ramp - 0.5) * 1.4);
+      const s = r.t === 'k' ? (th < 0.25 ? 0.22 : 0) : Math.max(0, Math.min(0.92, base + (th - 0.5) * 0.4));
+      if (s > 0.15) mods.push({ y, s });
+    }
+    cols.push({ c, t: r.t, mods });
+  }
+}
+---
+<div class="dband" aria-hidden="true" data-dband>
+  <svg class="dband__svg" viewBox={`0 0 ${COLS} ${ROWS}`} preserveAspectRatio="xMidYMid meet">
+    {cols.map((col) => (
+      <g class={`dband__c dband__c--${col.t}`} data-c={col.c}>
+        {col.mods.map((m) => (
+          <rect x={col.c + (1 - m.s) / 2} y={m.y + (1 - m.s) / 2} width={m.s} height={m.s} />
+        ))}
+      </g>
+    ))}
+  </svg>
+</div>

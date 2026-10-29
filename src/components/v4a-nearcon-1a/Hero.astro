@@ -1,0 +1,44 @@
+---
+import { heroApply as hero } from '../../content/copy';
+import Rig from './Rig.astro';
+// h1 reads exactly "NEAR Enclave 2027: Open Markets, Private Money"
+const [l1, l2] = hero.h1Lines;
+---
+<section class="hero" id="top" data-hero data-dark>
+  <div class="hero__in" data-hero-in>
+    <div class="hero__orb hero__orb--city" data-orb="city"><Rig kind="city" uid="hc" /></div>
+    <div class="hero__orb hero__orb--vault" data-orb="vault"><Rig kind="vault" uid="hv" /></div>
+
+    <svg class="lead" aria-hidden="true" focusable="false" data-lead>
+      {[0, 1].map((i) => (
+        <g class={`lead__g lead__g--${i ? 'ca' : 'gs'}`} data-lead-g>
+          <path class="lead__p" d="" pathLength="1" data-lead-p />
+          <path class="lead__run" d="" pathLength="1" data-lead-run />
+          <circle class="lead__o" r="5" cx="-20" cy="-20" data-lead-o />
+          <circle class="lead__dot" r="3.2" cx="-20" cy="-20" data-lead-dot />
+        </g>
+      ))}
+    </svg>
+
+    <p class="hero__eyebrow mono" data-hin>
+      {hero.eyebrowParts.map((p, i) => (<>{i > 0 && <span class="sep" aria-hidden="true"> · </span>}<span>{p}</span></>))}
+    </p>
+    <span class="hero__rule" aria-hidden="true" data-rule></span>
+
+    <div class="hero__copy">
+      <h1 class="hero__h1">
+        <span class="ln"><span class="ln__in" data-hl>{hero.h1Lead}</span></span>{' '}
+        <span class="ln"><span class="ln__in" data-hl data-anchor="city"><span class="gw gw--gs">{l1}</span></span></span>{' '}
+        <span class="ln"><span class="ln__in" data-hl data-anchor="vault"><span class="gw gw--ca">{l2}</span></span></span>
+      </h1>
+      <p class="hero__sub" data-hin>{hero.subhead}</p>
+      <div class="hero__act" data-hin>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{hero.cta}</span>
+          <span class="cta__arr" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="hero__shade" aria-hidden="true" data-shade></div>
+</section>

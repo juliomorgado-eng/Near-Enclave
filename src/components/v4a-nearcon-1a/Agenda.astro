@@ -1,0 +1,19 @@
+---
+import { agenda } from '../../content/copy';
+const acc = ['green', 'sky', 'coral', 'amber'];
+---
+<section class="agenda panel" id="agenda" aria-labelledby="agenda-title">
+  <div class="wrap">
+    <h2 class="h2 agenda__h2" id="agenda-title" data-rise>{agenda.h2}</h2>
+    <ul class="agenda__rows" role="list">
+      {agenda.tracks.map((t, i) => (
+        <li class={`ag ag--${acc[i]}`} data-ag>
+          <span class="ag__rule" aria-hidden="true" data-rule-x></span>
+          <span class="ag__blk" aria-hidden="true"></span>
+          <h3 class="ag__h3" data-rise>{t.h3}</h3>
+          <p class="ag__p" data-rise>{t.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

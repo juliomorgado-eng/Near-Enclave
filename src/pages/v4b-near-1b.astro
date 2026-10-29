@@ -1,0 +1,65 @@
+---
+import '@fontsource-variable/inter-tight';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/v4b-near-1b.css';
+
+import { metaApply } from '../content/copy';
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v4b-near-1b/Header.astro';
+import Hero from '../components/v4b-near-1b/Hero.astro';
+import Shift from '../components/v4b-near-1b/Shift.astro';
+import Stats from '../components/v4b-near-1b/Stats.astro';
+import Format from '../components/v4b-near-1b/Format.astro';
+import Agenda from '../components/v4b-near-1b/Agenda.astro';
+import Audience from '../components/v4b-near-1b/Audience.astro';
+import Partners from '../components/v4b-near-1b/Partners.astro';
+import Speakers from '../components/v4b-near-1b/Speakers.astro';
+import Closing from '../components/v4b-near-1b/Closing.astro';
+import Faq from '../components/v4b-near-1b/Faq.astro';
+import DotBand from '../components/v4b-near-1b/DotBand.astro';
+import Footer from '../components/v4b-near-1b/Footer.astro';
+import RequestModal from '../components/v4b-near-1b/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v4bn1b">
+  <head>
+    <Seo themeColor="#1C1917" description={metaApply.description} />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v4bn1b-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v4bn1b-motion');
+        // Safety net: if the bundle never boots, show the static page.
+        setTimeout(function () {
+          if (window.__v4bn1bready) return;
+          d.classList.remove('v4bn1b-motion');
+          d.classList.add('v4bn1b-failsafe');
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      <Hero />
+      <Shift />
+      <DotBand seed={3} />
+      <Stats />
+      <Format />
+      <Agenda />
+      <Audience />
+      <DotBand seed={11} />
+      <Partners />
+      <Speakers />
+      <Closing />
+      <Faq />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v4b-near-1b/main.ts';
+    </script>
+  </body>
+</html>

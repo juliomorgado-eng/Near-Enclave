@@ -1,0 +1,20 @@
+---
+import { format } from '../../content/copy';
+import Sky from './Sky.astro';
+const words = format.h2.split(' ');
+const last = words.pop();
+const blockA = format.body.slice(0, 2).join(' ');
+const blockB = format.body.slice(2).join(' ');
+---
+<section class="format panel" id="format" aria-labelledby="format-title" data-format>
+  <div class="wrap g12 format__grid">
+    <div class="format__orb"><Sky uid="fm" /></div>
+    <div class="format__copy">
+      <h2 class="h2 format__h2" id="format-title" data-rise>{words.join(' ')} <span class="mk mk--ca">{last}</span></h2>
+      <div class="format__text">
+        <p class="format__p" data-rise>{blockA}</p>
+        <p class="format__p" data-rise>{blockB}</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,25 @@
+---
+import { stats } from '../../content/copy';
+// Figures step across the 12-col grid (2–6, 7–11, 4–8); column 1 carries a thin solid bar that
+// fills with scroll. Each figure has a hairline progress line that fills with its counter.
+---
+<section id="stats" class="sec stats" data-stats>
+  <div class="wrap stats__grid">
+    <div class="stats__col" aria-hidden="true"><span class="stats__colfill" data-stats-col></span></div>
+    <ul class="stats__list">
+      {stats.map((s, i) => (
+        <li class={`stat stat--${i}`} data-stat data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>
+          <p class="stat__num">
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__val" aria-hidden="true" data-stat-val>{s.value}</span>
+          </p>
+          <span class="stat__bar" aria-hidden="true" data-strip><span class="stat__barfill"></span><span class="stat__barlead"></span></span>
+          <div class="stat__meta">
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src label">{s.source}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

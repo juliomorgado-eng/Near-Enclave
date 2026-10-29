@@ -1,0 +1,46 @@
+---
+import { agenda } from '../../content/copy';
+// Four tracks on an offset checkerboard: green / dark-warm cells, the right column dropped.
+// Each cell carries a flat vector icon (decorative): solid shapes and hairlines, 24×24.
+const TONE = ['g', 'd', 'd', 'g'];
+---
+<section id="agenda" class="sec agenda" aria-labelledby="agenda-title">
+  <div class="wrap agenda__grid">
+    <h2 class="h2 agenda__h2" id="agenda-title" data-split>{agenda.h2}</h2>
+    <span class="dotrule agenda__rule" aria-hidden="true"></span>
+    <ul class="agenda__list" role="list">
+      {agenda.tracks.map((t, i) => (
+        <li class={`track track--${TONE[i]} track--${i}`} data-fade>
+          <svg class="track__icon" viewBox="0 0 24 24" aria-hidden="true">
+            {i === 0 && (
+              <g>
+                <path d="M5 1v22M12 6v16M19 3v14" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" />
+                <rect x="3" y="4" width="4" height="9" /><rect x="10" y="10" width="4" height="8" /><rect x="17" y="5" width="4" height="7" />
+              </g>
+            )}
+            {i === 1 && (
+              <g>
+                <path d="M12 1L23 7H1Z" /><rect x="0" y="22" width="24" height="2" />
+                <rect x="2.5" y="9" width="3" height="11" /><rect x="10.5" y="9" width="3" height="11" /><rect x="18.5" y="9" width="3" height="11" />
+              </g>
+            )}
+            {i === 2 && (
+              <g>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4" fill="none" stroke="currentColor" stroke-width="3" />
+                <path fill-rule="evenodd" d="M2 11h20v13H2Z M10.5 15a1.5 1.5 0 1 0 3 0a1.5 1.5 0 1 0 -3 0Z M11.25 16.5h1.5v3.5h-1.5Z" />
+              </g>
+            )}
+            {i === 3 && (
+              <g>
+                <path d="M3 3L21 21M21 3L3 21" fill="none" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" />
+                <rect x="0" y="0" width="6" height="6" /><rect x="18" y="0" width="6" height="6" /><rect x="0" y="18" width="6" height="6" /><rect x="18" y="18" width="6" height="6" /><rect x="9.5" y="9.5" width="5" height="5" />
+              </g>
+            )}
+          </svg>
+          <h3 class="track__h3">{t.h3}</h3>
+          <p class="track__p">{t.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

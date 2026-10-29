@@ -1,0 +1,16 @@
+---
+import { format } from '../../content/copy';
+// Skyline block on the left, h2 on the right, body in two offset blocks (sentences 1–2, 3–4).
+const blockA = format.body.slice(0, 2).join(' ');
+const blockB = format.body.slice(2).join(' ');
+---
+<section id="format" class="sec format" data-format aria-labelledby="format-title">
+  <div class="wrap format__grid">
+    <div class="format__block" aria-hidden="true">
+      <canvas class="format__cv" data-nyc-cv></canvas>
+    </div>
+    <h2 class="h2 format__h2" id="format-title" data-split>{format.h2}</h2>
+    <p class="body format__p format__p--a" data-fade>{blockA}</p>
+    <p class="body format__p format__p--b" data-fade>{blockB}</p>
+  </div>
+</section>

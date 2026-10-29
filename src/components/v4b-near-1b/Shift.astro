@@ -1,0 +1,16 @@
+---
+import { shift, shiftParagraph } from '../../content/copy';
+---
+<section id="shift" class="sec shift" data-shift aria-labelledby="shift-title">
+  <div class="shift__pin" data-shift-pin>
+    <div class="wrap shift__grid">
+      <div class="shift__stage" aria-hidden="true">
+        <canvas class="shift__cv" data-shift-cv></canvas>
+      </div>
+      <div class="shift__copy">
+        <h2 class="h2 shift__h2" id="shift-title" data-split>{shift.h2}</h2>
+        <p class="body shift__p" data-fade>{shiftParagraph}</p>
+      </div>
+    </div>
+  </div>
+</section>

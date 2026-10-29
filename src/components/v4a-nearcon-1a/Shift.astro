@@ -1,0 +1,29 @@
+---
+import { shift, shiftParagraph } from '../../content/copy';
+import Divider from './Divider.astro';
+import { tower } from './geo';
+const words = shift.h2.split(' ');
+const mk = (w: string) => (w.startsWith('onchain') ? 'mk mk--gs' : w.startsWith('public') ? 'mk mk--ca' : '');
+const tw = tower();
+---
+<section class="shift panel" id="shift" aria-labelledby="shift-title" data-shift>
+  <div class="wrap g12 shift__grid">
+    <div class="shift__art" aria-hidden="true">
+      <svg class="tower" viewBox="0 0 400 560" focusable="false" data-tower>
+        {tw.segs.map((s) => (
+          <path d={s.d} class={s.dash ? 'is-dash' : undefined} stroke-opacity={s.o ?? 1} pathLength={s.dash ? undefined : 1} data-draw={s.dash ? undefined : ''} data-fade={s.dash ? '' : undefined} />
+        ))}
+        <circle class="tower__tip" cx={tw.tip[0]} cy={tw.tip[1]} r="5" data-pop />
+      </svg>
+    </div>
+    <div class="shift__copy">
+      <Divider class="shift__dv" />
+      <h2 class="h2m shift__h2" id="shift-title" data-rise>
+        {words.map((w, i) => (
+          <Fragment>{mk(w) ? <span class={mk(w)}>{w}</span> : w}{i < words.length - 1 ? ' ' : ''}</Fragment>
+        ))}
+      </h2>
+      <p class="shift__p" data-rise>{shiftParagraph}</p>
+    </div>
+  </div>
+</section>

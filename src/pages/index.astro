@@ -45,7 +45,12 @@ const versions = [
         note: 'Plano · dibujo técnico lineal que se traza',
         subs: [
           { id: 'v4A · near', href: '/v4a-near', note: 'near.org · clara · grilla modular · diagrama de nodos' },
-          { id: 'v4A · NEARCON', href: '/v4a-nearcon', note: 'NEARCON · negra · ilustración en círculos · ríos de dígitos' },
+          {
+            id: 'v4A · NEARCON',
+            href: '/v4a-nearcon',
+            note: 'NEARCON · negra · ilustración en círculos · ríos de dígitos',
+            subs: [{ id: '1A', href: '/v4a-nearcon-1a', note: 'bóveda y ciudad girando · panel cream sube · líneas que se trazan · página completa' }],
+          },
         ],
       },
       {
@@ -53,8 +58,21 @@ const versions = [
         href: '',
         note: 'Módulo · pixel · densidad · ASCII',
         subs: [
-          { id: 'v4B · near', href: '/v4b-near', note: 'near.org · oscura · halftone de módulos verdes' },
-          { id: 'v4B · NEARCON', href: '/v4b-nearcon', note: 'NEARCON · negra · campo ASCII 3D · barras pixel' },
+          {
+            id: 'v4B · near',
+            href: '/v4b-near',
+            note: 'near.org · oscura · halftone de módulos verdes',
+            subs: [{ id: '1A', href: '/v4b-near-1a', note: 'cubo grande · NEAR Enclave 2027 vertical · ciudad pixel · página completa' }, { id: '1B', href: '/v4b-near-1b', note: 'flat · sin pixeles · dots finos · página completa' }],
+          },
+          {
+            id: 'v4B · NEARCON',
+            href: '/v4b-nearcon',
+            note: 'NEARCON · negra · campo ASCII 3D · barras pixel',
+            subs: [
+              { id: '1A', href: '/v4b-nearcon-1a', note: 'hero izquierda · moneda ASCII · página completa' },
+              { id: '1B', href: '/v4b-nearcon-1b', note: 'hero animado · titular en 4 · ASCII divisor con scroll' },
+            ],
+          },
         ],
       },
     ],
@@ -124,7 +142,14 @@ const versions = [
                       <ul class="subs">
                         {s.subs.map((ss) => (
                           <li>
-                            <a href={ss.href}><strong>{ss.id}</strong><span>{ss.note}</span><em class="new">nuevo</em></a>
+                            <a href={ss.href}><strong>{ss.id}</strong><span>{ss.note}</span>{!ss.subs && <em class="new">nuevo</em>}</a>
+                            {ss.subs && (
+                              <ul class="subs">
+                                {ss.subs.map((x) => (
+                                  <li><a href={x.href}><strong>{x.id}</strong><span>{x.note}</span><em class="new">nuevo</em></a></li>
+                                ))}
+                              </ul>
+                            )}
                           </li>
                         ))}
                       </ul>

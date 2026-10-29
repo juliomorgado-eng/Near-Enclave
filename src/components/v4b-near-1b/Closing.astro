@@ -1,0 +1,28 @@
+---
+import { closing, formApply, heroApply } from '../../content/copy';
+// Right cell: flat green with 135° hairline diagonals that thicken towards the lower right.
+const N = 40;
+const lines: { c: number; w: number }[] = [];
+for (let c = 2; c < 2 * N; c += 3) lines.push({ c, w: +(0.75 + (c / (2 * N)) * 3.25).toFixed(2) });
+---
+<section id="request" class="sec closing" aria-labelledby="closing-title">
+  <div class="wrap closing__grid">
+    <div class="closing__main" data-fade>
+      <h2 class="closing__h2" id="closing-title" data-split>{formApply.title}</h2>
+      <div class="closing__row">
+        <p class="body closing__p">{closing.body}</p>
+        <button class="btn btn--lg" type="button" data-open-request>
+          <span class="btn__txt">{heroApply.cta}</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+    <div class="closing__side" aria-hidden="true" data-fade>
+      <svg class="closing__hatch" viewBox={`0 0 ${N} ${N}`} preserveAspectRatio="xMidYMid slice">
+        {lines.map((l) => (
+          <line x1={l.c} y1="0" x2="0" y2={l.c} stroke-width={l.w} vector-effect="non-scaling-stroke" />
+        ))}
+      </svg>
+    </div>
+  </div>
+</section>

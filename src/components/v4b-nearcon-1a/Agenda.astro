@@ -1,0 +1,30 @@
+---
+import { agenda } from '../../content/copy';
+// Tracks as framed cells, each with a tiny static ASCII glyph icon (decorative).
+const ICONS = [
+  // money and markets: candles
+  ['  |    |     ', ' [#]  [=]  | ', ' [#]   |  [#]', '  |       [#]', '           | '],
+  // institutional capital markets: columns under a pediment
+  ['   /\\/\\/\\/\\  ', ' ============ ', '  []  []  [] ', '  []  []  [] ', ' ============ '],
+  // confidential infrastructure: a sealed lock
+  ['    .--.     ', '   |    |    ', '  [{}01{}]   ', '  [01{}01]   ', '  [{}01{}]   '],
+  // agentic finance: linked agents
+  ['  o-----o    ', '  |\\   /|    ', '  |  *  |    ', '  |/   \\|    ', '  o-----o    '],
+];
+const ACC = ['gs', 'gs', 'ca', 'ca'];
+---
+<section id="agenda" class="sec agenda" aria-labelledby="agenda-title">
+  <div class="wrap">
+    <h2 class="h2 agenda__h2" id="agenda-title" data-reveal-h2>{agenda.h2}</h2>
+    <ul class="agenda__grid" role="list">
+      {agenda.tracks.map((t, i) => (
+        <li class="frame track" data-fade>
+          <span class="brk" aria-hidden="true"></span>
+          <pre class={`track__icon track__icon--${ACC[i]}`} aria-hidden="true">{ICONS[i].join('\n')}</pre>
+          <h3 class="h3 track__h3">{t.h3}</h3>
+          <p class="track__p">{t.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

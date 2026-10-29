@@ -1,0 +1,25 @@
+---
+import { shift } from '../../content/copy';
+// h2 words that carry a gradient: "onchain," (green→sky) and "public." (coral→amber)
+const words = shift.h2.split(' ');
+const grad = (w: string) => (w.startsWith('onchain') ? 'gw gw--gs' : w.startsWith('public') ? 'gw gw--ca' : '');
+---
+<section id="shift" class="sec shift" aria-labelledby="shift-title">
+  <div class="wrap shift__grid">
+    <h2 class="h2 shift__h2" id="shift-title" data-reveal-h2>
+      {words.map((w, i) => (
+        <Fragment><span class={grad(w) || undefined}>{w}</span>{i < words.length - 1 ? ' ' : ''}</Fragment>
+      ))}
+    </h2>
+    <div class="frame shift__frame" aria-hidden="true" data-fade>
+      <span class="brk"></span>
+      <div class="frame__in shift__stage">
+        <div class="af af--shift">
+          <pre class="af__pre" data-ascii-shift></pre>
+          <span class="af__scan"></span>
+        </div>
+      </div>
+    </div>
+    <p class="shift__p" data-fade>{shift.body.join(' ')}</p>
+  </div>
+</section>

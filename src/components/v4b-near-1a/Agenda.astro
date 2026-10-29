@@ -1,0 +1,33 @@
+---
+import { agenda } from '../../content/copy';
+import { bitmap, path } from './pixel';
+// Four tracks on an offset checkerboard: green / dark-warm cells, the right column dropped.
+// Each cell carries a 12×12 pixel icon (decorative).
+const ICONS = [
+  // money and markets: candles
+  ['..#.........', '.###....#...', '.###...###..', '.###...###..', '..#....###..', '.......###..', '....#...#...', '...###......', '...###...#..', '...###..###.', '....#...###.', '.........#..'],
+  // institutional capital markets: columns under a pediment
+  ['.....##.....', '...######...', '.##########.', '############', '............', '.##..##..##.', '.##..##..##.', '.##..##..##.', '.##..##..##.', '.##..##..##.', '............', '############'],
+  // confidential infrastructure: a sealed lock
+  ['....####....', '...##..##...', '..##....##..', '..##....##..', '..##....##..', '.##########.', '.##########.', '.####..####.', '.####..####.', '.#####.####.', '.##########.', '.##########.'],
+  // agentic finance: linked agents
+  ['##........##', '##........##', '..#......#..', '...#....#...', '....#..#....', '.....##.....', '.....##.....', '....#..#....', '...#....#...', '..#......#..', '##........##', '##........##'],
+];
+const TONE = ['g', 'd', 'd', 'g'];
+const icons = ICONS.map((rows) => path(bitmap(rows)));
+---
+<section id="agenda" class="sec agenda" aria-labelledby="agenda-title">
+  <div class="wrap agenda__grid">
+    <h2 class="h2 agenda__h2" id="agenda-title" data-split>{agenda.h2}</h2>
+    <span class="dotrule agenda__rule" aria-hidden="true"></span>
+    <ul class="agenda__list" role="list">
+      {agenda.tracks.map((t, i) => (
+        <li class={`track track--${TONE[i]} track--${i}`} data-fade>
+          <svg class="track__icon" viewBox="0 0 12 12" aria-hidden="true"><path d={icons[i]} /></svg>
+          <h3 class="track__h3">{t.h3}</h3>
+          <p class="track__p">{t.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

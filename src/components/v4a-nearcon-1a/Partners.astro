@@ -1,0 +1,28 @@
+---
+import { partners } from '../../content/copy';
+const acc = ['green', 'sky', 'coral', 'amber'];
+---
+<section class="partners panel" id="partners" aria-labelledby="partners-title">
+  <div class="wrap g12 partners__grid">
+    <div class="partners__head">
+      <h2 class="h2 partners__h2" id="partners-title" data-rise>{partners.h2}</h2>
+      <p class="partners__p" data-rise>{partners.body}</p>
+    </div>
+    <div class="partners__groups">
+      {partners.groups.map((g, gi) => (
+        <div class="pg" data-rise>
+          <span class="pg__rule" aria-hidden="true" data-rule-x></span>
+          <h3 class="pg__h3 mono">{g.h3}</h3>
+          <ul class="pg__list" role="list">
+            {g.logos.map((l, li) => (
+              <li class="wm">
+                <span class={`wm__b wm__b--${acc[(gi * 2 + li) % 4]}`} aria-hidden="true"></span>
+                {l.logo ? <img class="wm__img" src={l.logo} alt={l.name} loading="lazy" /> : <span class="wm__n">{l.name}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

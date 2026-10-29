@@ -1,0 +1,26 @@
+---
+import { speakers } from '../../content/copy';
+import { portrait } from './shapes';
+// Only the first sentence of speakers.body ("Speakers to be announced."), as in nearcon-1a.
+const body = speakers.body.split('. ')[0] + '.';
+// Flat portraits (decorative): solid vector silhouettes, a lime seal band across the eyes.
+const cards = [0, 1, 2, 3].map((v) => portrait(v));
+---
+<section id="speakers" class="sec speakers" aria-labelledby="speakers-title">
+  <div class="wrap speakers__grid">
+    <h2 class="h2 speakers__h2" id="speakers-title" data-split>{speakers.h2}</h2>
+    <p class="body speakers__p" data-fade>{body}</p>
+    <div class="speakers__row" aria-hidden="true">
+      {cards.map((c, i) => (
+        <div class={`spk spk--${i}`} data-fade>
+          <svg class="spk__svg" viewBox={`0 0 ${c.C} ${c.R}`} preserveAspectRatio="xMidYMax meet">
+            <defs><clipPath id={`v4bn1b-spk-${i}`}><ellipse cx={c.cx} cy={c.cy} rx={c.rx} ry={c.ry} /></clipPath></defs>
+            <path class="spk__body" d={c.body} />
+            <ellipse class="spk__body" cx={c.cx} cy={c.cy} rx={c.rx} ry={c.ry} />
+            <rect class="spk__seal" x="0" y={c.sealY} width={c.C} height={c.sealH} clip-path={`url(#v4bn1b-spk-${i})`} />
+          </svg>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

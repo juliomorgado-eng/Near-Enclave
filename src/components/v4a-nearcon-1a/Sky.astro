@@ -1,0 +1,34 @@
+---
+// Frontal New York skyline in a circle, ink on cream, traced with the scroll.
+import { skyline } from './geo';
+interface Props { uid: string; class?: string }
+const { uid, class: cls = '' } = Astro.props;
+const sky = skyline();
+const g = `sg-${uid}`;
+const c = `sc-${uid}`;
+const f = (n: number) => Math.round(n * 10) / 10;
+let ticks = '';
+for (let i = 0; i < 96; i++) {
+  const a = (i / 96) * Math.PI * 2;
+  const long = i % 8 === 0;
+  const r0 = long ? 188 : 192, r1 = long ? 199 : 196;
+  ticks += `M${f(200 + r0 * Math.cos(a))} ${f(200 + r0 * Math.sin(a))}L${f(200 + r1 * Math.cos(a))} ${f(200 + r1 * Math.sin(a))}`;
+}
+---
+<svg class={`sky ${cls}`} viewBox="0 0 400 400" overflow="visible" aria-hidden="true" focusable="false" data-sky>
+  <defs>
+    <linearGradient id={g} gradientUnits="userSpaceOnUse" x1="60" y1="340" x2="340" y2="60">
+      <stop offset="0" stop-color="#65d56e" />
+      <stop offset="1" stop-color="#59c2e8" />
+    </linearGradient>
+    <clipPath id={c}><circle cx="200" cy="200" r="183" /></clipPath>
+  </defs>
+  <g data-sky-spin><path class="sky__ticks" d={ticks} /></g>
+  <circle class="sky__ring" cx="200" cy="200" r="184" pathLength="1" data-draw />
+  <g clip-path={`url(#${c})`}>
+    {sky.fills.map((d) => <path class="sky__face" d={d} fill={`url(#${g})`} data-face />)}
+    {sky.lines.map((s) => (
+      <path class={`sky__l${s.dash ? ' is-dash' : ''}`} d={s.d} stroke-opacity={s.o ?? 1} pathLength={s.dash ? undefined : 1} data-draw={s.dash ? undefined : ''} data-fade={s.dash ? '' : undefined} />
+    ))}
+  </g>
+</svg>

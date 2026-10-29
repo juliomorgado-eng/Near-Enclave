@@ -1,0 +1,23 @@
+---
+import { stats } from '../../content/copy';
+const acc = ['green', 'sky', 'coral', 'amber'];
+const CELLS = 18;
+---
+<section class="stats panel" id="stats" aria-label="Stats" data-stats>
+  <ul class="wrap stats__row" role="list">
+    {stats.map((s, i) => (
+      <li class={`st st--${acc[i]}`} data-stat data-n={s.number} data-n2={s.numberTo ?? ''} data-dec={s.decimals}>
+        <span class="st__rule" aria-hidden="true" data-rule-x></span>
+        <p class="st__v">
+          <span class="sr">{s.value}</span>
+          <span aria-hidden="true" data-val>{s.value}</span>
+        </p>
+        <div class="px" aria-hidden="true">
+          {Array.from({ length: CELLS }, (_, k) => <span class="px__c" style={k >= CELLS - 4 ? `opacity:${[0.7, 0.48, 0.28, 0.14][k - (CELLS - 4)]}` : undefined}></span>)}
+        </div>
+        <p class="st__l">{s.label}</p>
+        <p class="st__s mono">{s.source}</p>
+      </li>
+    ))}
+  </ul>
+</section>

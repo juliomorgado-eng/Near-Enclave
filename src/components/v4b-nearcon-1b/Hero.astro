@@ -1,0 +1,40 @@
+---
+import { heroApply } from '../../content/copy';
+// 1B hero (animated): "NEAR Enclave 2027" opens huge and centred, then flies up and shrinks into
+// the lead; "Open Markets" / "Private Money" land offset across a 4-quadrant hairline grid, with
+// overlapping lines. The coin-in-cube ASCII is a full-width, scroll-linked band at the bottom.
+// The user approved dropping the ":" and "," from the display (copy otherwise unchanged).
+const lead = heroApply.h1Lead.replace(/:\s*$/, '');
+const [l1, l2] = heroApply.h1Lines.map((s) => s.replace(/,\s*$/, ''));
+const [w1, ...r1] = l1.split(' ');
+const [w2, ...r2] = l2.split(' ');
+---
+<section id="top" class="hero hero--b" aria-labelledby="hero-title" data-hero>
+  <div class="hq" aria-hidden="true">
+    <span class="hq__v" data-hq-v></span>
+    <span class="hq__h" data-hq-h></span>
+  </div>
+  <div class="hero__wrap wrap">
+    <div class="hero__in hero__in--b" data-hero-block>
+      <p class="hero__eyebrow mono" data-hf>{heroApply.eyebrow}</p>
+      <h1 class="h1b" id="hero-title" aria-label={`${lead} ${l1} ${l2}`}>
+        <span class="h1b__leadbox" aria-hidden="true"><span class="h1b__lead" data-lead>{[...lead].map((ch) => (
+          <span class="ch">{ch === ' ' ? ' ' : ch}</span>
+        ))}</span></span>
+        <span class="h1b__line h1b__line--a" aria-hidden="true" data-line-a><span data-hl><span class="gw gw--gs">{w1}</span> {r1.join(' ')}</span></span>
+        <span class="h1b__line h1b__line--b" aria-hidden="true" data-line-b><span data-hl><span class="gw gw--ca">{w2}</span> {r2.join(' ')}</span></span>
+      </h1>
+      <p class="hero__sub" data-hf>{heroApply.subhead}</p>
+      <div class="hero__cta" data-hf>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{heroApply.cta}</span>
+          <span class="cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="af af--hero af--band" aria-hidden="true" data-band>
+    <pre class="af__pre" data-ascii-hero></pre>
+    <span class="af__scan"></span>
+  </div>
+</section>

@@ -1,0 +1,50 @@
+---
+import { heroApply } from '../../content/copy';
+// Static density frame (no-JS / no-WebGL fallback): a tilted slab shaded by a fake light, in the right half.
+const RAMP = ' .:-+=<>/*;01()[]{}';
+const C = 192, R = 70;
+const rows: string[] = [];
+for (let y = 0; y < R; y++) {
+  let line = '';
+  for (let x = 0; x < C; x++) {
+    const u = (x / C) * 2 - 1, v = ((y / R) * 2 - 1) * 0.92;
+    const px = u - 0.5, py = v;
+    const a = 0.42, rx = px * Math.cos(a) - py * Math.sin(a), ry = px * Math.sin(a) + py * Math.cos(a);
+    const qx = Math.abs(rx) - 0.3, qy = Math.abs(ry) - 0.2;
+    const d = Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) + Math.min(Math.max(qx, qy), 0) - 0.06;
+    let l = 0;
+    if (d < 0) l = 0.35 + 0.6 * Math.min(1, -d * 6) * (0.6 + 0.4 * (rx + 0.4));
+    else if (d < 0.05) l = 0.95;
+    l = Math.max(0, Math.min(1, l));
+    line += RAMP[Math.min(RAMP.length - 1, Math.floor(l * RAMP.length))];
+  }
+  rows.push(line);
+}
+const [w1, ...r1] = heroApply.h1Lines[0].split(' ');
+const [w2, ...r2] = heroApply.h1Lines[1].split(' ');
+---
+<section id="top" class="hero" aria-labelledby="hero-title" data-hero>
+  <div class="af af--hero" aria-hidden="true">
+    <pre class="af__pre" data-ascii-hero>{rows.join('\n')}</pre>
+    <span class="af__scan"></span>
+  </div>
+  <div class="hero__wrap wrap">
+    <div class="hero__in">
+      <p class="hero__eyebrow mono" data-hf>{heroApply.eyebrow}</p>
+      <h1 class="h1" id="hero-title">
+        <span class="h1__line h1__line--lead"><span class="h1__in" data-hl>{heroApply.h1Lead}</span></span>
+        {' '}
+        <span class="h1__line"><span class="h1__in" data-hl><span class="gw gw--gs">{w1}</span> {r1.join(' ')}</span></span>
+        {' '}
+        <span class="h1__line"><span class="h1__in" data-hl><span class="gw gw--ca">{w2}</span> {r2.join(' ')}</span></span>
+      </h1>
+      <p class="hero__sub" data-hf>{heroApply.subhead}</p>
+      <div class="hero__cta" data-hf>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{heroApply.cta}</span>
+          <span class="cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
