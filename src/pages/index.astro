@@ -3,61 +3,87 @@ import Seo from '../components/shared/Seo.astro';
 import NearLogo from '../components/shared/NearLogo.astro';
 import { hero } from '../content/copy';
 
-// Shortlist: current options. Variants of the same base share a letter (A1, A2).
-const options = [
+// Round 5, ranked. Featured first, then the next tier, then the rest.
+const featured = [
+  { id: 'A5', href: '/v4b-nearcon-2c', note: 'Packets flow in the open and turn to cipher inside the enclave', base: 'A3' },
+  { id: 'A7', href: '/v4b-nearcon-2e', note: 'A live market seen through a privacy lens that grows on scroll', base: 'A3' },
+  { id: 'A4', href: '/v4b-nearcon-2b', note: 'A2 intro · larger title · big ASCII · A3 sections', base: 'A3' },
+  { id: 'C2', href: '/v4a-nearcon-2a', note: 'Calmer hero · animated markets chart · new skyline', base: 'C1' },
+];
+const tiers = [
   {
-    id: 'A',
-    note: 'NEARCON · negra · ASCII · barras pixel',
+    label: 'Also strong',
     items: [
-      { id: 'A1', href: '/v4b-nearcon-1a', note: 'hero izquierda · moneda ASCII · página completa', from: 'v4B · NEARCON 1A' },
-      { id: 'A2', href: '/v4b-nearcon-1b', note: 'hero animado · titular en 4 · ASCII divisor con scroll', from: 'v4B · NEARCON 1B' },
-      { id: 'A3', href: '/v4b-nearcon-2a', note: 'título grande · ASCII protagonista con scroll · secciones claras · footer nuevo', from: 'base A2', isNew: true },
-      { id: 'A4', href: '/v4b-nearcon-2b', note: 'hero y entrada de A2 · título más grande · ASCII grande con scroll · resto de A3', from: 'base A3', isNew: true },
+      { id: 'B2', href: '/v4b-near-2a', note: 'Launch Film point graphics · PP Neue Montreal' },
+      { id: 'D2', href: '/v3b-near-2a', note: 'Flat, lines only · dark and light sections' },
     ],
   },
   {
-    id: 'B',
-    note: 'near.org · oscura · módulos verdes',
-    items: [
-      { id: 'B1', href: '/v4b-near-1a', note: 'cubo grande · NEAR Enclave 2027 vertical · ciudad pixel', from: 'v4B · near 1A' },
-      { id: 'B2', href: '/v4b-near-2a', note: 'gráficos de puntos estilo Launch Film · PP Neue Montreal · footer nuevo', from: 'base B1', isNew: true },
-    ],
-  },
-  {
-    id: 'C',
-    note: 'NEARCON · líneas que se trazan · panel cream',
-    items: [
-      { id: 'C1', href: '/v4a-nearcon-1a', note: 'bóveda y ciudad girando · panel cream sube', from: 'v4A · NEARCON 1A' },
-      { id: 'C2', href: '/v4a-nearcon-2a', note: 'giro más calmo · título vivo · gráfica de mercados animada · footer nuevo', from: 'base C1', isNew: true },
-    ],
-  },
-  {
-    id: 'D',
-    note: 'near.org · enclave / monolito',
-    items: [
-      { id: 'D1', href: '/v3b-near', note: 'oscura · monolito de vidrio 3D con íconos · + Format', from: 'v3B · near' },
-      { id: 'D2', href: '/v3b-near-2a', note: 'flat · solo líneas · oscuro y claro alternado', from: 'base D1', isNew: true },
-    ],
+    label: 'Also in Round 5',
+    items: [{ id: 'A6', href: '/v4b-nearcon-2d', note: 'Open network, sealed payload' }],
   },
 ];
 
-// Everything else, kept reachable but out of the way.
-const archived = [
-  { id: 'v1', href: '/v1', note: 'NEARCON brand · premium editorial' },
-  { id: 'v2', href: '/v2', note: 'near.org system · NEARCON personality' },
-  { id: 'v3', href: '/v3', note: 'Awwwards concept · SEALED · WebGL' },
-  { id: 'v3A', href: '/v3a', note: 'Aperture · v1 brand × v3' },
-  { id: 'v3B', href: '/v3b', note: 'Enclave · monolito de vidrio' },
-  { id: 'v3B · NEARCON', href: '/v3b-nearcon', note: 'NEARCON · clara · copy tal cual · + Format' },
-  { id: 'v3C', href: '/v3c', note: 'Two Ledgers · público vs privado' },
-  { id: 'v3D', href: '/v3d', note: 'Invitation · keycard' },
-  { id: 'v3D · near', href: '/v3d-near', note: 'near.org · oscura · invitación sellada · + Format' },
-  { id: 'v3D · NEARCON', href: '/v3d-nearcon', note: 'NEARCON · cream · layout editorial · + Format' },
-  { id: 'v4A · near', href: '/v4a-near', note: 'near.org · clara · grilla modular · diagrama de nodos' },
-  { id: 'v4A · NEARCON', href: '/v4a-nearcon', note: 'NEARCON · negra · ilustración en círculos · ríos de dígitos' },
-  { id: 'v4B · near', href: '/v4b-near', note: 'near.org · oscura · halftone de módulos verdes' },
-  { id: 'v4B · near 1B', href: '/v4b-near-1b', note: 'flat · sin pixeles · dots finos · página completa' },
-  { id: 'v4B · NEARCON', href: '/v4b-nearcon', note: 'NEARCON · negra · campo ASCII 3D · barras pixel' },
+// The shortlisted pages the Round 5 work was built on, kept for side-by-side comparison.
+const bases = [
+  { id: 'A1', href: '/v4b-nearcon-1a', note: 'Left-aligned hero · ASCII coin · full page', round: 4 },
+  { id: 'A2', href: '/v4b-nearcon-1b', note: 'Animated hero · four-part headline · ASCII divider on scroll', round: 4 },
+  { id: 'B1', href: '/v4b-near-1a', note: 'Large cube · vertical NEAR Enclave 2027 · pixel city', round: 4 },
+  { id: 'C1', href: '/v4a-nearcon-1a', note: 'Rotating vault and city · cream panel rises', round: 4 },
+  { id: 'D1', href: '/v3b-near', note: 'Dark · 3D glass monolith with icons · + Format', round: 2 },
+];
+
+// Full history, newest first. `tag` marks pages that live on as a shortlist option.
+const rounds = [
+  {
+    n: 5,
+    title: 'Dropped',
+    items: [{ id: 'A3', href: '/v4b-nearcon-2a', note: 'Bigger title · full-screen ASCII on scroll · light sections · base for A4–A7' }],
+  },
+  {
+    n: 4,
+    title: 'Iterations on v4',
+    items: [
+      { id: 'v4B · NEARCON 1A', href: '/v4b-nearcon-1a', note: 'Left-aligned hero · ASCII coin', tag: 'A1' },
+      { id: 'v4B · NEARCON 1B', href: '/v4b-nearcon-1b', note: 'Animated hero · four-part headline', tag: 'A2' },
+      { id: 'v4B · near 1A', href: '/v4b-near-1a', note: 'Large cube · pixel city', tag: 'B1' },
+      { id: 'v4B · near 1B', href: '/v4b-near-1b', note: 'Flat · no pixels · fine dots · full page' },
+      { id: 'v4A · NEARCON 1A', href: '/v4a-nearcon-1a', note: 'Rotating vault and city', tag: 'C1' },
+    ],
+  },
+  {
+    n: 3,
+    title: 'v4 · vector, ASCII, pixel, line',
+    items: [
+      { id: 'v4A · near', href: '/v4a-near', note: 'Light · modular grid · node diagram' },
+      { id: 'v4A · NEARCON', href: '/v4a-nearcon', note: 'Black · circle illustrations · streams of digits' },
+      { id: 'v4B · near', href: '/v4b-near', note: 'Dark · halftone of green modules' },
+      { id: 'v4B · NEARCON', href: '/v4b-nearcon', note: 'Black · 3D ASCII field · pixel bars' },
+    ],
+  },
+  {
+    n: 2,
+    title: 'v3 concepts',
+    items: [
+      { id: 'v3', href: '/v3', note: 'Awwwards concept · SEALED · WebGL' },
+      { id: 'v3A', href: '/v3a', note: 'Aperture · v1 brand × v3' },
+      { id: 'v3B', href: '/v3b', note: 'Enclave · glass monolith' },
+      { id: 'v3B · near', href: '/v3b-near', note: 'Dark · icons on the monolith · + Format', tag: 'D1' },
+      { id: 'v3B · NEARCON', href: '/v3b-nearcon', note: 'Light · copy as written · + Format' },
+      { id: 'v3C', href: '/v3c', note: 'Two Ledgers · public vs private' },
+      { id: 'v3D', href: '/v3d', note: 'Invitation · keycard' },
+      { id: 'v3D · near', href: '/v3d-near', note: 'Dark · sealed invitation · + Format' },
+      { id: 'v3D · NEARCON', href: '/v3d-nearcon', note: 'Cream · editorial layout · + Format' },
+    ],
+  },
+  {
+    n: 1,
+    title: 'First directions',
+    items: [
+      { id: 'v1', href: '/v1', note: 'NEARCON brand · premium editorial' },
+      { id: 'v2', href: '/v2', note: 'near.org system · NEARCON personality' },
+    ],
+  },
 ];
 ---
 <!doctype html>
@@ -66,85 +92,208 @@ const archived = [
     <Seo />
     <meta name="robots" content="noindex" />
     <style is:global>
-      :root { --cream: #ebe3d3; --ink: #000; --line: #222; --muted: rgb(235 227 211 / .6); --accent: #00dc8d; }
+      :root {
+        --cream: #ebe3d3; --ink: #000; --accent: #00dc8d;
+        --mono: ui-monospace, 'SF Mono', Menlo, monospace;
+        /* on cream (latest round) */
+        --k-muted: rgb(0 0 0 / .62); --k-faint: rgb(0 0 0 / .45); --k-line: rgb(0 0 0 / .14);
+        /* on black (archive) */
+        --c-muted: rgb(235 227 211 / .55); --c-faint: rgb(235 227 211 / .35); --c-line: #1d1d1d;
+      }
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body {
-        min-height: 100svh; background: var(--ink); color: var(--cream);
-        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-        padding: clamp(24px, 6vw, 72px) 16px;
-      }
-      main { width: min(960px, 100%); margin-inline: auto; display: grid; gap: 40px; }
-      .logo svg { width: 96px; height: auto; }
-      h1 { font-size: clamp(28px, 5vw, 56px); line-height: 1.05; letter-spacing: -0.02em; }
-      .kicker { font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+      body { min-height: 100svh; background: var(--ink); color: var(--cream); font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
       ul { list-style: none; }
-      .tree { display: grid; gap: 2px; background: var(--line); border: 1px solid var(--line); }
-      .tree > li { background: var(--ink); }
-      a {
-        display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;
-        padding: 20px 24px; color: inherit; text-decoration: none; transition: background .2s;
+      a { color: inherit; text-decoration: none; }
+      a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+      .wrap { width: min(1040px, 100%); margin-inline: auto; }
+      .mono { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+
+      /* ===== Latest round: cream stage that fills the first view ===== */
+      .stage {
+        min-height: 100svh; display: flex; flex-direction: column;
+        background: var(--cream); color: var(--ink);
+        padding: clamp(20px, 3.4vh, 36px) 16px clamp(16px, 2.4vh, 24px);
       }
-      .group { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; padding: 20px 24px; }
-      .group strong { font-size: clamp(24px, 3vw, 34px); min-width: 4ch; }
-      .subs .group { padding-block: 14px; }
-      .subs .group strong { font-size: clamp(18px, 2.2vw, 24px); }
-      .group span { font-size: 15px; color: var(--muted); }
-      a:hover, a:focus-visible { background: #111; }
-      a:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-      a strong { font-size: clamp(24px, 3vw, 34px); min-width: 4ch; }
-      a span { font-size: 15px; color: var(--muted); }
-      .subs { border-left: 1px solid #333; margin-left: 32px; }
-      .subs a { padding-block: 14px; }
-      .subs a strong { font-size: clamp(18px, 2.2vw, 24px); }
-      a small, .archive summary span { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgb(235 227 211 / .4); }
-      a small { margin-left: auto; }
-      .new { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: var(--accent); padding: 2px 6px; font-style: normal; }
-      .archive summary {
-        cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 12px;
-        font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+      .stage .wrap { flex: 1; display: flex; flex-direction: column; gap: clamp(18px, 3vh, 30px); }
+      .top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+      .logo svg { width: 76px; height: auto; display: block; }
+      .top .mono { color: var(--k-faint); }
+      .stage h1 { font-size: clamp(20px, 2.6vw, 32px); line-height: 1.08; letter-spacing: -0.02em; font-weight: 500; color: var(--k-muted); max-width: 26ch; }
+
+      .r5head { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; border-top: 2px solid var(--ink); padding-top: clamp(12px, 2vh, 18px); }
+      .r5head h2 { font-size: clamp(32px, 4.6vw, 56px); line-height: .9; letter-spacing: -0.04em; font-weight: 500; }
+      .pill { background: var(--ink); color: var(--cream); padding: 5px 9px; }
+      .r5head .count { margin-left: auto; color: var(--k-faint); }
+
+      .group { display: grid; gap: 10px; }
+      .glabel { display: flex; align-items: center; gap: 10px; height: 14px; color: var(--k-muted); }
+      .glabel b { font-weight: 400; color: var(--ink); }
+      .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 1px var(--ink); flex: none; }
+      .ring { width: 9px; height: 9px; border-radius: 50%; border: 1px solid var(--ink); flex: none; }
+
+      /* tier 1: solid black cards */
+      .feat { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .fcard {
+        display: grid; grid-template-columns: minmax(6.5rem, auto) 1fr; grid-template-rows: 1fr auto;
+        grid-template-areas: 'top note' 'top foot'; gap: 14px 28px; height: 100%; min-height: clamp(104px, 16vh, 168px);
+        padding: 20px 22px; background: var(--ink); color: var(--cream); transition: transform .25s, background .25s;
       }
-      .archive summary::-webkit-details-marker { display: none; }
-      .archive summary::before { content: '+'; color: var(--accent); }
-      .archive[open] summary::before { content: '−'; }
-      .archive[open] summary { margin-bottom: 16px; }
-      .archive a strong { font-size: 18px; min-width: 9ch; }
-      @media (max-width: 600px) {
-        .subs { margin-left: 16px; }
-        a { padding: 16px; }
+      .fcard:hover { transform: translateY(-3px); background: #151515; }
+      .fcard__top { grid-area: top; display: flex; flex-direction: column-reverse; justify-content: flex-end; gap: 12px; }
+      .fcard__id { font-size: clamp(48px, 5.6vw, 76px); line-height: .82; letter-spacing: -0.05em; font-weight: 500; }
+      .fcard__rank { color: var(--accent); }
+      .fcard__note { grid-area: note; align-self: start; max-width: 34ch; font-size: 16px; line-height: 1.38; color: rgb(235 227 211 / .72); }
+      .fcard__foot { grid-area: foot; display: flex; justify-content: space-between; color: rgb(235 227 211 / .4); }
+      .fcard__go { color: var(--accent); transition: transform .25s; }
+      .fcard:hover .fcard__go { transform: translateX(4px); }
+
+      /* tier 2 + 3 share a row on desktop */
+      .rest { display: grid; grid-template-columns: 2fr 1fr; gap: 8px 28px; }
+      .alt { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .acard { display: flex; align-items: baseline; gap: 12px; padding: 12px 16px; border: 1px solid var(--ink); transition: background .2s; }
+      .acard:hover { background: rgb(0 0 0 / .06); }
+      .acard strong { font-size: 24px; font-weight: 500; letter-spacing: -0.03em; }
+      .acard em { font-style: normal; font-size: 14px; line-height: 1.3; color: var(--k-muted); }
+      .more a { display: flex; align-items: baseline; gap: 10px; padding: 12px 0; border-top: 1px solid var(--k-line); border-bottom: 1px solid var(--k-line); color: var(--k-muted); }
+      .more a:hover { color: var(--ink); }
+      .more strong { font-weight: 500; color: var(--ink); }
+      .more em { font-style: normal; font-size: 14px; }
+
+      .down { margin-top: auto; display: flex; justify-content: center; gap: 8px; color: var(--k-faint); padding-top: 8px; }
+      .down:hover { color: var(--ink); }
+
+      /* ===== Archive: everything before Round 5, quiet on black ===== */
+      .archive { padding: clamp(48px, 8vw, 96px) 16px clamp(48px, 8vw, 96px); }
+      .archive .wrap { display: grid; gap: clamp(40px, 6vw, 64px); }
+      .ahead { display: grid; gap: 8px; }
+      .ahead h2 { font-size: clamp(22px, 2.6vw, 30px); font-weight: 500; letter-spacing: -0.01em; color: var(--c-muted); }
+      .ahead p { color: var(--c-faint); }
+      .sub { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; color: var(--c-faint); }
+      .sub h3 { font-size: 17px; font-weight: 500; color: var(--c-muted); }
+
+      .rows { display: grid; gap: 1px; background: var(--c-line); border: 1px solid var(--c-line); }
+      .rows a {
+        display: grid; grid-template-columns: 11rem 1fr auto; align-items: baseline; gap: 6px 20px;
+        padding: 12px 18px; background: var(--ink); color: var(--c-muted); transition: background .2s, color .2s;
+      }
+      .rows--short a { grid-template-columns: 4rem 1fr auto; }
+      .rows a:hover { background: #0e0e0e; color: var(--cream); }
+      .rows strong { font-size: 15px; font-weight: 500; }
+      .rows span { font-size: 14px; color: var(--c-faint); }
+      .rows a:hover span { color: var(--c-muted); }
+      .rows small { color: var(--c-faint); }
+
+      .round { border-top: 1px solid var(--c-line); }
+      .round summary { cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 16px; padding: 16px 0; color: var(--c-faint); }
+      .round summary::-webkit-details-marker { display: none; }
+      .round summary::before { content: '+'; font-family: var(--mono); width: 1ch; }
+      .round[open] summary::before { content: '−'; }
+      .round summary:hover { color: var(--c-muted); }
+      .round summary b { font-weight: 500; color: var(--c-muted); font-size: 16px; }
+      .round summary .count { margin-left: auto; }
+      .round[open] .rows { margin-bottom: 18px; }
+
+      @media (max-width: 760px) {
+        .stage h1 { display: none; }
+        .r5head .count { display: none; }
+        .feat { grid-template-columns: repeat(2, 1fr); }
+        .fcard { grid-template-columns: 1fr; grid-template-rows: none; grid-template-areas: none; gap: 10px; padding: 12px 14px; min-height: 0; }
+        .fcard__top, .fcard__note, .fcard__foot { grid-area: auto; }
+        .fcard__top { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+        .fcard__id { font-size: 32px; }
+        .fcard__note { font-size: 13px; line-height: 1.3; }
+        .fcard__foot { display: none; }
+        .rest { grid-template-columns: 1fr; gap: 14px; }
+        .acard { flex-direction: column; gap: 2px; padding: 10px 12px; }
+        .acard strong { font-size: 20px; }
+        .acard em { font-size: 12px; }
+        .more a { padding: 8px 0; }
+        .more em { font-size: 13px; }
+        .rows a { grid-template-columns: 1fr auto; padding: 12px 14px; }
+        .rows a span { grid-column: 1 / -1; grid-row: 2; }
       }
     </style>
   </head>
   <body>
-    <main>
-      <div class="logo"><NearLogo /></div>
-      <h1>{hero.h1}</h1>
-      <p class="kicker">Opciones de diseño</p>
-      <ul class="tree">
-        {options.map((o) => (
-          <li>
-            {o.href ? (
-              <a href={o.href}><strong>{o.id}</strong><span>{o.note}</span><small>{o.from}</small></a>
-            ) : (
-              <>
-                <div class="group"><strong>{o.id}</strong><span>{o.note}</span></div>
-                <ul class="subs">
-                  {o.items.map((i) => (
-                    <li><a href={i.href}><strong>{i.id}</strong><span>{i.note}</span>{i.isNew && <em class="new">nuevo</em>}<small>{i.from}</small></a></li>
-                  ))}
-                </ul>
-              </>
-            )}
-          </li>
-        ))}
-      </ul>
-      <details class="archive">
-        <summary>Archivados <span>{archived.length}</span></summary>
-        <ul class="tree">
-          {archived.map((a) => (
-            <li><a href={a.href}><strong>{a.id}</strong><span>{a.note}</span></a></li>
+    <section class="stage" aria-labelledby="r5">
+      <div class="wrap">
+        <header class="top">
+          <div class="logo"><NearLogo /></div>
+          <span class="mono">Landing page design review</span>
+        </header>
+        <h1>{hero.h1}</h1>
+
+        <div class="r5head">
+          <h2 id="r5">Round 5</h2>
+          <span class="mono pill">Latest round</span>
+          <span class="mono count">{featured.length + tiers.reduce((n, t) => n + t.items.length, 0)} versions</span>
+        </div>
+
+        <div class="group">
+          <p class="glabel mono"><span class="dot"></span><b>Featured</b> · start here</p>
+          <ul class="feat">
+            {featured.map((o, i) => (
+              <li>
+                <a class="fcard" href={o.href}>
+                  <div class="fcard__top">
+                    <strong class="fcard__id">{o.id}</strong>
+                    <span class="mono fcard__rank">0{i + 1}</span>
+                  </div>
+                  <p class="fcard__note">{o.note}</p>
+                  <div class="fcard__foot mono"><span>From {o.base}</span><span class="fcard__go" aria-hidden="true">→</span></div>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="rest">
+          <div class="group">
+            <p class="glabel mono"><span class="ring"></span><b>{tiers[0].label}</b></p>
+            <div class="alt">
+              {tiers[0].items.map((x) => <a class="acard" href={x.href}><strong>{x.id}</strong><em>{x.note}</em></a>)}
+            </div>
+          </div>
+          <div class="group more">
+            <p class="glabel mono"><b>{tiers[1].label}</b></p>
+            {tiers[1].items.map((x) => <a href={x.href}><strong>{x.id}</strong><em>{x.note}</em></a>)}
+          </div>
+        </div>
+
+        <a class="down mono" href="#archive">Earlier rounds <span aria-hidden="true">↓</span></a>
+      </div>
+    </section>
+
+    <section class="archive" id="archive" aria-labelledby="arch">
+      <div class="wrap">
+        <div class="ahead">
+          <p class="mono">Archive</p>
+          <h2 id="arch">Earlier rounds, for reference</h2>
+        </div>
+
+        <div>
+          <div class="sub"><h3>Shortlist bases</h3><span class="mono">What Round 5 was built on</span></div>
+          <ul class="rows rows--short">
+            {bases.map((b) => (
+              <li><a href={b.href}><strong>{b.id}</strong><span>{b.note}</span><small class="mono">Round {b.round}</small></a></li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <div class="sub"><h3>All rounds</h3><span class="mono">Full history</span></div>
+          {rounds.map((r) => (
+            <details class="round">
+              <summary><span class="mono">Round {r.n}</span><b>{r.title}</b><span class="mono count">{r.items.length} {r.items.length === 1 ? 'page' : 'pages'}</span></summary>
+              <ul class="rows">
+                {r.items.map((i) => (
+                  <li><a href={i.href}><strong>{i.id}</strong><span>{i.note}</span><small class="mono">{i.tag ? `Shortlist ${i.tag}` : ''}</small></a></li>
+                ))}
+              </ul>
+            </details>
           ))}
-        </ul>
-      </details>
-    </main>
+        </div>
+      </div>
+    </section>
   </body>
 </html>

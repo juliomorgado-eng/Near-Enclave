@@ -1,0 +1,28 @@
+---
+import { partners } from '../../content/copy';
+const ACC = ['g', 's', 'c', 'a'];
+---
+<section id="partners" class="sec partners" aria-labelledby="partners-title">
+  <div class="wrap">
+    <div class="partners__head">
+      <h2 class="h2 partners__h2" id="partners-title" data-reveal-h2>{partners.h2}</h2>
+      <p class="lede partners__p" data-fade>{partners.body}</p>
+    </div>
+    <div class="partners__groups">
+      {partners.groups.map((g, gi) => (
+        <div class="frame pgroup" data-fade>
+          <span class="brk" aria-hidden="true"></span>
+          <h3 class="h3 pgroup__h3">{g.h3}</h3>
+          <ul class="pgroup__list" role="list">
+            {g.logos.map((l, li) => (
+              <li class="wordmark">
+                <span class={`pxb pxb--${ACC[(gi * 2 + li) % 4]}`} aria-hidden="true"></span>
+                {l.logo ? <img class="wordmark__img" src={l.logo} alt={l.name} loading="lazy" /> : <span class="wordmark__name">{l.name}</span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

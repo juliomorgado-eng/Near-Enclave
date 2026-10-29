@@ -1,0 +1,58 @@
+---
+import { heroApply } from '../../content/copy';
+// 2A hero: a pinned stage (sticky 100svh inside .cover, see the page). "NEAR Enclave 2027" is THE
+// title, full-width display type; "Open Markets / Private Money" is the tagline under it. The
+// coin-in-cube ASCII field fills the stage and is already moving on the first frame; its band
+// starts under the title (clip edge = the stage rule carrying the eyebrow parts) and, through the
+// scroll runway, opens to the full viewport while the object grows and the cube seals.
+// The ":" and "," are dropped from the display (approved for 1B); the aria-label keeps the copy.
+const lead = heroApply.h1Lead.replace(/:\s*$/, '');
+const [l1, l2] = heroApply.h1Lines.map((s) => s.replace(/,\s*$/, ''));
+const [w1, ...r1] = l1.split(' ');
+const [w2, ...r2] = l2.split(' ');
+// "NEAR Enclave" / "2027": the year is its own span so it can drop to a second line on phones
+const yearAt = lead.lastIndexOf(' ');
+const name = lead.slice(0, yearAt);
+const year = lead.slice(yearAt + 1);
+const chars = (s: string) => [...s].map((ch) => (ch === ' ' ? '\u00a0' : ch));
+---
+<section id="top" class="hero" aria-labelledby="hero-title" data-hero>
+  <div class="hero__in" data-hero-in>
+    <div class="af af--hero" aria-hidden="true" data-band>
+      <pre class="af__pre" data-ascii-hero></pre>
+      <span class="af__scan"></span>
+    </div>
+
+    <div class="hero__rule" aria-hidden="true" data-rule>
+      <span class="hero__ruleline" data-ruleline></span>
+      <ul class="hero__parts mono" role="list">
+        {heroApply.eyebrowParts.map((p) => <li data-hf>{p}</li>)}
+      </ul>
+    </div>
+
+    <div class="hero__head wrap" data-hero-head>
+      <h1 class="h1" id="hero-title" aria-label={`${heroApply.h1Lead} ${heroApply.h1Lines.join(' ')}`}>
+        <span class="h1__title" aria-hidden="true">
+          <span class="h1__w">{chars(name).map((ch) => <span class="ch">{ch}</span>)}</span>
+          <span class="h1__w h1__w--year">{chars(year).map((ch) => <span class="ch">{ch}</span>)}</span>
+        </span>
+        <span class="h1__tag" aria-hidden="true">
+          <span class="h1__tl"><span data-hl><span class="gw gw--gs">{w1}</span> {r1.join(' ')}</span></span>
+          <span class="h1__sep" data-hf></span>
+          <span class="h1__tl"><span data-hl><span class="gw gw--ca">{w2}</span> {r2.join(' ')}</span></span>
+        </span>
+      </h1>
+    </div>
+
+    <div class="hero__foot wrap" data-hero-foot>
+      <p class="hero__sub" data-hf>{heroApply.subhead}</p>
+      <div class="hero__cta" data-hf>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{heroApply.cta}</span>
+          <span class="cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="hero__shade" aria-hidden="true" data-shade></div>
+</section>

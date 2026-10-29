@@ -1,0 +1,42 @@
+---
+import { stats } from '../../content/copy';
+// 2A stats on cream. Colour pulled back: the figures carry a tonal ink → warm-grey gradient and the
+// only hue left is the coral→amber accent on the tick timelines.
+// The old lateral pixel-dot progress stripe is replaced by a rail borrowed from v4A-NEARCON 1A's
+// line language: one ink hairline traces down the left edge with the scroll, and at each stat a
+// ring draws itself and fills when the line reaches it (a progress index tied to the content).
+const n = String(stats.length).padStart(2, '0');
+---
+<section class="sec stats" id="stats" aria-label="Stats" data-stats>
+  <div class="wrap">
+    <div class="frame stats__block" data-fade>
+      <span class="brk" aria-hidden="true"></span>
+      <ul class="stats__list" role="list">
+        {stats.map((s, i) => (
+          <li class="st" data-st>
+            <div class="rail" aria-hidden="true">
+              <span class="rail__ln" data-rail-ln></span>
+              <svg class="rail__node" viewBox="0 0 24 24" focusable="false">
+                <circle class="rail__fill" cx="12" cy="12" r="5" data-rail-fill />
+                <circle class="rail__ring" cx="12" cy="12" r="9.5" pathLength="1" data-rail-ring />
+              </svg>
+              <span class="rail__ix mono">{String(i + 1).padStart(2, '0')}<span class="rail__of">/{n}</span></span>
+            </div>
+            <div class="st__body">
+              {i > 0 && (
+                <div class="tl tl--stat" aria-hidden="true"><span class="tl__on" data-st-on></span></div>
+              )}
+              <div class="st__row">
+                <p class="st__val" data-count data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>{s.value}</p>
+                <div class="st__meta">
+                  <p class="st__label">{s.label}</p>
+                  <p class="mono st__src">{s.source}</p>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

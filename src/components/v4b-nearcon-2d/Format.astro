@@ -1,0 +1,29 @@
+---
+import { format } from '../../content/copy';
+// h2: last word "capital." carries the coral→amber accent block (light mode)
+const words = format.h2.split(' ');
+const last = words.pop();
+// body split in two blocks: sentences 1–2 and 3–4
+const blockA = format.body.slice(0, 2).join(' ');
+const blockB = format.body.slice(2).join(' ');
+---
+<section id="format" class="sec format" aria-labelledby="format-title" data-format>
+  <div class="wrap">
+    <div class="frame format__frame" data-fade>
+      <span class="brk" aria-hidden="true"></span>
+      <div class="frame__in format__stage">
+        <div class="af af--sky" aria-hidden="true">
+          <pre class="af__pre" data-ascii-sky></pre>
+          <span class="af__scan"></span>
+        </div>
+        <h2 class="h2 format__h2" id="format-title" data-reveal-h2>
+          <span class="plate plate--h2">{words.join(' ')} <span class="mk mk--ca">{last}</span></span>
+        </h2>
+      </div>
+    </div>
+    <div class="format__text">
+      <p class="format__p format__p--a" data-fade>{blockA}</p>
+      <p class="format__p format__p--b" data-fade>{blockB}</p>
+    </div>
+  </div>
+</section>
