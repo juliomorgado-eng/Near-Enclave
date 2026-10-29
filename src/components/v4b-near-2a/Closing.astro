@@ -1,0 +1,21 @@
+---
+import { closing, formApply, heroApply } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// Night scene (film 04, "Privacy"): a crisp enclave shell, everything inside scrambled.
+---
+<section id="request" class="sec closing is-night" aria-labelledby="closing-title">
+  <div class="wrap closing__grid">
+    <div class="closing__main">
+      <Kicker i={8} />
+      <h2 class="closing__h2" id="closing-title" data-split>{formApply.title}</h2>
+      <div class="closing__row" data-fade>
+        <p class="body closing__p">{closing.body}</p>
+        <button class="btn btn--lg btn--green" type="button" data-open-request>
+          <span class="btn__txt">{heroApply.cta}</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+    <div class="slot closing__slot" data-slot="closing" aria-hidden="true"></div>
+  </div>
+</section>

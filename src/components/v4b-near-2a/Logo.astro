@@ -1,0 +1,11 @@
+---
+// NEAR primary logo, inlined so the wordmark follows currentColor (ink on paper, bone on
+// night). The mark keeps the brand green. Source: public/v4b-near-2a/near-primary-dark.svg.
+import raw from '../../../public/v4b-near-2a/near-primary-dark.svg?raw';
+interface Props { class?: string; label?: string }
+const { class: cls = '', label = 'NEAR' } = Astro.props;
+const svg = raw
+  .replace(/fill="white"/g, 'fill="currentColor"')
+  .replace(/<svg[^>]*>/, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 212 52" fill="none" role="img" aria-label="${label}" class="${cls}">`);
+---
+<Fragment set:html={svg} />

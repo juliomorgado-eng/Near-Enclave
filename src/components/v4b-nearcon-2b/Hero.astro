@@ -1,0 +1,48 @@
+---
+import { heroApply } from '../../content/copy';
+// 2B hero = 1B layout + intro on the 2A pinned stage.
+// "NEAR Enclave 2027" opens huge and centred, then flies up and settles as a real title (bigger
+// than 1B's small lead); "Open Markets" / "Private Money" land offset across the 4-quadrant
+// hairlines. The coin-in-cube ASCII starts as the band at the bottom (1B) and, through the
+// runway, opens to the full viewport while the cube seals (2A).
+// The ":" and "," are dropped from the display (approved for 1B); the aria-label keeps the copy.
+const lead = heroApply.h1Lead.replace(/:\s*$/, '');
+const [l1, l2] = heroApply.h1Lines.map((s) => s.replace(/,\s*$/, ''));
+const [w1, ...r1] = l1.split(' ');
+const [w2, ...r2] = l2.split(' ');
+---
+<section id="top" class="hero" aria-labelledby="hero-title" data-hero>
+  <div class="hero__in" data-hero-in>
+    <div class="af af--hero" aria-hidden="true" data-band>
+      <pre class="af__pre" data-ascii-hero></pre>
+      <span class="af__scan"></span>
+    </div>
+    <span class="hero__edge" aria-hidden="true"></span>
+
+    <div class="hq" aria-hidden="true" data-hq>
+      <span class="hq__v" data-hq-v></span>
+      <span class="hq__h" data-hq-h></span>
+    </div>
+
+    <div class="hero__head" data-hero-head>
+      <div class="hero__blk wrap" data-hero-blk>
+        <p class="hero__eyebrow mono" data-hf>{heroApply.eyebrow}</p>
+        <h1 class="h1b" id="hero-title" aria-label={`${heroApply.h1Lead} ${heroApply.h1Lines.join(' ')}`}>
+          <span class="h1b__leadbox" aria-hidden="true"><span class="h1b__lead" data-lead>{[...lead].map((ch) => (
+            <span class="ch">{ch === ' ' ? ' ' : ch}</span>
+          ))}</span></span>
+          <span class="h1b__line h1b__line--a" aria-hidden="true" data-line-a><span data-hl><span class="gw gw--gs">{w1}</span> {r1.join(' ')}</span></span>
+          <span class="h1b__line h1b__line--b" aria-hidden="true" data-line-b><span data-hl><span class="gw gw--ca">{w2}</span> {r2.join(' ')}</span></span>
+        </h1>
+        <p class="hero__sub" data-hf>{heroApply.subhead}</p>
+        <div class="hero__cta" data-hf>
+          <button class="cta cta--lg" type="button" data-open-request>
+            <span>{heroApply.cta}</span>
+            <span class="cta__arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero__shade" aria-hidden="true" data-shade></div>
+</section>

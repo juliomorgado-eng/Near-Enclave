@@ -1,0 +1,26 @@
+---
+// Dark → light hand-off drawn with lines only: the dot bands of v4b-near-1a translated into
+// vertical hairlines. Runs of lines hang from the dark edge; their length ramps like a halftone,
+// so the tone dissolves into the light section. Lines grow with the scroll.
+const N = 150;
+let s = 11;
+const rnd = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+const lines: { x: number; l: number; w: number }[] = [];
+let i = 0;
+while (i < N) {
+  const run = 5 + Math.round(rnd() * 16);
+  const level = 0.25 + rnd() * 0.75;
+  for (let k = 0; k < run && i < N; k++, i++) {
+    const ramp = 1 - Math.abs(k / Math.max(1, run - 1) - 0.5) * 1.2;
+    const l = Math.max(0.06, Math.min(1, level * (0.45 + ramp * 0.55) + (rnd() - 0.5) * 0.12));
+    lines.push({ x: i * 8 + 4, l: Math.round(l * 1000) / 10, w: level > 0.8 && ramp > 0.7 ? 2 : 1 });
+  }
+}
+---
+<div class="band t-light" data-tone="light" aria-hidden="true" data-band>
+  <svg class="band__svg" viewBox="0 0 1200 100" preserveAspectRatio="none" focusable="false">
+    {lines.map((ln, k) => (
+      <line class:list={['band__l', k % 2 && 'band__l--odd']} x1={ln.x} y1="0" x2={ln.x} y2={ln.l} stroke-width={ln.w} />
+    ))}
+  </svg>
+</div>

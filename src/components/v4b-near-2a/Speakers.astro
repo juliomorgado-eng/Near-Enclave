@@ -1,0 +1,24 @@
+---
+import { speakers } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// Only the first sentence of speakers.body ("Speakers to be announced."), as in 1a.
+const body = speakers.body.split('. ')[0] + '.';
+// Four stipple busts (decorative), a band of scrambled green squares across the eyes.
+---
+<section id="speakers" class="sec speakers" aria-labelledby="speakers-title">
+  <div class="wrap speakers__grid">
+    <div class="speakers__head">
+      <Kicker i={7} />
+      <h2 class="h2 speakers__h2" id="speakers-title" data-split>{speakers.h2}</h2>
+    </div>
+    <p class="body speakers__p" data-fade>{body}</p>
+    <div class="speakers__row" aria-hidden="true">
+      {[0, 1, 2, 3].map((i) => (
+        <div class="spk" data-fade>
+          <div class="slot spk__slot" data-slot="speakers" data-sub={i}></div>
+          <span class="spk__i label">0{i + 1}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

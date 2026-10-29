@@ -1,0 +1,29 @@
+---
+import { stats } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// Night scene (film 03, "Speed"): one plane per figure, traffic streaming through them.
+// The plane of the figure in view lights up. Slot is sticky on the left; figures scroll right.
+---
+<section id="stats" class="sec stats is-night" data-stats>
+  <div class="wrap stats__grid">
+    <div class="stats__side">
+      <Kicker i={2} />
+      <div class="slot stats__slot" data-slot="stats" aria-hidden="true"></div>
+    </div>
+    <ul class="stats__list" role="list">
+      {stats.map((s, i) => (
+        <li class="stat" data-stat={i} data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>
+          <p class="stat__num">
+            <span class="sr-only">{s.value}</span>
+            <span class="stat__val" aria-hidden="true" data-stat-val>{s.value}</span>
+          </p>
+          <span class="ruler" aria-hidden="true" data-ruler></span>
+          <div class="stat__meta">
+            <p class="stat__label">{s.label}</p>
+            <p class="stat__src label">{s.source}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

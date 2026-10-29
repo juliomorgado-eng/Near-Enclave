@@ -1,0 +1,14 @@
+---
+// Four line circles in a row; they trace, then fill one by one with the four accents (scroll-tied).
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const acc = ['green', 'sky', 'coral', 'amber'];
+---
+<svg class={`dv ${cls}`} viewBox="0 0 172 40" aria-hidden="true" focusable="false" data-dv>
+  {acc.map((a, i) => (
+    <g>
+      <circle class={`dv__f dv__f--${a}`} cx={20 + i * 44} cy="20" r="17.5" data-dv-fill />
+      <circle class="dv__c" cx={20 + i * 44} cy="20" r="17.5" pathLength="1" data-draw data-dv-ring />
+    </g>
+  ))}
+</svg>

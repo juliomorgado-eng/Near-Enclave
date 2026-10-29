@@ -1,0 +1,56 @@
+---
+// Frontal New York skyline in a circle, ink on cream, traced with the scroll (over a short distance).
+// 2A adds the instrument around it: a counter-turning dashed ring, cardinal marks and crosshair ticks,
+// the event line set on the top arc, lit windows, beacons on the three spires and a comet on the rim.
+import { skyline, skyLights, SKY_TIPS } from './geo';
+import { heroApply } from '../../content/copy';
+interface Props { uid: string; class?: string }
+const { uid, class: cls = '' } = Astro.props;
+const sky = skyline();
+const lights = skyLights();
+const g = `sg-${uid}`;
+const c = `sc-${uid}`;
+const arc = `sa-${uid}`;
+const f = (n: number) => Math.round(n * 10) / 10;
+let ticks = '';
+for (let i = 0; i < 96; i++) {
+  const a = (i / 96) * Math.PI * 2;
+  const long = i % 8 === 0;
+  const r0 = long ? 188 : 192, r1 = long ? 199 : 196;
+  ticks += `M${f(200 + r0 * Math.cos(a))} ${f(200 + r0 * Math.sin(a))}L${f(200 + r1 * Math.cos(a))} ${f(200 + r1 * Math.sin(a))}`;
+}
+const card = [0, 90, 180, 270].map((d) => (d * Math.PI) / 180);
+let cross = '';
+for (const a of card) cross += `M${f(200 + 204 * Math.cos(a))} ${f(200 + 204 * Math.sin(a))}L${f(200 + 216 * Math.cos(a))} ${f(200 + 216 * Math.sin(a))}`;
+// top arc for the event line, 196° → 344° through the top
+const p0 = [200 + 211 * Math.cos((196 * Math.PI) / 180), 200 + 211 * Math.sin((196 * Math.PI) / 180)];
+const p1 = [200 + 211 * Math.cos((344 * Math.PI) / 180), 200 + 211 * Math.sin((344 * Math.PI) / 180)];
+const line = heroApply.eyebrowParts.join('  ·  ');
+---
+<svg class={`sky ${cls}`} viewBox="0 0 400 400" overflow="visible" aria-hidden="true" focusable="false" data-sky>
+  <defs>
+    <linearGradient id={g} gradientUnits="userSpaceOnUse" x1="60" y1="340" x2="340" y2="60">
+      <stop offset="0" stop-color="#65d56e" />
+      <stop offset="1" stop-color="#59c2e8" />
+    </linearGradient>
+    <clipPath id={c}><circle cx="200" cy="200" r="183" /></clipPath>
+    <path id={arc} d={`M${f(p0[0])} ${f(p0[1])}A211 211 0 0 1 ${f(p1[0])} ${f(p1[1])}`} fill="none" />
+  </defs>
+  <text class="sky__arc" data-fade data-sky-txt><textPath href={`#${arc}`} startOffset="50%" text-anchor="middle">{line}</textPath></text>
+  <path class="sky__cross" d={cross} data-fade data-sky-x />
+  <g data-sky-spin><path class="sky__ticks" d={ticks} data-fade data-sky-ticks /></g>
+  <g data-sky-spin2><circle class="sky__in" cx="200" cy="200" r="172" data-fade data-sky-in /></g>
+  <circle class="sky__ring" cx="200" cy="200" r="184" pathLength="1" data-draw />
+  <circle class="sky__comet" cx="200" cy="200" r="184" pathLength="1" transform="rotate(-90 200 200)" />
+  {card.map((a) => <rect class="sky__card" x={f(200 + 184 * Math.cos(a)) - 3.5} y={f(200 + 184 * Math.sin(a)) - 3.5} width="7" height="7" data-pop data-sky-card />)}
+  <g clip-path={`url(#${c})`}>
+    {sky.fills.map((d) => <path class="sky__face" d={d} fill={`url(#${g})`} data-face />)}
+    {sky.lines.map((s, i) => (
+      <path class={`sky__l${s.dash ? ' is-dash' : ''}${i >= sky.lines.length - 6 && i <= sky.lines.length - 4 ? ' is-wave' : ''}`} d={s.d} stroke-opacity={s.o ?? 1} pathLength={s.dash ? undefined : 1} data-draw={s.dash ? undefined : ''} data-fade={s.dash ? '' : undefined} />
+    ))}
+    <g class="sky__lights">
+      {lights.map(([x, y], i) => <rect class="sky__lt" x={x} y={y} width="3.4" height="4" style={`--i:${i % 7}`} data-pop data-sky-lt />)}
+    </g>
+    {SKY_TIPS.map(([x, y], i) => <circle class={`sky__bc sky__bc--${i}`} cx={x} cy={y} r="3.2" data-pop data-sky-bc />)}
+  </g>
+</svg>

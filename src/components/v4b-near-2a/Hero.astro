@@ -1,0 +1,32 @@
+---
+import { heroApply } from '../../content/copy';
+// Film title card: lead line, then two 500-weight lines (ink / warm), sub, CTA.
+// The stipple form (an open sphere around a sealed enclave) is drawn into [data-slot].
+const lead = heroApply.h1Lead.replace(/:\s*$/, '');
+---
+<section id="top" class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero__grid">
+    <div class="slot hero__slot" data-slot="hero" aria-hidden="true"></div>
+    <div class="hero__copy">
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__lead" data-hero-in>{lead}<span class="sr-only">:</span></span>
+        {' '}
+        <span class="hero__ln"><span class="hero__li" data-hero-line>{heroApply.h1Lines[0]}</span></span>
+        {' '}
+        <span class="hero__ln hero__ln--2"><span class="hero__li" data-hero-line>{heroApply.h1Lines[1]}</span></span>
+      </h1>
+      <p class="hero__sub" data-hero-in>{heroApply.subhead}</p>
+      <div class="hero__cta" data-hero-in>
+        <button class="btn btn--lg" type="button" data-open-request>
+          <span class="btn__txt">{heroApply.cta}</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+    <ul class="hero__meta label" data-hero-in>
+      {heroApply.eyebrowParts.map((p, i) => (
+        <li class="hero__mi"><span class="hero__mk" aria-hidden="true">0{i + 1}</span>{p}</li>
+      ))}
+    </ul>
+  </div>
+</section>

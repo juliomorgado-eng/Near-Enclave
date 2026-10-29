@@ -1,0 +1,15 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { heroApply } from '../../content/copy';
+---
+<header class="hud" data-hud>
+  <div class="hud__in">
+    <a class="hud__brand" href="#top" aria-label="NEAR, back to top">
+      <NearLogo variant="wordmark" class="hud__logo" label="NEAR" />
+    </a>
+    <button class="cta cta--sm" type="button" data-open-request>
+      <span>{heroApply.cta}</span>
+      <span class="cta__arr" aria-hidden="true">→</span>
+    </button>
+  </div>
+</header>

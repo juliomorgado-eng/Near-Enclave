@@ -1,0 +1,35 @@
+---
+import { speakers } from '../../content/copy';
+// Only "Speakers to be announced."
+const body = speakers.body.split('. ')[0] + '.';
+const f = (n: number) => Math.round(n * 10) / 10;
+let ticks = '';
+for (let i = 0; i < 72; i++) {
+  const a = (i / 72) * Math.PI * 2;
+  const long = i % 6 === 0;
+  const r0 = long ? 90 : 93, r1 = 98;
+  ticks += `M${f(100 + r0 * Math.cos(a))} ${f(100 + r0 * Math.sin(a))}L${f(100 + r1 * Math.cos(a))} ${f(100 + r1 * Math.sin(a))}`;
+}
+// an empty seat: head and shoulders traced in one line
+const sil = 'M58 172C60 140 76 124 100 124C124 124 140 140 142 172M100 116C82 116 72 102 72 84C72 64 84 52 100 52C116 52 128 64 128 84C128 102 118 116 100 116Z';
+const acc = ['green', 'sky', 'coral', 'amber'];
+---
+<section class="speakers panel" id="speakers" aria-labelledby="speakers-title">
+  <div class="wrap g12 speakers__grid">
+    <div class="speakers__head">
+      <h2 class="h2 speakers__h2" id="speakers-title" data-rise>{speakers.h2}</h2>
+      <p class="speakers__p" data-rise>{body}</p>
+    </div>
+    <div class="seats" aria-hidden="true">
+      {acc.map((a, i) => (
+        <svg class={`seat seat--${a}`} viewBox="0 0 200 200" focusable="false" data-seat>
+          <defs><clipPath id={`seat-${i}`}><circle cx="100" cy="100" r="84" /></clipPath></defs>
+          <g class="seat__spin" style={`animation-direction:${i % 2 ? 'reverse' : 'normal'}`}><path class="seat__ticks" d={ticks} /></g>
+          <circle class="seat__ring" cx="100" cy="100" r="85" pathLength="1" data-draw />
+          <g clip-path={`url(#seat-${i})`}><path class="seat__sil" d={sil} pathLength="1" data-draw /></g>
+          <circle class="seat__dot" cx={100 + 85 * Math.cos(-0.8 + i)} cy={100 + 85 * Math.sin(-0.8 + i)} r="5" />
+        </svg>
+      ))}
+    </div>
+  </div>
+</section>

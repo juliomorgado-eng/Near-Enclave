@@ -1,0 +1,109 @@
+---
+import { heroApply } from '../../content/copy';
+// The enclave as a flat technical elevation. Many grey input lines (ciphertext) run into the
+// monolith on circuit bends; a scan line works the face; exactly one green line leaves it (the
+// verified result). Everything is a stroke: it draws itself in, then the packets loop.
+const X0 = 330, X1 = 560, Y0 = 200, Y1 = 514;
+const IN = 12; // face inset
+const fx0 = X0 + IN, fx1 = X1 - IN, fy0 = Y0 + IN, fy1 = Y1 - IN;
+const OUT_Y = 357;
+
+const inputs = Array.from({ length: 8 }, (_, k) => {
+  const y = 96 + k * 80;
+  const yt = 236 + k * 36;
+  const dy = Math.abs(yt - y);
+  const bx = 318 - dy;
+  return { d: `M0 ${y}H${bx}L318 ${yt}H${X0}`, yt, dur: (3.4 + ((k * 7) % 5) * 0.45).toFixed(2), delay: (-((k * 1.37) % 3.2)).toFixed(2) };
+});
+
+const cols = 6, rows = 8;
+const grid: string[] = [];
+for (let c = 1; c < cols; c++) {
+  const x = fx0 + ((fx1 - fx0) * c) / cols;
+  grid.push(`M${x.toFixed(1)} ${fy0}V${fy1}`);
+}
+for (let r = 1; r < rows; r++) {
+  const y = fy0 + ((fy1 - fy0) * r) / rows;
+  grid.push(`M${fx0} ${y.toFixed(1)}H${fx1}`);
+}
+
+// ground hatch under the monolith
+let hatch = '';
+for (let x = 312; x <= 580; x += 12) hatch += `M${x} ${Y1}l-8 8`;
+
+const tick = (x: number, y: number) => `M${x - 5} ${y + 5}L${x + 5} ${y - 5}`;
+const dims = [
+  // top dimension: extension lines, dimension line, slash ticks
+  `M${X0} ${Y0 - 8}V${Y0 - 40}M${X1} ${Y0 - 8}V${Y0 - 40}`,
+  `M${X0 - 10} ${Y0 - 28}H${X1 + 10}`,
+  tick(X0, Y0 - 28) + tick(X1, Y0 - 28),
+  // right dimension
+  `M${X1 + 8} ${Y0}H${X1 + 48}M${X1 + 8} ${Y1}H${X1 + 48}`,
+  `M${X1 + 36} ${Y0 - 10}V${Y1 + 10}`,
+  tick(X1 + 36, Y0) + tick(X1 + 36, Y1),
+];
+const axisX = (X0 + X1) / 2;
+---
+<section id="top" class="sec hero t-dark" data-tone="dark" data-hero aria-labelledby="hero-title">
+  <div class="wrap hero__grid">
+    <div class="hero__copy" data-hero-copy>
+      <p class="hero__eyebrow label" data-hero-fade>
+        <span class="kick" aria-hidden="true"></span>
+        {heroApply.eyebrowParts.map((p, i) => (
+          <>
+            {i > 0 && <span class="hero__dot" aria-hidden="true">·</span>}
+            <span>{p}</span>
+          </>
+        ))}
+      </p>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__kicker" data-hero-fade>{heroApply.h1Lead}</span>
+        {' '}
+        <span class="hero__line"><span class="hero__li" data-hero-line>{heroApply.h1Lines[0]}</span></span>
+        {' '}
+        <span class="hero__line hero__line--b"><span class="hero__li" data-hero-line>{heroApply.h1Lines[1]}</span></span>
+      </h1>
+      <p class="hero__sub" data-hero-fade>{heroApply.subhead}</p>
+      <div class="hero__cta" data-hero-fade>
+        <button class="btn btn--lg" type="button" data-open-request>
+          <span class="btn__txt">{heroApply.cta}</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+        <span class="hatch" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="hero__stage" aria-hidden="true">
+      <svg class="encl" viewBox="160 80 480 560" preserveAspectRatio="xMidYMid slice" overflow="hidden" focusable="false" data-encl data-px="slice" style="--px:1.1">
+        <defs>
+          <clipPath id="encl-face"><rect x={fx0} y={fy0} width={fx1 - fx0} height={fy1 - fy0} /></clipPath>
+        </defs>
+        <g class="encl__in">
+          {inputs.map((l) => <path class="encl__wire" d={l.d} pathLength="1" data-draw />)}
+          {inputs.map((l) => (
+            <path class="encl__pk" d={l.d} pathLength="1" style={`animation-duration:${l.dur}s;animation-delay:${l.delay}s`} />
+          ))}
+          {inputs.map((l) => <rect class="encl__node" x={X0 - 3} y={l.yt - 3} width="6" height="6" data-pop />)}
+        </g>
+        <path class="encl__dim" d={dims.join('')} pathLength="1" data-draw />
+        <path class="encl__axis" d={`M${axisX} ${Y0 - 56}V${Y1 + 30}`} data-fade />
+        <path class="encl__ground" d={`M270 ${Y1}H640`} pathLength="1" data-draw />
+        <path class="encl__hatch" d={hatch} data-fade />
+        <g class="encl__face">
+          <path class="encl__grid" d={grid.join('')} data-fade />
+          <g clip-path="url(#encl-face)">
+            <g class="encl__scan" style={`--scan:${fy1 - fy0}px`}>
+              <path class="encl__scanl" d={`M${fx0} ${fy0}H${fx1}`} />
+            </g>
+          </g>
+          <rect class="encl__inner" x={fx0} y={fy0} width={fx1 - fx0} height={fy1 - fy0} pathLength="1" data-draw />
+        </g>
+        <rect class="encl__slab" x={X0} y={Y0} width={X1 - X0} height={Y1 - Y0} pathLength="1" data-draw />
+        <path class="encl__out" d={`M${X1} ${OUT_Y}H700`} pathLength="1" data-draw />
+        <path class="encl__outpk" d={`M${X1} ${OUT_Y}H700`} pathLength="1" />
+        <rect class="encl__node encl__node--out" x={X1 - 4} y={OUT_Y - 4} width="8" height="8" data-pop />
+      </svg>
+    </div>
+  </div>
+  <div class="hero__shade" aria-hidden="true" data-hero-shade></div>
+</section>

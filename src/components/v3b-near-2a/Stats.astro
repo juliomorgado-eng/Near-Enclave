@@ -1,0 +1,27 @@
+---
+import { stats } from '../../content/copy';
+// Wide screens: the four figures travel sideways along one long ruler while the section is
+// pinned; a green line measures the distance covered. Narrow screens: a plain stack.
+---
+<section id="stats" class="sec stats t-dark" data-tone="dark" data-stats aria-label="Stats">
+  <div class="stats__pin">
+    <div class="stats__track" data-track>
+      <ul class="stats__list" role="list">
+        {stats.map((s) => (
+          <li class="st" data-st data-n={s.number} data-n2={s.numberTo ?? ''} data-d={s.decimals} data-pre={s.prefix} data-suf={s.suffix}>
+            <span class="st__rule" aria-hidden="true" data-st-rule></span>
+            <p class="st__num">
+              <span class="sr-only">{s.value}</span>
+              <span class="st__val" aria-hidden="true" data-val>{s.value}</span>
+            </p>
+            <div class="st__meta">
+              <p class="st__label">{s.label}</p>
+              <p class="st__src label">{s.source}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <div class="stats__ruler" aria-hidden="true"><span class="stats__fill" data-fill></span></div>
+    </div>
+  </div>
+</section>

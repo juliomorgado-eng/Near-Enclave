@@ -1,0 +1,29 @@
+---
+import { stats } from '../../content/copy';
+const acc = ['green', 'sky', 'coral', 'amber'];
+const CELLS = 18;
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<section class="stats panel" id="stats" aria-label="Stats" data-stats>
+  <ul class="wrap stats__row" role="list">
+    {stats.map((s, i) => (
+      <li class={`st st--${acc[i]}`} data-stat data-n={s.number} data-n2={s.numberTo ?? ''} data-dec={s.decimals}>
+        <span class="st__rule" aria-hidden="true" data-rule-x></span>
+        <span class="st__ruler" aria-hidden="true" data-st-ruler></span>
+        <span class="st__head" aria-hidden="true">
+          <span class="st__blk" data-st-blk></span>
+          <span class="st__idx mono" data-st-idx>{pad(i + 1)} / {pad(stats.length)}</span>
+        </span>
+        <p class="st__v">
+          <span class="sr">{s.value}</span>
+          <span class="st__mask" aria-hidden="true"><span class="st__num" data-st-num><span data-val>{s.value}</span></span></span>
+        </p>
+        <div class="px" aria-hidden="true">
+          {Array.from({ length: CELLS }, (_, k) => <span class="px__c" style={k >= CELLS - 4 ? `opacity:${[0.7, 0.48, 0.28, 0.14][k - (CELLS - 4)]}` : undefined}></span>)}
+        </div>
+        <p class="st__l" data-st-txt>{s.label}</p>
+        <p class="st__s mono" data-st-txt>{s.source}</p>
+      </li>
+    ))}
+  </ul>
+</section>

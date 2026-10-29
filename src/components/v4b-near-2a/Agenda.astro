@@ -1,0 +1,26 @@
+---
+import { agenda } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// Four tracks, each with its own stipple form (one shared point pool split four ways):
+// 0 a ring of circulating value, 1 stacked market plates, 2 a sealed enclave, 3 orbiting agents.
+---
+<section id="agenda" class="sec agenda" aria-labelledby="agenda-title">
+  <div class="wrap agenda__grid">
+    <div class="agenda__head">
+      <Kicker i={4} />
+      <h2 class="h2 agenda__h2" id="agenda-title" data-split>{agenda.h2}</h2>
+    </div>
+    <ol class="agenda__list" role="list">
+      {agenda.tracks.map((t, i) => (
+        <li class={`track track--${i}`} data-fade>
+          <div class="track__top">
+            <span class="track__i label" aria-hidden="true">0{i + 1} / 0{agenda.tracks.length}</span>
+            <div class="slot track__slot" data-slot="agenda" data-sub={i} aria-hidden="true"></div>
+          </div>
+          <h3 class="track__h3">{t.h3}</h3>
+          <p class="track__p">{t.body}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

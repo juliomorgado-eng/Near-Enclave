@@ -1,0 +1,22 @@
+---
+import { shift, nav } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// Six permissioned rails route into one account (film scene 02, "Chains"), scrubbed by scroll.
+// Body is shift.body joined (= shiftParagraph); the third sentence carries the weight.
+---
+<section id="shift" class="sec shift" data-shift aria-labelledby="shift-title">
+  <div class="shift__pin" data-shift-pin>
+    <div class="wrap shift__grid">
+      <div class="slot shift__slot" data-slot="shift" aria-hidden="true"></div>
+      <div class="shift__copy">
+        <Kicker i={1} label={nav[0].label} />
+        <h2 class="h2 shift__h2" id="shift-title" data-split>{shift.h2}</h2>
+        <p class="body shift__p" data-fade>
+          {shift.body.map((s, i) => (
+            <><span class={i === 2 ? 'em' : undefined}>{s}</span>{i < shift.body.length - 1 ? ' ' : ''}</>
+          ))}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

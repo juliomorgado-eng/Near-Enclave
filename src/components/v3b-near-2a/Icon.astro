@@ -1,0 +1,21 @@
+---
+// Line icon on the 24-unit NEAR deck grid (same set the v3b-near monolith face used).
+import { ICONS, STROKE } from '../../scripts/v3b-near-2a/icons';
+import nSvg from '../../../public/v3b-near-2a/near-icon-black.svg?raw';
+interface Props { i: number; class?: string; [k: string]: unknown }
+const { i, class: cls, ...rest } = Astro.props;
+const ic = ICONS[i];
+const nPath = /d="([^"]+)"/.exec(nSvg)?.[1] ?? '';
+---
+{ic && (
+  <svg class:list={['ico', cls]} viewBox="-4 -4 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width={STROKE * 0.75} stroke-linecap="square" stroke-linejoin="miter" {...rest}>
+    {'fill' in ic && ic.fill ? (
+      <path d={nPath} transform={`scale(${24 / 73})`} fill="currentColor" stroke="none" />
+    ) : (
+      <>
+        {'paths' in ic && ic.paths.map((d) => <path d={d} />)}
+        {'fills' in ic && (ic.fills ?? []).map((d) => <path d={d} fill="currentColor" stroke="none" />)}
+      </>
+    )}
+  </svg>
+)}

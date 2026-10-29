@@ -1,0 +1,67 @@
+---
+// 2A footer: a closing statement with the CTA, the section index, the event line and contacts,
+// then the event name set edge to edge (outlined, filled with the gradient as the page ends),
+// and a ruled bar with the NEAR wordmark and a way back up. Every string comes from copy.ts.
+import NearLogo from '../shared/NearLogo.astro';
+import Ellipses from './Ellipses.astro';
+import { heroApply as hero, nav, contact } from '../../content/copy';
+const [l1, l2] = hero.h1Lines;
+const name = hero.h1Lead.replace(/:\s*$/, '');
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<footer class="foot" data-dark data-foot>
+  <div class="wrap foot__in">
+    <div class="foot__top">
+      <div class="foot__lead">
+        <Ellipses uid="foot" class="foot__ell" />
+        <p class="foot__h" data-foot-rise>
+          <span class="gw gw--gs">{l1}</span><br />
+          <span class="gw gw--ca">{l2}</span>
+        </p>
+        <button class="cta cta--lg foot__cta" type="button" data-open-request data-foot-rise>
+          <span>{hero.cta}</span>
+          <span class="cta__arr" aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      <nav class="foot__nav" aria-label="Sections" data-foot-rise>
+        <ul role="list">
+          {nav.map((n, i) => (
+            <li>
+              <a class="foot__a" href={`#${n.id}`} data-foot-link>
+                <span class="foot__i mono" aria-hidden="true">{pad(i + 1)}</span>
+                <span class="foot__al">{n.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="foot__info" data-foot-rise>
+        <ul class="foot__ev" role="list">
+          {hero.eyebrowParts.map((p) => <li>{p}</li>)}
+        </ul>
+        <dl class="foot__ct">
+          <div><dt class="mono">Press</dt><dd><a href={`mailto:${contact.press}`}>{contact.press}</a></dd></div>
+          <div><dt class="mono">Sponsorship</dt><dd><a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <p class="foot__word" aria-hidden="true" data-foot-word>
+      <span class="foot__wo" data-foot-fit>{name}</span>
+      <span class="foot__wf" data-foot-fill>{name}</span>
+    </p>
+
+    <div class="foot__bar">
+      <a class="foot__brand" href="#top" aria-label="NEAR, back to top">
+        <NearLogo variant="wordmark" class="foot__logo" label="NEAR" />
+      </a>
+      <span class="foot__rule" aria-hidden="true" data-foot-rule><span class="foot__run"></span></span>
+      <a class="foot__up mono" href="#top" aria-label="Back to top">
+        <span>Back to top</span>
+        <span class="foot__upc" aria-hidden="true">↑</span>
+      </a>
+    </div>
+  </div>
+</footer>

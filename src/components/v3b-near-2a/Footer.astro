@@ -1,0 +1,42 @@
+---
+import { heroApply, formApply, contact } from '../../content/copy';
+import Logo from './Logo.astro';
+// Closing + footer in one dark plate: the apply title is the button, the event facts sit on a
+// hairline row, contacts on the right, and the event name traced in outline across the width.
+const name = heroApply.h1Lead.replace(/:\s*$/, '');
+---
+<footer class="foot t-dark" data-tone="dark" id="apply">
+  <div class="wrap foot__grid">
+    <div class="foot__cta">
+      <h2 class="foot__h2">
+        <button class="foot__btn" type="button" data-open-request>
+          <span class="foot__btxt">{formApply.title}</span>
+          <span class="foot__arr" aria-hidden="true">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square"><path d="M6 24H40M26 10L40 24L26 38" /></svg>
+          </span>
+        </button>
+      </h2>
+      <p class="foot__intro">{formApply.intro}</p>
+    </div>
+    <ul class="foot__contact" role="list">
+      <li><span class="label">Press</span><a href={`mailto:${contact.press}`}>{contact.press}</a></li>
+      <li><span class="label">Sponsorship</span><a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></li>
+    </ul>
+    <ul class="foot__facts" role="list">
+      {heroApply.eyebrowParts.map((p, i) => (
+        <li>{i === 0 && <span class="kick" aria-hidden="true"></span>}{p}</li>
+      ))}
+    </ul>
+  </div>
+  <div class="foot__mark" aria-hidden="true">
+    <svg viewBox="0 0 1200 136" focusable="false" data-mark>
+      <text x="0" y="114" textLength="1200" lengthAdjust="spacing">{name}</text>
+    </svg>
+  </div>
+  <div class="wrap foot__bar">
+    <Logo class="foot__logo" />
+    <a class="foot__top" href="#top" aria-label="Back to top">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" aria-hidden="true"><path d="M12 20V5M5.5 11.5L12 5L18.5 11.5" /></svg>
+    </a>
+  </div>
+</footer>

@@ -3,80 +3,61 @@ import Seo from '../components/shared/Seo.astro';
 import NearLogo from '../components/shared/NearLogo.astro';
 import { hero } from '../content/copy';
 
-// Version tree: each version lists its sub-versions (variants built on top of it).
-const versions = [
-  { id: 'v1', href: '/v1', note: 'NEARCON brand · premium editorial', subs: [] },
-  { id: 'v2', href: '/v2', note: 'near.org system · NEARCON personality', subs: [] },
+// Shortlist: current options. Variants of the same base share a letter (A1, A2).
+const options = [
   {
-    id: 'v3',
-    href: '/v3',
-    note: 'Awwwards concept · SEALED · WebGL',
-    subs: [
-      { id: 'v3A', href: '/v3a', note: 'Aperture · v1 brand × v3', subs: [] },
-      {
-        id: 'v3B',
-        href: '/v3b',
-        note: 'Enclave · monolito de vidrio',
-        subs: [
-          { id: 'v3B · near', href: '/v3b-near', note: 'near.org · oscura · íconos en el monolito · + Format' },
-          { id: 'v3B · NEARCON', href: '/v3b-nearcon', note: 'NEARCON · clara · copy tal cual · + Format' },
-        ],
-      },
-      { id: 'v3C', href: '/v3c', note: 'Two Ledgers · público vs privado', subs: [] },
-      {
-        id: 'v3D',
-        href: '/v3d',
-        note: 'Invitation · keycard',
-        subs: [
-          { id: 'v3D · near', href: '/v3d-near', note: 'near.org · oscura · invitación sellada · + Format' },
-          { id: 'v3D · NEARCON', href: '/v3d-nearcon', note: 'NEARCON · cream · layout editorial · + Format' },
-        ],
-      },
+    id: 'A',
+    note: 'NEARCON · negra · ASCII · barras pixel',
+    items: [
+      { id: 'A1', href: '/v4b-nearcon-1a', note: 'hero izquierda · moneda ASCII · página completa', from: 'v4B · NEARCON 1A' },
+      { id: 'A2', href: '/v4b-nearcon-1b', note: 'hero animado · titular en 4 · ASCII divisor con scroll', from: 'v4B · NEARCON 1B' },
+      { id: 'A3', href: '/v4b-nearcon-2a', note: 'título grande · ASCII protagonista con scroll · secciones claras · footer nuevo', from: 'base A2', isNew: true },
+      { id: 'A4', href: '/v4b-nearcon-2b', note: 'hero y entrada de A2 · título más grande · ASCII grande con scroll · resto de A3', from: 'base A3', isNew: true },
     ],
   },
   {
-    id: 'v4',
-    href: '',
-    note: 'Dirección vectorial · ASCII · pixel · línea',
-    subs: [
-      {
-        id: 'v4A',
-        href: '',
-        note: 'Plano · dibujo técnico lineal que se traza',
-        subs: [
-          { id: 'v4A · near', href: '/v4a-near', note: 'near.org · clara · grilla modular · diagrama de nodos' },
-          {
-            id: 'v4A · NEARCON',
-            href: '/v4a-nearcon',
-            note: 'NEARCON · negra · ilustración en círculos · ríos de dígitos',
-            subs: [{ id: '1A', href: '/v4a-nearcon-1a', note: 'bóveda y ciudad girando · panel cream sube · líneas que se trazan · página completa' }],
-          },
-        ],
-      },
-      {
-        id: 'v4B',
-        href: '',
-        note: 'Módulo · pixel · densidad · ASCII',
-        subs: [
-          {
-            id: 'v4B · near',
-            href: '/v4b-near',
-            note: 'near.org · oscura · halftone de módulos verdes',
-            subs: [{ id: '1A', href: '/v4b-near-1a', note: 'cubo grande · NEAR Enclave 2027 vertical · ciudad pixel · página completa' }, { id: '1B', href: '/v4b-near-1b', note: 'flat · sin pixeles · dots finos · página completa' }],
-          },
-          {
-            id: 'v4B · NEARCON',
-            href: '/v4b-nearcon',
-            note: 'NEARCON · negra · campo ASCII 3D · barras pixel',
-            subs: [
-              { id: '1A', href: '/v4b-nearcon-1a', note: 'hero izquierda · moneda ASCII · página completa' },
-              { id: '1B', href: '/v4b-nearcon-1b', note: 'hero animado · titular en 4 · ASCII divisor con scroll' },
-            ],
-          },
-        ],
-      },
+    id: 'B',
+    note: 'near.org · oscura · módulos verdes',
+    items: [
+      { id: 'B1', href: '/v4b-near-1a', note: 'cubo grande · NEAR Enclave 2027 vertical · ciudad pixel', from: 'v4B · near 1A' },
+      { id: 'B2', href: '/v4b-near-2a', note: 'gráficos de puntos estilo Launch Film · PP Neue Montreal · footer nuevo', from: 'base B1', isNew: true },
     ],
   },
+  {
+    id: 'C',
+    note: 'NEARCON · líneas que se trazan · panel cream',
+    items: [
+      { id: 'C1', href: '/v4a-nearcon-1a', note: 'bóveda y ciudad girando · panel cream sube', from: 'v4A · NEARCON 1A' },
+      { id: 'C2', href: '/v4a-nearcon-2a', note: 'giro más calmo · título vivo · gráfica de mercados animada · footer nuevo', from: 'base C1', isNew: true },
+    ],
+  },
+  {
+    id: 'D',
+    note: 'near.org · enclave / monolito',
+    items: [
+      { id: 'D1', href: '/v3b-near', note: 'oscura · monolito de vidrio 3D con íconos · + Format', from: 'v3B · near' },
+      { id: 'D2', href: '/v3b-near-2a', note: 'flat · solo líneas · oscuro y claro alternado', from: 'base D1', isNew: true },
+    ],
+  },
+];
+
+// Everything else, kept reachable but out of the way.
+const archived = [
+  { id: 'v1', href: '/v1', note: 'NEARCON brand · premium editorial' },
+  { id: 'v2', href: '/v2', note: 'near.org system · NEARCON personality' },
+  { id: 'v3', href: '/v3', note: 'Awwwards concept · SEALED · WebGL' },
+  { id: 'v3A', href: '/v3a', note: 'Aperture · v1 brand × v3' },
+  { id: 'v3B', href: '/v3b', note: 'Enclave · monolito de vidrio' },
+  { id: 'v3B · NEARCON', href: '/v3b-nearcon', note: 'NEARCON · clara · copy tal cual · + Format' },
+  { id: 'v3C', href: '/v3c', note: 'Two Ledgers · público vs privado' },
+  { id: 'v3D', href: '/v3d', note: 'Invitation · keycard' },
+  { id: 'v3D · near', href: '/v3d-near', note: 'near.org · oscura · invitación sellada · + Format' },
+  { id: 'v3D · NEARCON', href: '/v3d-nearcon', note: 'NEARCON · cream · layout editorial · + Format' },
+  { id: 'v4A · near', href: '/v4a-near', note: 'near.org · clara · grilla modular · diagrama de nodos' },
+  { id: 'v4A · NEARCON', href: '/v4a-nearcon', note: 'NEARCON · negra · ilustración en círculos · ríos de dígitos' },
+  { id: 'v4B · near', href: '/v4b-near', note: 'near.org · oscura · halftone de módulos verdes' },
+  { id: 'v4B · near 1B', href: '/v4b-near-1b', note: 'flat · sin pixeles · dots finos · página completa' },
+  { id: 'v4B · NEARCON', href: '/v4b-nearcon', note: 'NEARCON · negra · campo ASCII 3D · barras pixel' },
 ];
 ---
 <!doctype html>
@@ -115,9 +96,18 @@ const versions = [
       .subs { border-left: 1px solid #333; margin-left: 32px; }
       .subs a { padding-block: 14px; }
       .subs a strong { font-size: clamp(18px, 2.2vw, 24px); }
-      .subs .subs a strong { font-size: 18px; }
-      .subs .subs a strong::before { content: '↳ '; color: var(--accent); }
-      .new { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: var(--accent); padding: 2px 6px; }
+      a small, .archive summary span { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: rgb(235 227 211 / .4); }
+      a small { margin-left: auto; }
+      .new { font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); background: var(--accent); padding: 2px 6px; font-style: normal; }
+      .archive summary {
+        cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 12px;
+        font-family: ui-monospace, monospace; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+      }
+      .archive summary::-webkit-details-marker { display: none; }
+      .archive summary::before { content: '+'; color: var(--accent); }
+      .archive[open] summary::before { content: '−'; }
+      .archive[open] summary { margin-bottom: 16px; }
+      .archive a strong { font-size: 18px; min-width: 9ch; }
       @media (max-width: 600px) {
         .subs { margin-left: 16px; }
         a { padding: 16px; }
@@ -128,39 +118,33 @@ const versions = [
     <main>
       <div class="logo"><NearLogo /></div>
       <h1>{hero.h1}</h1>
-      <p class="kicker">Design directions · versiones y sub-versiones</p>
+      <p class="kicker">Opciones de diseño</p>
       <ul class="tree">
-        {versions.map((v) => (
+        {options.map((o) => (
           <li>
-            {v.href ? <a href={v.href}><strong>{v.id}</strong><span>{v.note}</span></a> : <div class="group"><strong>{v.id}</strong><span>{v.note}</span></div>}
-            {v.subs.length > 0 && (
-              <ul class="subs">
-                {v.subs.map((s) => (
-                  <li>
-                    {s.href ? <a href={s.href}><strong>{s.id}</strong><span>{s.note}</span></a> : <div class="group"><strong>{s.id}</strong><span>{s.note}</span></div>}
-                    {s.subs.length > 0 && (
-                      <ul class="subs">
-                        {s.subs.map((ss) => (
-                          <li>
-                            <a href={ss.href}><strong>{ss.id}</strong><span>{ss.note}</span>{!ss.subs && <em class="new">nuevo</em>}</a>
-                            {ss.subs && (
-                              <ul class="subs">
-                                {ss.subs.map((x) => (
-                                  <li><a href={x.href}><strong>{x.id}</strong><span>{x.note}</span><em class="new">nuevo</em></a></li>
-                                ))}
-                              </ul>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </li>
-                ))}
-              </ul>
+            {o.href ? (
+              <a href={o.href}><strong>{o.id}</strong><span>{o.note}</span><small>{o.from}</small></a>
+            ) : (
+              <>
+                <div class="group"><strong>{o.id}</strong><span>{o.note}</span></div>
+                <ul class="subs">
+                  {o.items.map((i) => (
+                    <li><a href={i.href}><strong>{i.id}</strong><span>{i.note}</span>{i.isNew && <em class="new">nuevo</em>}<small>{i.from}</small></a></li>
+                  ))}
+                </ul>
+              </>
             )}
           </li>
         ))}
       </ul>
+      <details class="archive">
+        <summary>Archivados <span>{archived.length}</span></summary>
+        <ul class="tree">
+          {archived.map((a) => (
+            <li><a href={a.href}><strong>{a.id}</strong><span>{a.note}</span></a></li>
+          ))}
+        </ul>
+      </details>
     </main>
   </body>
 </html>
