@@ -1,0 +1,62 @@
+---
+import '../styles/v4b-near-2a.css';
+
+import { metaApply } from '../content/copy';
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v4b-near-2a/Header.astro';
+import Hero from '../components/v4b-near-2a/Hero.astro';
+import Shift from '../components/v4b-near-2a/Shift.astro';
+import Stats from '../components/v4b-near-2a/Stats.astro';
+import Format from '../components/v4b-near-2a/Format.astro';
+import Agenda from '../components/v4b-near-2a/Agenda.astro';
+import Audience from '../components/v4b-near-2a/Audience.astro';
+import Partners from '../components/v4b-near-2a/Partners.astro';
+import Speakers from '../components/v4b-near-2a/Speakers.astro';
+import Closing from '../components/v4b-near-2a/Closing.astro';
+import Faq from '../components/v4b-near-2a/Faq.astro';
+import Footer from '../components/v4b-near-2a/Footer.astro';
+import RequestModal from '../components/v4b-near-2a/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="v4bn2a">
+  <head>
+    <Seo themeColor="#151412" description={metaApply.description} />
+    <link rel="preload" href="/v4b-near-2a/fonts/PPNeueMontreal-Medium.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/v4b-near-2a/fonts/PPNeueMontreal-Regular.woff2" as="font" type="font/woff2" crossorigin />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('v4bn2a-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('v4bn2a-motion');
+        // Safety net: if the bundle never boots, show the static page.
+        setTimeout(function () {
+          if (window.__v4bn2aready) return;
+          d.classList.remove('v4bn2a-motion');
+          d.classList.add('v4bn2a-failsafe');
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <canvas class="film" data-film aria-hidden="true"></canvas>
+    <Header />
+    <main id="main" class="sheet">
+      <Hero />
+      <Shift />
+      <Stats />
+      <Format />
+      <Agenda />
+      <Audience />
+      <Partners />
+      <Speakers />
+      <Closing />
+      <Faq />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v4b-near-2a/main.ts';
+    </script>
+  </body>
+</html>

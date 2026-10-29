@@ -1,0 +1,52 @@
+---
+import { heroApply, nav, contact } from '../../content/copy';
+import Logo from './Logo.astro';
+// The ink surround under the sheet, like the film's player rail: title + CTA, a chapter strip
+// (nav anchors, same indices as the section kickers), contacts, then the closing shot: the
+// NEAR logo assembles from stipple and resolves solid (film scene 05).
+const IDX: Record<string, number> = { shift: 1, format: 3, agenda: 4, audience: 5, partners: 6, faq: 9 };
+const lead = heroApply.h1Lead.replace(/:\s*$/, '');
+---
+<footer class="ft is-ink" data-ft>
+  <div class="ft__in">
+    <div class="ft__top">
+      <p class="ft__title" aria-hidden="true">
+        <span>{heroApply.h1Lines[0]}</span>
+        <span class="ft__warm">{heroApply.h1Lines[1]}</span>
+      </p>
+      <div class="ft__aside">
+        <ul class="ft__meta label" role="list">
+          {heroApply.eyebrowParts.map((p) => <li>{p}</li>)}
+        </ul>
+        <button class="btn btn--lg btn--green" type="button" data-open-request>
+          <span class="btn__txt">{heroApply.cta}</span>
+          <span class="btn__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="ft__chap" aria-label="Sections">
+      {nav.map((n) => (
+        <a class="chap" href={`#${n.id}`} data-chap={n.id}>
+          <span class="chap__i">{String(IDX[n.id] ?? 0).padStart(2, '0')}</span>
+          <span class="chap__t">{n.label}</span>
+        </a>
+      ))}
+    </nav>
+
+    <div class="ft__contact">
+      <p class="ft__c"><span class="label">Press</span><a href={`mailto:${contact.press}`}>{contact.press}</a></p>
+      <p class="ft__c"><span class="label">Sponsorship</span><a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></p>
+    </div>
+
+    <div class="ft__mark">
+      <div class="slot ft__slot" data-slot="footer" aria-hidden="true"></div>
+      <Logo class="ft__logo" label={`NEAR, ${lead}`} />
+    </div>
+
+    <div class="ft__base label">
+      <span>{lead}</span>
+      <a class="ft__top-link" href="#top">Back to top <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>

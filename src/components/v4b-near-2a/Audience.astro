@@ -1,0 +1,23 @@
+---
+import { audience } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// Seats in rows around one stage; a row lights green as its line of the list passes.
+---
+<section id="audience" class="sec audience" data-audience aria-labelledby="audience-title">
+  <div class="wrap audience__grid">
+    <div class="audience__head">
+      <Kicker i={5} />
+      <h2 class="h2 audience__h2" id="audience-title" data-split>{audience.h2}</h2>
+      <p class="body audience__p" data-fade>{audience.body}</p>
+      <div class="slot audience__slot" data-slot="audience" aria-hidden="true"></div>
+    </div>
+    <ol class="audience__list" role="list">
+      {audience.list.map((item, i) => (
+        <li class="aud" data-aud={i} data-fade>
+          <span class="aud__i label" aria-hidden="true">0{i + 1}</span>
+          <span class="aud__t">{item}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

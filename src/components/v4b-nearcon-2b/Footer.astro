@@ -1,0 +1,68 @@
+---
+import NearLogo from '../shared/NearLogo.astro';
+import { heroApply, nav, contact } from '../../content/copy';
+// 2A footer: the dark bookend to the hero. Only existing content: the event name, the eyebrow
+// parts, the section index (copy.nav), the press/sponsorship contacts, the apply CTA and the
+// NEAR logo. Layout: mono-labelled 12-col grid over hairlines, a full-width display wordmark
+// that traces in, and a base row with the logo and a back-to-top control.
+const lead = heroApply.h1Lead.replace(/:\s*$/, '');
+const yearAt = lead.lastIndexOf(' ');
+// the tagline (hero h1 lines, same display treatment as the hero) heads the CTA column
+const [l1, l2] = heroApply.h1Lines.map((s) => s.replace(/,\s*$/, ''));
+const [w1, ...r1] = l1.split(' ');
+const [w2, ...r2] = l2.split(' ');
+---
+<footer class="foot" data-dark>
+  <div class="wrap">
+    <div class="foot__top">
+      <span class="foot__ln" aria-hidden="true" data-rule-x></span>
+      <ul class="foot__meta mono" role="list">
+        {heroApply.eyebrowParts.map((p) => <li>{p}</li>)}
+      </ul>
+    </div>
+
+    <div class="foot__grid">
+      <div class="foot__col foot__col--cta">
+        <p class="foot__lb mono" aria-hidden="true">01</p>
+        <p class="foot__tag">
+          <span class="foot__tl"><span class="gw gw--gs">{w1}</span> {r1.join(' ')}</span>
+          <span class="foot__tl"><span class="gw gw--ca">{w2}</span> {r2.join(' ')}</span>
+        </p>
+        <button class="cta cta--lg" type="button" data-open-request>
+          <span>{heroApply.cta}</span>
+          <span class="cta__arrow" aria-hidden="true">→</span>
+        </button>
+      </div>
+      <nav class="foot__col foot__col--nav" aria-label="Sections">
+        <p class="foot__lb mono" aria-hidden="true">02</p>
+        <ul class="foot__nav" role="list">
+          {nav.map((n) => (
+            <li><a class="foot__a" href={`#${n.id}`}><span>{n.label}</span></a></li>
+          ))}
+        </ul>
+      </nav>
+      <div class="foot__col foot__col--contact">
+        <p class="foot__lb mono" aria-hidden="true">03</p>
+        <dl class="foot__dl">
+          <div><dt class="mono">Press</dt><dd><a class="foot__a" href={`mailto:${contact.press}`}><span>{contact.press}</span></a></dd></div>
+          <div><dt class="mono">Sponsorship</dt><dd><a class="foot__a" href={`mailto:${contact.sponsorship}`}><span>{contact.sponsorship}</span></a></dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <p class="foot__mark" aria-hidden="true" data-foot-mark>
+      <span class="foot__mk">{lead.slice(0, yearAt)}</span> <span class="foot__mk foot__mk--y">{lead.slice(yearAt + 1)}</span>
+    </p>
+
+    <div class="foot__base">
+      <span class="foot__ln" aria-hidden="true" data-rule-x></span>
+      <a class="foot__brand" href="#top" aria-label="NEAR, back to top">
+        <NearLogo variant="wordmark" class="foot__logo" label="NEAR" />
+      </a>
+      <a class="foot__top-btn mono" href="#top">
+        <span>Back to top</span>
+        <span class="foot__arr" aria-hidden="true">↑</span>
+      </a>
+    </div>
+  </div>
+</footer>

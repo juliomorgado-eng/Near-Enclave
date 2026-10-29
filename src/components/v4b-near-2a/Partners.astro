@@ -1,0 +1,25 @@
+---
+import { partners } from '../../content/copy';
+import Kicker from './Kicker.astro';
+---
+<section id="partners" class="sec partners" aria-labelledby="partners-title">
+  <div class="wrap partners__grid">
+    <div class="partners__head">
+      <Kicker i={6} />
+      <h2 class="h2 partners__h2" id="partners-title" data-split>{partners.h2}</h2>
+    </div>
+    <p class="body partners__p" data-fade>{partners.body}</p>
+    {partners.groups.map((g, gi) => (
+      <div class={`pgroup pgroup--${gi}`} data-fade>
+        <h3 class="pgroup__h3 label">{g.h3}</h3>
+        <ul class="pgroup__list" role="list">
+          {g.logos.map((l) => (
+            <li class="wordmark">
+              {l.logo ? <img class="wordmark__img" src={l.logo} alt={l.name} loading="lazy" /> : <span class="wordmark__name">{l.name}</span>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

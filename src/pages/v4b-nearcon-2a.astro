@@ -1,0 +1,68 @@
+---
+import '@fontsource/poppins/300.css';
+import '@fontsource/poppins/400.css';
+import '@fontsource/poppins/500.css';
+import '@fontsource/roboto-mono/400.css';
+import '@fontsource/roboto-mono/500.css';
+import '../styles/v4b-nearcon-2a.css';
+
+import { metaApply } from '../content/copy';
+import Seo from '../components/shared/Seo.astro';
+import Header from '../components/v4b-nearcon-2a/Header.astro';
+import Hero from '../components/v4b-nearcon-2a/Hero.astro';
+import Shift from '../components/v4b-nearcon-2a/Shift.astro';
+import Stats from '../components/v4b-nearcon-2a/Stats.astro';
+import Format from '../components/v4b-nearcon-2a/Format.astro';
+import Agenda from '../components/v4b-nearcon-2a/Agenda.astro';
+import Audience from '../components/v4b-nearcon-2a/Audience.astro';
+import Partners from '../components/v4b-nearcon-2a/Partners.astro';
+import Speakers from '../components/v4b-nearcon-2a/Speakers.astro';
+import Closing from '../components/v4b-nearcon-2a/Closing.astro';
+import Faq from '../components/v4b-nearcon-2a/Faq.astro';
+import Footer from '../components/v4b-nearcon-2a/Footer.astro';
+import RequestModal from '../components/v4b-nearcon-2a/RequestModal.astro';
+---
+<!doctype html>
+<html lang="en" class="m4">
+  <head>
+    <Seo themeColor="#000000" description={metaApply.description} />
+    <script is:inline>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('m4-js');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) d.classList.add('m4-motion');
+        // Safety net: if the bundle never boots, reveal everything.
+        setTimeout(function () {
+          if (window.__m4ready) return;
+          d.classList.remove('m4-motion');
+          d.classList.add('m4-failsafe');
+        }, 4000);
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main id="main">
+      <!-- cover: the hero stage stays pinned through the runway, then the cream Shift panel rises over it -->
+      <div class="cover" data-cover>
+        <Hero />
+        <div class="runway" aria-hidden="true" data-runway></div>
+        <Shift />
+      </div>
+      <Stats />
+      <Format />
+      <Agenda />
+      <Audience />
+      <Partners />
+      <Speakers />
+      <Closing />
+      <Faq />
+    </main>
+    <Footer />
+    <RequestModal />
+    <script>
+      import '../scripts/v4b-nearcon-2a/main.ts';
+    </script>
+  </body>
+</html>

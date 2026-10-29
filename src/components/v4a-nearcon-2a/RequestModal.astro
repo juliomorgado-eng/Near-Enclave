@@ -1,0 +1,50 @@
+---
+import { formApply as form } from '../../content/copy';
+---
+<div class="rq" data-request-modal hidden role="dialog" aria-modal="true" aria-labelledby="rq-title">
+  <div class="rq__backdrop" data-request-close></div>
+  <div class="rq__panel" data-rq-panel>
+    <div class="rq__head">
+      <span class="rq__brandline" aria-hidden="true"></span>
+      <button class="rq__close" type="button" data-request-close aria-label="Close"><span aria-hidden="true"></span></button>
+    </div>
+    <h2 class="rq__title" id="rq-title">{form.title}</h2>
+    <p class="rq__intro">{form.intro}</p>
+    <form class="rq__form" data-request-form>
+      <div class="rq__fields" data-rq-fields>
+        {form.fields.map((f) => (
+          <div class="field">
+            <input
+              class="field__in"
+              id={`rq-${f.name}`}
+              name={f.name}
+              type={f.type}
+              autocomplete={f.autocomplete}
+              required={f.required}
+              placeholder=" "
+            />
+            <label class="field__lb mono" for={`rq-${f.name}`}>{f.label}</label>
+            <span class="field__ln" aria-hidden="true"></span>
+          </div>
+        ))}
+        <fieldset class="seg">
+          <legend class="seg__lg mono">{form.segment.label}</legend>
+          <div class="seg__opts">
+            {form.segment.options.map((o, i) => (
+              <label class="seg__opt">
+                <input type="radio" name="segment" value={o} required={i === 0} />
+                <span class="mono">{o}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+      </div>
+      <span class="rq__seal" data-rq-seal aria-hidden="true"></span>
+      <button class="btn btn--lg rq__submit" type="submit" data-rq-submit>
+        <span class="btn__txt">{form.submit}</span>
+        <span class="btn__arrow" aria-hidden="true">→</span>
+      </button>
+    </form>
+    <p class="rq__success" data-request-success hidden tabindex="-1" role="status">{form.success}</p>
+  </div>
+</div>

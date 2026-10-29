@@ -1,0 +1,18 @@
+---
+import { closing, formApply } from '../../content/copy';
+import Divider from './Divider.astro';
+const words = formApply.title.split(' ');
+const last = words.pop();
+---
+<section class="closing panel" id="request" aria-labelledby="closing-title">
+  <div class="wrap g12 closing__grid">
+    <Divider class="closing__dv" />
+    <div class="closing__card" data-rise>
+      <h2 class="closing__h2" id="closing-title">
+        <button class="closing__btn" type="button" data-open-request>{words.join(' ')} <span class="mk mk--ca">{last}</span></button>
+      </h2>
+      <p class="closing__p">{closing.body}</p>
+      <span class="closing__arr" aria-hidden="true">→</span>
+    </div>
+  </div>
+</section>

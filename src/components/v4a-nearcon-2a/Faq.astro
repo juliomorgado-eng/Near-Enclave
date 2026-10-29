@@ -1,0 +1,31 @@
+---
+import { faq, contact } from '../../content/copy';
+const half = Math.ceil(faq.items.length / 2);
+const cols = [faq.items.slice(0, half), faq.items.slice(half)];
+---
+<section class="faq panel" id="faq" aria-labelledby="faq-title">
+  <div class="wrap g12 faq__grid">
+    <h2 class="h2 faq__h2" id="faq-title" data-rise>{faq.h2}</h2>
+    {cols.map((col) => (
+      <div class="faq__col" data-rise>
+        {col.map((item) => (
+          <details class="qa">
+            <summary class="qa__q">
+              <span class="qa__t">{item.q}</span>
+              <span class="qa__i" aria-hidden="true"></span>
+            </summary>
+            <div class="qa__a">
+              <p>
+                {item.contact ? (
+                  <Fragment>Press: <a href={`mailto:${contact.press}`}>{contact.press}</a> · Sponsorship: <a href={`mailto:${contact.sponsorship}`}>{contact.sponsorship}</a></Fragment>
+                ) : (
+                  item.a
+                )}
+              </p>
+            </div>
+          </details>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

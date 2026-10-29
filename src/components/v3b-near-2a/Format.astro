@@ -1,0 +1,72 @@
+---
+import { format } from '../../content/copy';
+import Icon from './Icon.astro';
+// "One stage": a flat plan of a single stage and the rows facing it, traced with the scroll
+// (the technical line drawings of v4a-nearcon-1a, flattened). Four equal sectors, one room.
+// Each sentence keeps its small face icon from the original monolith (stage · chat · calendar · key).
+const CX = 300, CY = 380;
+const A0 = 196, A1 = 344, SECT = 4, GAP = 2.6;
+const R0 = 82, DR = 30, ROWS = 8;
+const rad = (a: number) => (a * Math.PI) / 180;
+const pt = (r: number, a: number) => `${(CX + r * Math.cos(rad(a))).toFixed(1)} ${(CY + r * Math.sin(rad(a))).toFixed(1)}`;
+const arc = (r: number, a: number, b: number) => `M${pt(r, a)}A${r} ${r} 0 0 1 ${pt(r, b)}`;
+const span = (A1 - A0) / SECT;
+
+const rows: { d: string; seats: string }[] = [];
+for (let k = 0; k < ROWS; k++) {
+  const r = R0 + k * DR;
+  let d = '';
+  let seats = '';
+  for (let q = 0; q < SECT; q++) {
+    const a = A0 + q * span + GAP / 2;
+    const b = A0 + (q + 1) * span - GAP / 2;
+    d += arc(r, a, b);
+    // seat ticks: one every ~22 units along the row, standing on its inner side
+    const n = Math.max(3, Math.floor((rad(b - a) * r) / 22));
+    for (let j = 0; j <= n; j++) {
+      const t = a + ((b - a) * (j + 0.5)) / (n + 1);
+      seats += `M${pt(r - 1, t)}L${pt(r - 9, t)}`;
+    }
+  }
+  rows.push({ d, seats });
+}
+const RMAX = R0 + (ROWS - 1) * DR;
+const aisles = Array.from({ length: SECT + 1 }, (_, q) => {
+  const a = A0 + q * span;
+  return `M${pt(R0 - 18, a)}L${pt(RMAX + 10, a)}`;
+}).join('');
+const wall = arc(RMAX + 26, A0 - 8, A1 + 8);
+const stage = `M${CX - 78} ${CY - 6}H${CX + 78}V${CY + 30}H${CX - 78}Z`;
+const dim = `M${CX - 78} ${CY + 42}V${CY + 62}M${CX + 78} ${CY + 42}V${CY + 62}M${CX - 88} ${CY + 54}H${CX + 88}M${CX - 83} ${CY + 59}L${CX - 73} ${CY + 49}M${CX + 73} ${CY + 59}L${CX + 83} ${CY + 49}`;
+const axis = `M${CX} ${CY + 70}V${CY - RMAX - 40}`;
+---
+<section id="format" class="sec format t-light" data-tone="light" data-format aria-labelledby="format-title">
+  <div class="wrap format__grid">
+    <h2 class="h2 format__h2" id="format-title" data-split>{format.h2}</h2>
+    <figure class="format__plan" aria-hidden="true">
+      <svg class="plan" viewBox="-40 32 680 470" focusable="false" data-plan data-px style="--px:1">
+        <path class="plan__axis" d={axis} data-fade />
+        <path class="plan__wall" d={wall} pathLength="1" data-draw />
+        {rows.map((r) => (
+          <g class="plan__row">
+            <path class="plan__arc" d={r.d} pathLength="1" data-draw />
+            <path class="plan__seats" d={r.seats} data-fade />
+          </g>
+        ))}
+        <path class="plan__aisle" d={aisles} pathLength="1" data-draw />
+        <path class="plan__stage" d={stage} pathLength="1" data-draw />
+        <circle class="plan__spk" cx={CX} cy={CY + 12} r="5" data-pop />
+        <path class="plan__dim" d={dim} pathLength="1" data-draw />
+      </svg>
+    </figure>
+    <ol class="format__list">
+      {format.body.map((s, i) => (
+        <li class="fl" data-fl>
+          <span class="fl__rule" aria-hidden="true" data-fl-rule></span>
+          <Icon i={5 + i} class="fl__ico" />
+          <p class="fl__t">{s}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

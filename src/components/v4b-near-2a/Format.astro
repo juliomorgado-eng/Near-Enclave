@@ -1,0 +1,18 @@
+---
+import { format, nav } from '../../content/copy';
+import Kicker from './Kicker.astro';
+// A stipple city block grid with one green plate at its centre: one stage, New York.
+const blockA = format.body.slice(0, 2).join(' ');
+const blockB = format.body.slice(2).join(' ');
+---
+<section id="format" class="sec format" data-format aria-labelledby="format-title">
+  <div class="wrap format__grid">
+    <div class="slot format__slot" data-slot="format" aria-hidden="true"></div>
+    <div class="format__head">
+      <Kicker i={3} label={nav[1].label} />
+      <h2 class="h2 format__h2" id="format-title" data-split>{format.h2}</h2>
+    </div>
+    <p class="body format__p format__p--a" data-fade>{blockA}</p>
+    <p class="body format__p format__p--b" data-fade>{blockB}</p>
+  </div>
+</section>

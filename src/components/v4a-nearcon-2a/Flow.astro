@@ -1,0 +1,103 @@
+---
+// The Shift, drawn as a technical chart without numbers. It illustrates the paragraph beside it:
+// payments, collateral and settlement converge on open networks; capital leaves the permissioned
+// rails to follow; privacy is the missing primitive — a dashed slot that the drawing completes last.
+// Everything traces with the scroll; once drawn, runners flow along the lanes and a playhead scans
+// the chart as the reader scrolls. Labels reuse words from the copy only.
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+
+const X0 = 36, Y0 = 470, TOP = 36, RIGHT = 460;
+const CX = 264, CY = 176; // where the lanes meet: open networks
+const PX = 380; // the privacy slot on the output line
+const lanes = [
+  { y: 96, label: 'Payments', tone: 'green', d: `M${X0} 96H112C180 96 196 ${CY} ${CX} ${CY}` },
+  { y: 176, label: 'Collateral', tone: 'sky', d: `M${X0} ${CY}H${CX}` },
+  { y: 256, label: 'Settlement', tone: 'coral', d: `M${X0} 256H112C180 256 196 ${CY} ${CX} ${CY}` },
+];
+// ruler ticks on both axes, ordered from the origin outward
+const ticks: { x1: number; y1: number; x2: number; y2: number; major: boolean }[] = [];
+for (let k = 1; k <= 42; k++) {
+  const major = k % 5 === 0;
+  const y = Y0 - k * 10;
+  if (y > TOP + 6) ticks.push({ x1: X0 - (major ? 9 : 4), y1: y, x2: X0, y2: y, major });
+  const x = X0 + k * 10;
+  if (x < RIGHT - 6) ticks.push({ x1: x, y1: Y0, x2: x, y2: Y0 + (major ? 9 : 4), major });
+}
+ticks.sort((a, b) => (a.x1 - X0 + (Y0 - a.y1)) - (b.x1 - X0 + (Y0 - b.y1)));
+let grid = '';
+for (let x = X0 + 40; x < RIGHT; x += 40) for (let y = TOP + 34; y < Y0; y += 40) grid += `M${x} ${y}h0.01`;
+const RAIL_A = 372, RAIL_B = 388, RAIL_END = 300;
+let sleepers = '';
+for (let x = X0 + 8; x < RAIL_END - 4; x += 12) sleepers += `M${x} ${RAIL_A - 6}V${RAIL_B + 6}`;
+const blocks = [56, 84, 112, 140, 168, 196];
+const follow = `M222 ${RAIL_A - 8}C222 300 ${CX} 262 ${CX} ${CY + 11}`;
+---
+<svg class={`flow ${cls}`} viewBox="0 0 480 500" overflow="visible" aria-hidden="true" focusable="false" data-flow>
+  <defs>
+    <linearGradient id="fl-gs" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#65d56e" /><stop offset="1" stop-color="#59c2e8" /></linearGradient>
+    <linearGradient id="fl-ca" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f98372" /><stop offset="1" stop-color="#f1b139" /></linearGradient>
+    <mask id="fl-m-follow" maskUnits="userSpaceOnUse" x="0" y="0" width="480" height="500">
+      <path d={follow} fill="none" stroke="#fff" stroke-width="8" pathLength="1" data-draw data-f-follow />
+    </mask>
+  </defs>
+
+  <!-- frame: dotted field, axes with arrowheads, ruler ticks -->
+  <path class="flow__grid" d={grid} data-fade data-f-grid />
+  <path class="flow__axis" d={`M${X0} ${Y0}V${TOP}`} pathLength="1" data-draw data-f-axis />
+  <path class="flow__axis" d={`M${X0} ${Y0}H${RIGHT}`} pathLength="1" data-draw data-f-axis />
+  <path class="flow__axis" d={`M${X0 - 5} ${TOP + 7}L${X0} ${TOP}L${X0 + 5} ${TOP + 7}M${RIGHT - 7} ${Y0 - 5}L${RIGHT} ${Y0}L${RIGHT - 7} ${Y0 + 5}`} data-fade data-f-tip />
+  <g class="flow__ticks">
+    {ticks.map((t) => <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} class={t.major ? 'is-major' : undefined} data-fade data-f-tick />)}
+  </g>
+  <rect class="flow__origin" x={X0 - 3} y={Y0 - 3} width="6" height="6" data-pop data-f-origin />
+
+  <!-- permissioned rails: two rails on sleepers, a gate at the end, assets parked on them -->
+  <path class="flow__sleepers" d={sleepers} data-fade data-f-sleeper />
+  <path class="flow__rail" d={`M${X0} ${RAIL_A}H${RAIL_END}`} pathLength="1" data-draw data-f-rail />
+  <path class="flow__rail" d={`M${X0} ${RAIL_B}H${RAIL_END}`} pathLength="1" data-draw data-f-rail />
+  <path class="flow__gate" d={`M${RAIL_END} ${RAIL_A - 14}V${RAIL_B + 14}M${RAIL_END + 6} ${RAIL_A - 14}V${RAIL_B + 14}M${RAIL_END} ${RAIL_A - 6}H${RAIL_END + 6}M${RAIL_END} ${RAIL_B + 6}H${RAIL_END + 6}`} data-fade data-f-gate />
+  {blocks.map((x, i) => <rect class={`flow__blk${i % 3 === 1 ? ' is-full' : ''}`} x={x - 7} y={RAIL_A - 16} width="14" height="14" data-pop data-f-block />)}
+  <text class="flow__lbl" x={X0 + 12} y={RAIL_B + 32} data-fade data-f-lbl>Permissioned rails</text>
+
+  <!-- capital following: a dashed climb from the rails into the open network -->
+  <path class="flow__follow" d={follow} mask="url(#fl-m-follow)" />
+  <path class="flow__run flow__run--amber" d={follow} pathLength="1" data-f-run />
+
+  <!-- the three lanes converging -->
+  {lanes.map((l) => (
+    <g>
+      <path class="flow__lane" d={l.d} pathLength="1" data-draw data-f-lane />
+      <path class={`flow__run flow__run--${l.tone}`} d={l.d} pathLength="1" data-f-run />
+      <rect class={`flow__start flow__start--${l.tone}`} x={X0 - 5} y={l.y - 5} width="10" height="10" data-pop data-f-start />
+      <text class="flow__lbl" x={X0 + 12} y={l.y - 10} data-fade data-f-lbl>{l.label}</text>
+    </g>
+  ))}
+
+  <!-- open networks: the meeting node -->
+  <g class="flow__halo" data-f-halo><circle cx={CX} cy={CY} r="22" data-fade data-f-halo-c /></g>
+  <circle class="flow__node" cx={CX} cy={CY} r="10" data-pop data-f-node />
+  <circle class="flow__core" cx={CX} cy={CY} r="3.5" data-pop data-f-node />
+  <text class="flow__lbl" x={CX} y={CY - 44} text-anchor="middle" data-fade data-f-lbl>Open networks</text>
+
+  <!-- output: to the privacy slot, then onward, onchain -->
+  <path class="flow__out" d={`M${CX + 10} ${CY}H${PX - 24}`} pathLength="1" data-draw data-f-out />
+  <path class="flow__run flow__run--ink" d={`M${CX + 10} ${CY}H${PX - 24}`} pathLength="1" data-f-run />
+  <circle class="flow__ghost" cx={PX} cy={CY} r="24" data-fade data-f-ghost />
+  <circle class="flow__ring" cx={PX} cy={CY} r="24" pathLength="1" transform={`rotate(-90 ${PX} ${CY})`} data-draw data-f-ring />
+  <g data-pop data-f-fill>
+    <circle class="flow__fill" cx={PX} cy={CY} r="16" fill="url(#fl-ca)" />
+    <circle class="flow__key" cx={PX} cy={CY - 3} r="3.4" />
+    <path class="flow__key" d={`M${PX - 1.8} ${CY - 1}L${PX - 3.2} ${CY + 7}H${PX + 3.2}L${PX + 1.8} ${CY - 1}Z`} />
+  </g>
+  <text class="flow__lbl flow__lbl--strong" x={PX} y={CY + 48} text-anchor="middle" data-fade data-f-lbl>Privacy</text>
+  <path class="flow__out2" d={`M${PX + 24} ${CY}H${RIGHT - 8}`} stroke="url(#fl-gs)" pathLength="1" data-draw data-f-out2 />
+  <path class="flow__arrow" d={`M${RIGHT - 10} ${CY - 6}L${RIGHT - 2} ${CY}L${RIGHT - 10} ${CY + 6}`} data-pop data-f-arrow />
+
+  <!-- playhead: scans the chart with the scroll once it is drawn -->
+  <g class="flow__ph" data-f-ph>
+    <line x1="0" y1={TOP + 8} x2="0" y2={Y0} />
+    <path d={`M-5 ${Y0 + 14}L0 ${Y0 + 6}L5 ${Y0 + 14}Z`} />
+  </g>
+  {lanes.map((l) => <circle class={`flow__dot flow__dot--${l.tone}`} cx={X0} cy={l.y} r="4.5" data-f-dot />)}
+</svg>

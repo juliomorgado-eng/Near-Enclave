@@ -1,0 +1,43 @@
+---
+// The single dark breath mid-page: small city and vault turning either side of the heading.
+// 2A: seven seats, laid out as an indexed register — the first (the widest group) reads as a lead
+// line across the band, the other six sit in a 3 × 2 grid. No orphans: the last two words of every
+// line are bound with a no-break space, and text-wrap balances the rest.
+import { audience } from '../../content/copy';
+import Rig from './Rig.astro';
+const acc = ['green', 'sky', 'coral', 'amber'];
+const bind = (t: string) => t.replace(/ (\S+)$/, ' $1');
+const pad = (n: number) => String(n).padStart(2, '0');
+const [lead, ...rest] = audience.list;
+const total = pad(audience.list.length);
+---
+<section class="breath" id="audience" aria-labelledby="audience-title" data-dark data-breath>
+  <div class="wrap breath__top">
+    <div class="breath__orb breath__orb--city" data-orb="city"><Rig kind="city" uid="bc" diag={false} /></div>
+    <div class="breath__head">
+      <h2 class="h2 breath__h2" id="audience-title" data-rise>{bind(audience.h2)}</h2>
+      <p class="breath__p" data-rise>{bind(audience.body)}</p>
+    </div>
+    <div class="breath__orb breath__orb--vault" data-orb="vault"><Rig kind="vault" uid="bv" diag={false} /></div>
+  </div>
+  <ol class="wrap reg" role="list" data-reg>
+    <li class="reg__it reg__it--lead" data-reg-it>
+      <span class="reg__rule" aria-hidden="true" data-rule-x></span>
+      <span class="reg__meta" aria-hidden="true">
+        <span class="reg__b reg__b--green"></span>
+        <span class="reg__n mono">01 / {total}</span>
+      </span>
+      <span class="reg__t">{bind(lead)}</span>
+    </li>
+    {rest.map((item, i) => (
+      <li class="reg__it" data-reg-it>
+        <span class="reg__rule" aria-hidden="true" data-rule-x></span>
+        <span class="reg__meta" aria-hidden="true">
+          <span class={`reg__b reg__b--${acc[(i + 1) % 4]}`}></span>
+          <span class="reg__n mono">{pad(i + 2)} / {total}</span>
+        </span>
+        <span class="reg__t">{bind(item)}</span>
+      </li>
+    ))}
+  </ol>
+</section>

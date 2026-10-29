@@ -1,0 +1,10 @@
+---
+// Film chrome: a bracketed scene index, optionally followed by the nav label.
+interface Props { i: number; label?: string; class?: string }
+const { i, label, class: cls = '' } = Astro.props;
+---
+<p class={`kicker label ${cls}`} data-fade>
+  <span class="kicker__sq" aria-hidden="true"></span>
+  <span class="kicker__i" aria-hidden="true">[ {String(i).padStart(2, '0')} ]</span>
+  {label && <span class="kicker__t">{label}</span>}
+</p>

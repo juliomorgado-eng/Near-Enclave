@@ -1,0 +1,57 @@
+---
+import { shift } from '../../content/copy';
+import { ICONS } from '../../scripts/v3b-near-2a/icons';
+import nSvg from '../../../public/v3b-near-2a/near-icon-black.svg?raw';
+// The monolith's face icons, blown up onto their own 24-unit keyline grid (the construction
+// sheet the NEAR deck icons are drawn on). One icon per sentence draws itself stroke by stroke:
+// link (open networks) · lock on rails (permissioned rails) · lock (privacy) · NEAR mark.
+const PRIM = 2;
+const nPath = /d="([^"]+)"/.exec(nSvg)?.[1] ?? '';
+const NS = 17 / 73; // the mark sits inside the keyline square
+
+const grid: string[] = [];
+for (let k = 1; k < 24; k++) {
+  if (k === 12) continue;
+  grid.push(`M${k} 0V24`, `M0 ${k}H24`);
+}
+let ruler = '';
+for (let k = 0; k <= 24; k++) {
+  const l = k % 6 === 0 ? 1.4 : 0.7;
+  ruler += `M${k} -1.2v-${l}M-1.2 ${k}h-${l}`;
+}
+const icons = [0, 1, 2, 3].map((i) => ICONS[i]);
+---
+<section id="shift" class="sec shift t-light" data-tone="light" data-shift aria-labelledby="shift-title">
+  <div class="shift__pin">
+    <div class="wrap shift__grid">
+      <div class="shift__plate" aria-hidden="true">
+        <svg class="plate" viewBox="-4 -4 32 32" focusable="false" data-plate data-px style="--px:0.07">
+          <path class="plate__ruler" d={ruler} data-fade />
+          <path class="plate__grid" d={grid.join('')} data-fade />
+          <path class="plate__major" d="M12 0V24M0 12H24M0 0L24 24M24 0L0 24" pathLength="1" data-draw />
+          <circle class="plate__major" cx="12" cy="12" r="10" pathLength="1" data-draw />
+          <rect class="plate__major" x="4" y="4" width="16" height="16" pathLength="1" data-draw />
+          <rect class="plate__frame" x="0" y="0" width="24" height="24" pathLength="1" data-draw />
+          {icons.map((ic, i) => (
+            <g class:list={['plate__ico', i === PRIM && 'plate__ico--prim']} data-ico={i}>
+              {'fill' in ic && ic.fill ? (
+                <path d={nPath} transform={`translate(3.5 3.5) scale(${NS})`} style={`stroke-width:calc(var(--ico-w) / ${NS})`} pathLength="1" />
+              ) : (
+                'paths' in ic && ic.paths.map((d) => <path d={d} pathLength="1" />)
+              )}
+            </g>
+          ))}
+        </svg>
+        <div class="shift__prog">
+          {shift.body.map(() => <span data-prog></span>)}
+        </div>
+      </div>
+      <h2 class="h2 shift__h2" id="shift-title" data-split>{shift.h2}</h2>
+      <ol class="shift__body">
+        {shift.body.map((s, i) => (
+          <li class:list={['shift__s', i === PRIM && 'shift__s--prim']} data-s>{s}</li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>

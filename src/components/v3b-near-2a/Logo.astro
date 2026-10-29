@@ -1,0 +1,12 @@
+---
+// near.org primary logo (green mark + wordmark). The wordmark takes currentColor so the same
+// logo reads on the dark and the light sections.
+import raw from '../../../public/v3b-near-2a/near-primary-dark.svg?raw';
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+const svg = raw
+  .replace(/fill="white"/g, 'fill="currentColor"')
+  .replace(/\s(width|height)="\d+"/g, '')
+  .replace('<svg ', `<svg class="${cls}" `);
+---
+<Fragment set:html={svg} />

@@ -1,0 +1,11 @@
+---
+import { heroApply } from '../../content/copy';
+import Logo from './Logo.astro';
+---
+<header class="hud" data-hud data-tone="dark">
+  <a class="hud__brand" href="#top" aria-label="NEAR — back to top"><Logo class="hud__logo" /></a>
+  <button class="btn btn--sm" type="button" data-open-request>
+    <span class="btn__txt">{heroApply.cta}</span>
+    <span class="btn__arrow" aria-hidden="true">→</span>
+  </button>
+</header>
